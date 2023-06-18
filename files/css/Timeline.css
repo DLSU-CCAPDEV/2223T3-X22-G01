@@ -1,0 +1,75 @@
+body {
+	background-color: #ececec;
+}
+
+.page {
+	box-sizing: border-box;
+}
+
+.profile-side {
+	position: sticky;
+	top: 0;
+
+/*	outline: 1px solid black;*/
+	
+	width: 34%;
+	height: 98.8vh;
+	float: left;
+	margin: -8px;
+	padding: 3px;
+
+	background-image: url(../images/eve_test.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+
+}
+
+#salamin-logo {
+	outline: 1px solid black;
+
+	width: 28%;
+	height: 28%;
+}
+
+.timeline-page {
+	outline: 1px solid red;
+
+	float: right;
+	width: 66%;
+/*	height: 150vh;*/
+	margin: -6px;
+	padding: 3px;
+}
+
+.page-header {
+	outline: 1px solid pink;
+	text-align: center;
+}
+
+.search-bar {
+	outline: 1px solid hotpink;
+	
+	width: 60%;
+	height: 20px;
+	float: left;
+}
+
+#search {
+	border-radius: 8px;
+	width: 80%;
+}
+
+.search-option {
+	outline: 1px solid deeppink;
+	width: 40%;
+	height: 20px;
+	float: right;
+}
+
+.page:after {
+	content: "";
+	display: table;
+	clear: both;
+}
