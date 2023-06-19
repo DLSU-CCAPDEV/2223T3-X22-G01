@@ -6,6 +6,7 @@
 
 body {
 	background-color: #ececec;
+	height:100%;
 }
 
 .page {
@@ -91,6 +92,8 @@ body {
 
 .timeline-page {
 	outline: 1px solid red;
+	display:block;
+	overflow:auto;
 
 	float: right;
 	width: 66%;
@@ -191,7 +194,7 @@ input.post-title::placeholder, input.post-title {
 
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+/*	height: 100vh;*/
 }
 
 .post {
