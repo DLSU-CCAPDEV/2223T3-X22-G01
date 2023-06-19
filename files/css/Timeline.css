@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*{
+	font-family: "Poppins", sans-serif;
+}
+
 body {
 	background-color: #ececec;
 }
@@ -61,6 +67,26 @@ body {
 	bottom: 0;
 	height: 10%;
 	width: 98%;
+	display: flex;
+	flex-direction: row;
+}
+
+.logout-action {
+	outline: 1px solid black;
+	width: 15%;
+	padding: 1vh 0;
+}
+
+.username-action {
+	outline: 1px solid black;
+	width: 70%;
+	padding: 1vh 0;
+}
+
+.settings-action {
+	outline: 1px solid black;
+	width: 15%;
+	padding: 1vh 0;
 }
 
 .timeline-page {
@@ -109,31 +135,55 @@ nav.search-action {
 
 .page-post {
 	outline: 1px dotted blue;
-	padding: 5px;
+	background-color: white;
+	border-radius: 10px;
+	padding: 10px;
 	margin: 20px 100px;
 	display: flex;
 	flex-direction: column;
 
-	height: 20vh;
+	height: 25vh;
+}
+
+input.post-title::placeholder, input.post-title {
+	font-size: 24px;
 }
 
 .post-title {
-	outline: 1px dotted purple;
+	outline: none;
+	border:none;
 	height: 5vh;
 	padding: 1vh 0;
 }
 
 .post-user {
-	outline: 1px dotted mediumpurple;
+	outline: none;
+	border:none;
 	height: 13vh;
-	padding: 1vh 0;
+	padding: 5px 0;
 }
 
 .post-user-actions {
 	outline: 1px dotted rebeccapurple;
-	height: 2vh;
-	padding: 1vh 0;
+	height: 4vh;
+	padding: 0;
 	align-content: center;
+}
+
+.post-button {
+	outline:none;
+	border: none;
+	width: 10vh;
+	background-color: #4fa095;
+	padding: 5px 5px;
+	color: #ececec;
+	font-size: 20px;
+	border-radius: 20px;
+	float: right;
+}
+
+.post-button:hover {
+	background-color: #428a80;
 }
 
 .page-content {
@@ -146,8 +196,34 @@ nav.search-action {
 
 .post {
 	outline: 1px dotted blue;
+	background-color: white;
+	height: 10vh;
+	width: auto;
+	border-radius: 10px;
 	padding: 5px;
 	margin: 10px 100px;
+	display: flex;
+	flex-direction: row;
+}
+
+.post-vote {
+
+}
+
+.post-content {
+	background-color: #bad1c2;
+}
+
+.post-query {
+	background-color: #bad1c2;
+}
+
+.post-details {
+	background-color: #bad1c2;
+}
+
+.post-pfp {
+
 }
 
 .page:after {
