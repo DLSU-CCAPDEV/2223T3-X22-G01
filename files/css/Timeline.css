@@ -13,7 +13,7 @@ body {
 /*	outline: 1px solid black;*/
 	
 	width: 34%;
-	height: 98.8vh;
+	height: 100vh;
 	float: left;
 	margin: -8px;
 	padding: 3px;
@@ -26,11 +26,41 @@ body {
 
 }
 
+.side-header {
+	outline: 1px solid black;
+	box-sizing: border-box;
+	position: absolute;
+	top: 0;
+	height: 10%;
+	width: 98%;
+}
+
 #salamin-logo {
 	outline: 1px solid black;
 
-	width: 28%;
-	height: 28%;
+	max-width: 100%;
+	max-height: 100%;
+	width: 250px;
+	height: auto;
+	object-position: center top;
+}
+
+.side-content {
+	outline: 1px solid black;
+	box-sizing: border-box;
+	position: absolute;
+	width: 98%;
+	top: 10%;
+	bottom: 10%;
+}
+
+.side-footer {
+	outline: 1px solid black;
+	box-sizing: border-box;
+	position: absolute;
+	bottom: 0;
+	height: 10%;
+	width: 98%;
 }
 
 .timeline-page {
@@ -46,26 +76,78 @@ body {
 .page-header {
 	outline: 1px solid pink;
 	text-align: center;
+	height: 30px;
+	display: flex;
+	
 }
 
 .search-bar {
 	outline: 1px solid hotpink;
 	
 	width: 60%;
-	height: 20px;
-	float: left;
+	height: 30px;
+	
 }
 
 #search {
 	border-radius: 8px;
 	width: 80%;
+	float:right;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: 5px;
 }
 
-.search-option {
+nav.search-action {
 	outline: 1px solid deeppink;
 	width: 40%;
-	height: 20px;
-	float: right;
+	height: 25px;
+	padding-top: 5px;
+	margin-left:5px;
+	float:left;
+}
+
+.page-post {
+	outline: 1px dotted blue;
+	padding: 5px;
+	margin: 20px 100px;
+	display: flex;
+	flex-direction: column;
+
+	height: 20vh;
+}
+
+.post-title {
+	outline: 1px dotted purple;
+	height: 5vh;
+	padding: 1vh 0;
+}
+
+.post-user {
+	outline: 1px dotted mediumpurple;
+	height: 13vh;
+	padding: 1vh 0;
+}
+
+.post-user-actions {
+	outline: 1px dotted rebeccapurple;
+	height: 2vh;
+	padding: 1vh 0;
+	align-content: center;
+}
+
+.page-content {
+	outline: 1px solid red;
+
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.post {
+	outline: 1px dotted blue;
+	padding: 5px;
+	margin: 10px 100px;
 }
 
 .page:after {
