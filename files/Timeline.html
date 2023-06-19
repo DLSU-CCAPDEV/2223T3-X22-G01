@@ -41,29 +41,44 @@
 
 		<div class="page-header"> <!-- search -->
 			<div class="search-bar">
-				<input type="text" id="search" name="search">
+				<input type="text" placeholder="Search" id="search" name="search">
 			</div>
 			<nav class="search-action"> <!-- change to sprites -->
-				<a href="#">latest</a>
-				<a href="#">popular</a>
-				<a href="#">answered</a>
-				<a href="#">unanswered</a>
+				<span class="search-latest">
+					<a href="#">latest</a>
+				</span class="search-popular">
+				<span>
+					<a href="#">popular</a>
+				</span>
+				<span class="search-answered">
+					<a href="#">answered</a>
+				</span>
+				<span class="search=unanswered">
+					<a href="#">unanswered</a>
+				</span>
 			</nav>
 			
 		</div>
 
 		<div class="page-post"> <!-- post prompt -->
 			
-			<div class="post-title">
-				<p>Title</p>
-			</div>
+			<input type="text" placeholder="Title" class="post-title" name="post-title">
 
-			<div class="post-user">
-				<p>Need help!</p>
-			</div>
+			<textarea type="text" placeholder="Go ahead. Write down a question." class="post-user" name="post-user"></textarea>
 
 			<div class="post-user-actions">
-				<p>icons here</p>
+				<span class="bold"></span>
+				<span class="italic"></span>
+				<span class="strikethrough"></span>
+				<span class="bullet-list"></span>
+				<span class="number-list"></span>
+				<span class="embed"></span>
+				<span class="left-justify"></span>
+				<span class="center-justify"></span>
+				<span class="right-justify"></span>
+				<span class="justify"></span>
+				<span class="insert-img"></span>
+				<button class="post-button">Post</button>
 			</div>
 
 		</div>
@@ -77,6 +92,14 @@
 				</div>
 
 				<div class="post-content" id="post-content-1">
+					
+					<div class="post-query" id="post-query-1">
+						
+					</div>
+
+					<div class="post-details" id="post-details-1">
+						
+					</div>
 					
 				</div>
 
@@ -93,7 +116,15 @@
 				</div>
 
 				<div class="post-content" id="post-content-2">
-					
+
+					<div class="post-query" id="post-query-2">
+						
+					</div>
+
+					<div class="post-details" id="post-details-2">
+						
+					</div>
+
 				</div>
 
 				<div class="post-pfp" id="post-pfp-2">
