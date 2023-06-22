@@ -43,13 +43,14 @@ body {
 	background-image: url(../images/eve_test.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: cover; 
 
 	box-shadow: inset -20px 0px 20px -20px var(--shadow);
 	color: var(--altText);
 
 	display: flex;
 	flex-direction: column;
+	transition: 0.5s;
 }
 
 
@@ -61,7 +62,7 @@ body {
 }
 
 .side-content {
-	display: flex;
+
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
@@ -69,7 +70,9 @@ body {
 
 	padding: 40px;
 	gap: 10px;
-	
+
+	white-space: nowrap;
+
 }
 
 .side-message {
@@ -109,8 +112,7 @@ body {
 	margin: 20px;
 	margin-left: 40%;
 	margin-right: 10%;
-	
-	
+	transition: 0.5s;
 }
 
 .page-header {
@@ -179,6 +181,10 @@ input.post-title::placeholder, input.post-title {
 .post-user-actions {
 
 	align-content: center;
+}
+
+a {
+	text-decoration: none;
 }
 
 .post-button {
@@ -292,14 +298,7 @@ input.post-title::placeholder, input.post-title {
 
 .post-text {
 	padding: 10px;
-	padding-right: 30px;
-	padding-left: 60px;
-
-	display: flex;
-	flex-direction: column;
-	justify-content:center;
-
-	min-width: 80%;
+	margin: auto;
 	
 }
 
@@ -314,6 +313,10 @@ ion-icon{
 	color: var(--secondary);
 }
 
+ion-icon:hover{
+	color: var(--HLsecondary)
+}
+
 div.side-footer ion-icon{
 	color: var(--altText);
 }
@@ -323,17 +326,57 @@ textarea, input[type="text"] {
 }
 
 .post-pfp {
-	display: none;
+	display: block;
+	background-color: black;
+	width: 100px;
+	height: 100px;
+	min-width: 100px;
+	border-radius: 50% 50% 0px 0px;
+	margin-left: auto;
+
 }
 
-@media only screen and (min-width: 720px) {
-    .post-pfp {
+.user-pfp {
+	display: none;
+	background-image: url(../images/eve_test.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover; 
+	width: 0px;
+	height: 0px;
+	min-width: 0px;
+	border-radius: 50%;
+	margin-left: auto;
+}
+
+@media only screen and (max-width: 1000px) {
+    .post-query {
+		font-size: 23px;
+		
+	}
+	.timeline-page {
+		margin-left: 10%;
+	}
+
+	.profile-side {
+		transform: translateX(-500px);
+	}
+
+	.user-pfp {
 		display: block;
-		background-color: black;
-		width: 100px;
-		height: 100px;
-		min-width: 100px;
-		border-radius: 50% 50% 0px 0px;
-		margin-left: auto;
+		width: 50px;
+		height: 50px;
+		min-width: 50px
+	
+	}
+}
+
+@media only screen and (max-width: 720px) {
+    
+
+	
+
+	.post-pfp {
+		display: none;
 	}
 }
