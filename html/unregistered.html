@@ -45,7 +45,7 @@
         </header>
 
         <!-- Home -->
-        <section class="home">
+        <div class="home">
             <div class="form_content">
                 <i class="uil uil-times form_close"></i>
 
@@ -74,7 +74,9 @@
                             <a href="#" class="forgot_pw">Forgot password?</a>
                         </div>
 
-                        <button class="button">Login Now</button>
+                        <button class="button">
+                            <a href="timeline.html" style="color: white; text-decoration: none;">Login Now</a>
+                        </button>
 
                         <div class="login_sign-up">Don't have an account yet? <a href="#" id="sign-up"> Sign-up</a></div>
                     </form>
@@ -102,37 +104,38 @@
                             <i class="uil uil-eye-slash pw_hide"></i>
                         </div>
 
-                        <button class="button">Sign-up Now</button>
+                        <button class="button">
+                            <a href="timeline.html" style="color: white; text-decoration: none;">Sign-Up Now</a>
+                        </button>
 
                         <div class="login_sign-up">Already have an account?<a href="#" id="sign-up"> Log-in</a></div>
                     </form>
                 </div>
             </div>
-        </section>
+            <div class="page">
+                <div class="timeline-page">
+                    <div class="page-post"> <!-- post prompt -->
+                            
+                        <input type="text" placeholder="Title" class="post-title" name="post-title">
 
+                        <textarea type="text" placeholder="Go ahead. Write down a question." class="post-user" name="post-user"></textarea>
 
-    <div class="page"> 
-        <div class="timeline-page">
-
-            <div class="page-post"> <!-- post prompt -->
-                
-                <input type="text" placeholder="Title" class="post-title" name="post-title">
-
-                <textarea type="text" placeholder="Go ahead. Write down a question." class="post-user" name="post-user"></textarea>
-
-                <div class="post-user-actions">
-                    <span class="bold"></span>
-                    <span class="italic"></span>
-                    <span class="strikethrough"></span>
-                    <span class="bullet-list"></span>
-                    <span class="number-list"></span>
-                    <span class="embed"></span>
-                    <span class="left-justify"></span>
-                    <span class="center-justify"></span>
-                    <span class="right-justify"></span>
-                    <span class="justify"></span>
-                    <span class="insert-img"></span>
-                    <button class="post-button">Post</button>
+                        <div class="post-user-actions">
+                            <span class="bold"></span>
+                            <span class="italic"></span>
+                            <span class="strikethrough"></span>
+                            <span class="bullet-list"></span>
+                            <span class="number-list"></span>
+                            <span class="embed"></span>
+                            <span class="left-justify"></span>
+                            <span class="center-justify"></span>
+                            <span class="right-justify"></span>
+                            <span class="justify"></span>
+                            <span class="insert-img"></span>
+                            <!-- Post button -->
+                            <button class="post-button" id="open_form_post">Post</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -143,189 +146,142 @@
                     
                     <div class="post-content" id="post-content-1">
                         <div class="post-vote" id="post-vote-1">
-                            <ion-icon name="caret-up-outline"></ion-icon>
-                            <div>29</div>
-                            <ion-icon name="caret-down-outline"></ion-icon>
-                        </div>
-                        
-                        <div class="post-text">
-                            <div class="post-query" id="post-query-1">
-                                How long does it take for passports to get delivered?
-                            </div>
-    
-                            <div class="post-details" id="post-details-1">
-                                @borkborkerson | 6 days ago | 10 replies
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    
-    
-                    <div class="post-pfp" id="post-pfp-1">
-                        
-                    </div>
-    
-                </div>
-    
-                <div class="post" id="post-1"> <!-- posts proper -->
-                    
-                    
-                    <div class="post-content" id="post-content-1">
-                        <div class="post-vote" id="post-vote-1">
-                            <ion-icon name="caret-up-outline"></ion-icon>
-                            <div>29</div>
-                            <ion-icon name="caret-down-outline"></ion-icon>
-                        </div>
-                        
-                        <div class="post-text">
-                            <div class="post-query" id="post-query-1">
-                                How long does it take for passports to get delivered?
-                            </div>
-    
-                            <div class="post-details" id="post-details-1">
-                                @borkborkerson | 6 days ago | 10 replies
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    
-    
-                    <div class="post-pfp" id="post-pfp-1">
-                        
-                    </div>
-    
-                </div>
-    
-                <div class="post" id="post-1"> <!-- posts proper -->
-                    
-                    
-                    <div class="post-content" id="post-content-1">
-                        <div class="post-vote" id="post-vote-1">
-                            <ion-icon name="caret-up-outline"></ion-icon>
-                            <div>29</div>
-                            <ion-icon name="caret-down-outline"></ion-icon>
-                        </div>
-                        
-                        <div class="post-text">
-                            <div class="post-query" id="post-query-1">
-                                How long does it take for passports to get delivered?
-                            </div>
-    
-                            <div class="post-details" id="post-details-1">
-                                @borkborkerson | 6 days ago | 10 replies
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    
-    
-                    <div class="post-pfp" id="post-pfp-1">
-                        
-                    </div>
-    
-                </div>
-    
-                <div class="post" id="post-1"> <!-- posts proper -->
-                    
-                    
-                    <div class="post-content" id="post-content-1">
-                        <div class="post-vote" id="post-vote-1">
-                            <ion-icon name="caret-up-outline"></ion-icon>
-                            <div>29</div>
-                            <ion-icon name="caret-down-outline"></ion-icon>
-                        </div>
-                        
-                        <div class="post-text">
-                            <div class="post-query" id="post-query-1">
-                                How long does it take for passports to get delivered?
-                            </div>
-    
-                            <div class="post-details" id="post-details-1">
-                                @borkborkerson | 6 days ago | 10 replies
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    
-    
-                    <div class="post-pfp" id="post-pfp-1">
-                        
-                    </div>
-    
-                </div>
-    
-                <div class="post" id="post-1"> <!-- posts proper -->
-                    
-                    
-                    <div class="post-content" id="post-content-1">
-                        <div class="post-vote" id="post-vote-1">
-                            <ion-icon name="caret-up-outline"></ion-icon>
-                            <div>29</div>
-                            <ion-icon name="caret-down-outline"></ion-icon>
-                        </div>
-                        
-                        <div class="post-text">
-                            <div class="post-query" id="post-query-1">
-                                How long does it take for passports to get delivered?
-                            </div>
-    
-                            <div class="post-details" id="post-details-1">
-                                @borkborkerson | 6 days ago | 10 replies
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    
-    
-                    <div class="post-pfp" id="post-pfp-1">
-                        
-                    </div>
-    
-                </div>
-    
-                <div class="post" id="post-1"> <!-- posts proper -->
-                    
-                    
-                    <div class="post-content" id="post-content-1">
-                        <div class="post-vote" id="post-vote-1">
-                            <ion-icon name="caret-up-outline"></ion-icon>
-                            <div>29</div>
-                            <ion-icon name="caret-down-outline"></ion-icon>
-                        </div>
-                        
-                        <div class="post-text">
-                            <div class="post-query" id="post-query-1">
-                                How long does it take for passports to get delivered?
-                            </div>
-    
-                            <div class="post-details" id="post-details-1">
-                                @borkborkerson | 6 days ago | 10 replies
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    
-    
-                    <div class="post-pfp" id="post-pfp-1">
-                        
-                    </div>
-    
-                </div>
-    
-            </div>
-    
-        </div>
-    
-    </div>
-        </div>
 
-    </div>
+                            <button class="upvote" id="open_form_upvote">
+                                <ion-icon clear name="caret-up-outline"></ion-icon>
+                            </button>
+                            <div>18</div>
+                            <button class="downvote" id="open_form_downvote">
+                                <ion-icon clear name="caret-down-outline"></ion-icon>
+                            </button>
+                        </div>
+                        
+                        <div class="post-text">
+                            <div class="post-query" id="post-query-1">
+                                I would like to ask how do you make friends once done in school? 
+                            </div>
+    
+                            <div class="post-details" id="post-details-1">
+                                @soraruru | 5 mins ago | 2 replies
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post" id="post-1"> <!-- posts proper -->
+                    
+                    
+                    <div class="post-content" id="post-content-1">
+                        <div class="post-vote" id="post-vote-1">
+
+                            <button class="upvote" id="open_form_upvote">
+                                <ion-icon clear name="caret-up-outline"></ion-icon>
+                            </button>
+                            <div>29</div>
+                            <button class="downvote" id="open_form_downvote">
+                                <ion-icon clear name="caret-down-outline"></ion-icon>
+                            </button>
+                        </div>
+                        
+                        <div class="post-text">
+                            <div class="post-query" id="post-query-1">
+                                Planning to migrate sa ibang country for work sa Australia or Canada.
+                            </div>
+    
+                            <div class="post-details" id="post-details-1">
+                                @Kanae_2434 | 23 hours ago | 2 replies
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+
+                <div class="post" id="post-1"> <!-- posts proper -->
+                    
+                    
+                    <div class="post-content" id="post-content-1">
+                        <div class="post-vote" id="post-vote-1">
+
+                            <button class="upvote" id="open_form_upvote">
+                                <ion-icon clear name="caret-up-outline"></ion-icon>
+                            </button>
+                            <div>45</div>
+                            <button class="downvote" id="open_form_downvote">
+                                <ion-icon clear name="caret-down-outline"></ion-icon>
+                            </button>
+                        </div>
+                        
+                        <div class="post-text">
+                            <div class="post-query" id="post-query-1">
+                                How long does it take for passports to get delivered?
+                            </div>
+    
+                            <div class="post-details" id="post-details-1">
+                                @Vamp_Kuzu | 1 day ago | 3 replies
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+
+                <div class="post" id="post-1"> <!-- posts proper -->
+                    
+                    
+                    <div class="post-content" id="post-content-1">
+                        <div class="post-vote" id="post-vote-1">
+
+                            <button class="upvote" id="open_form_upvote">
+                                <ion-icon clear name="caret-up-outline"></ion-icon>
+                            </button>
+                            <div>15</div>
+                            <button class="downvote" id="open_form_downvote">
+                                <ion-icon clear name="caret-down-outline"></ion-icon>
+                            </button>
+                        </div>
+                        
+                        <div class="post-text">
+                            <div class="post-query" id="post-query-1">
+                                How long does it take for passports to get delivered?
+                            </div>
+    
+                            <div class="post-details" id="post-details-1">
+                                @minasern | 3 days ago | 3 replies
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+
+                <div class="post" id="post-1"> <!-- posts proper -->
+                    
+                    
+                    <div class="post-content" id="post-content-1">
+                        <div class="post-vote" id="post-vote-1">
+
+                            <button class="upvote" id="open_form_upvote">
+                                <ion-icon clear name="caret-up-outline"></ion-icon>
+                            </button>
+                            <div>29</div>
+                            <button class="downvote" id="open_form_downvote">
+                                <ion-icon clear name="caret-down-outline"></ion-icon>
+                            </button>
+                        </div>
+                        
+                        <div class="post-text">
+                            <div class="post-query" id="post-query-1">
+                                How long does it take for passports to get delivered?
+                            </div>
+    
+                            <div class="post-details" id="post-details-1">
+                                @ShibuyaHAL | 5 days ago | 15 replies
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+   
         
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
