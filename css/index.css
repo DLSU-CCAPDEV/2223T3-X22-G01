@@ -215,10 +215,9 @@ a {
 
 	display: flex;
 	flex-direction: column;
-	margin-left: auto;
-	width: auto;
+	margin-left: 5%;
+	width: 100%;
 	gap: 20px;
-
 }
 
 .post{
@@ -227,8 +226,6 @@ a {
 
 	gap: 10px;
 }
-
-
 
 .post-vote {
 	background-color: var(--BGsecondary);
@@ -256,6 +253,7 @@ a {
 .post-text {
 	padding: 10px;
 	margin: auto;
+	margin-left: 5%;
 	
 }
 
@@ -283,37 +281,42 @@ textarea, input[type="text"] {
 }
 
 .post-pfp {
-	display: block;
 	background-color: black;
 	width: 100px;
 	height: 100px;
-	min-width: 100px;
+	flex-shrink: 0;
+	flex-grow: 0;
 	border-radius: 50% 50% 0px 0px;
-	margin-left: auto;
-
+	
+	
 	background-size: cover;
+	transition: 0.5s;
 
 }
 
 .user-pfp {
-	display: none;
+
 	background-image: url(../images/eve_test.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover; 
 	width: 0px;
-	height: 0px;
-	min-width: 0px;
-	border-radius: 50%;
+	height: 50px;
+	flex-shrink: 0;
+	border-radius: 50% 50% 0% 0%;
 	margin-left: auto;
+
+	transform: translateX(-200px);
+
+	transition: 0.2s;
+
 }
 
 .post-content {
-	width: auto;
+	flex-grow: 1;
 	height: auto;
 	position: relative;
 
-	
 	background-color: var(--primary);
 	border: none;
 	border-radius: 50px 10px 0px 10px;
@@ -375,10 +378,8 @@ textarea, input[type="text"] {
 	}
 
 	.user-pfp {
-		display: block;
 		width: 50px;
-		height: 50px;
-		min-width: 50px
+		transform: translateX(0px);
 	
 	}
 }
@@ -386,6 +387,6 @@ textarea, input[type="text"] {
 @media only screen and (max-width: 720px) {
 
 	.post-pfp {
-		display: none;
+		width: 0px;
 	}
 }
