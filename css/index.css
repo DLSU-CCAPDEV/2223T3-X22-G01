@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root{
+	--BGprimary: #d7d7d7;
+	--BGsecondary: #ffffff;
+
+	--primary: #bad1c2;
+	--secondary: #428a80;
+
+	--HLprimary: #d8ecd6;
+	--HLsecondary: #5dad89;
+
+	--shadow: #2d132964;
+	--text: #07211b;
+	--altText: #ffffff;
+}
+
+*{
+	font-family: "Roboto", sans-serif;
+	color: var(--text);
+}
+
+body {
+	background-color: var(--BGprimary);
+	height:100%;
+	margin: 0;
+}
+
+.page {
+	box-sizing: border-box;
+}
+
+.profile-side {
+	position: fixed;
+	top: 0;
+	
+	width: 34%;
+	height: 98vh;
+	overflow: hidden;
+	
+	padding: 10px;
+
+	background-image: url(../images/eve_test.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover; 
+
+	box-shadow: inset -20px 0px 20px -20px var(--shadow);
+	color: var(--altText);
+
+	display: flex;
+	flex-direction: column;
+	transition: 0.5s;
+}
+
+
+#salamin-logo {
+	max-width: 100%;
+	max-height: 100%;
+	width: 250px;
+	height: auto;
+}
+
+
+#salamin-logo:hover {
+	cursor: pointer;
+}
+
+.side-content {
+
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	margin-top: auto;
+
+	padding: 40px;
+	gap: 10px;
+
+	white-space: nowrap;
+
+}
+
+.side-message {
+	font-size: 32px;
+	font-weight: 300;
+	color: var(--altText);
+}
+
+.user-info {
+	font-weight: 200;
+	color: var(--altText);
+}
+
+.side-footer {
+	
+	display: flex;
+	flex-direction: row;
+	vertical-align: middle;
+	justify-content: space-around;
+	margin-top: 120px;
+	margin-bottom: 10px;
+	
+}
+
+
+.username-action {
+	font-weight: 100;
+	letter-spacing: 3px;
+	color: var(--altText);
+}
+
+
+.timeline-page {
+	display:flex;
+	flex-direction: column;
+	gap: 30px;
+	margin: 20px;
+	margin-left: 40%;
+	margin-right: 10%;
+	transition: 0.5s;
+}
+
+.page-header {
+	align-content: middle;
+	gap: 20px;
+	display: flex;
+	
+}
+
+.search-bar {
+	width: 100%;
+	display: flex;
+	padding: 10px;
+	border-radius: 50px;
+	width: 100%;
+	height: 100%;
+	background-color: var(--BGsecondary);
+	
+}
+
+#search {
+	width: 100%;
+	border: none;
+	outline: none;
+	font-size: 16px;
+}
+
+
+nav.search-action {
+	display: flex;
+	gap: 10px;
+	margin-left: auto;
+	align-items: center;
+}
+
+.page-post {
+	
+	background-color: var(--BGsecondary);
+	border-radius: 20px;
+	padding: 10px;
+	padding-left: 50px;
+	display: flex;
+	flex-direction: column;
+
+
+}
+
+input.post-title::placeholder, input.post-title {
+	font-size: 24px;
+}
+
+.post-title {
+	outline: none;
+	border:none;
+	height: 5vh;
+	padding: 1vh 0;
+}
+
+.post-user {
+	outline: none;
+	border:none;
+	height: 13vh;
+	
+}
+
+.post-user-actions {
+
+	align-content: center;
+}
+
+a {
+	text-decoration: none;
+}
+
+.post-button {
+	outline:none;
+	border: none;
+	
+	background-color: var(--secondary);
+	padding: 10px 30px;
+	color: var(--BGsecondary);
+	font-size: 20px;
+	border-radius: 20px;
+	float: right;
+
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.post-button:hover {
+	background-color: var(--HLsecondary);
+}
+
+.page-content {
+
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	width: auto;
+	gap: 20px;
+
+}
+
+.post{
+	display: flex;
+	align-items: center;
+
+	gap: 10px;
+}
+
+
+
+.post-vote {
+	background-color: var(--BGsecondary);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content:space-around;
+	
+
+	border-radius: 20px 0px 0px 0px;
+	width: 10%;
+
+	padding: 10px 5px;
+}
+
+.post-query {
+	font-size: 25px;
+	
+}
+
+.post-details {
+	font-weight: 300;
+}
+
+.post-text {
+	padding: 10px;
+	margin: auto;
+	
+}
+
+.page:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+ion-icon{
+	font-size: 32px;
+	color: var(--secondary);
+}
+
+ion-icon:hover{
+	color: var(--HLsecondary)
+}
+
+div.side-footer ion-icon{
+	color: var(--altText);
+}
+
+textarea, input[type="text"] {
+	background-color: var(--BGsecondary);
+}
+
+.post-pfp {
+	display: block;
+	background-color: black;
+	width: 100px;
+	height: 100px;
+	min-width: 100px;
+	border-radius: 50% 50% 0px 0px;
+	margin-left: auto;
+
+	background-size: cover;
+
+}
+
+.user-pfp {
+	display: none;
+	background-image: url(../images/eve_test.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover; 
+	width: 0px;
+	height: 0px;
+	min-width: 0px;
+	border-radius: 50%;
+	margin-left: auto;
+}
+
+.post-content {
+	width: auto;
+	height: auto;
+	position: relative;
+
+	
+	background-color: var(--primary);
+	border: none;
+	border-radius: 50px 10px 0px 10px;
+	cursor: pointer;
+	transition: 0.5s;
+
+	display: flex;
+
+}
+
+.glasshover::after{
+	content: "";
+	position: absolute;
+	height: 100%;
+	width: 100%;
+
+	top: 0;
+	left: 0;
+	background: linear-gradient(
+		45deg,
+		transparent 50%,
+		#ffffff10 58%,
+		#ffffff32 67%,
+		transparent 68%
+	);
+
+	background-size: 200% 100%;
+	background-position:  165% 0;
+	transition: 0.7s;
+}
+
+.glasshover:hover:after{
+	background-position: -20% 0;
+}
+
+#pfp-1 {
+	background-image: url(../images/pfp_soraru.jpg);
+}
+
+#pfp-2 {
+	background-image: url(../images/pfp_kanae.jpg);
+}
+
+#pfp-3 {
+	background-image: url(../images/pfp_kuzuha.jpg);
+}
+
+@media only screen and (max-width: 1000px) {
+    .post-query {
+		font-size: 23px;
+		
+	}
+	.timeline-page {
+		margin-left: 10%;
+	}
+
+	.profile-side {
+		transform: translateX(-500px);
+	}
+
+	.user-pfp {
+		display: block;
+		width: 50px;
+		height: 50px;
+		min-width: 50px
+	
+	}
+}
+
+@media only screen and (max-width: 720px) {
+
+	.post-pfp {
+		display: none;
+	}
+}
