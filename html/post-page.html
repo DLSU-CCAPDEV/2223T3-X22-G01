@@ -91,10 +91,36 @@
                 </div>
                 <div class="post-footer">
                     <div class="vote-post">
+
                         <ion-icon name="caret-up-outline" class="upvote"></ion-icon>
-						<div>29</div>
-						<ion-icon name="caret-down-outline" class="downvote"></ion-icon>
+
+                        <div class="num-vote">29</div> 
+
+			<ion-icon name="caret-down-outline" class="downvote"></ion-icon>
+
+                    <script>
+                        const plus = document.querySelector(".upvote");
+                        const minus = document.querySelector(".downvote");
+                        const num = document.querySelector(".num-vote");
+
+                        let a = 29;
+
+                        plus.addEventListener("click", () => {
+                            a++;
+                            num.innerText = a;
+                            console.log(a);
+                        });
+
+                        minus.addEventListener("click", () => {
+                            if (a > 0){
+                                a--;
+                                num.innerText = a;
+                                console.log(a);
+                            }
+                        });
+                    </script>
                     </div>
+			
                     <div class="poster-pfp"></div>
                     <div class="poster">Posted by&nbsp;<span class="username">@soraruru</span></div>
                 </div>
