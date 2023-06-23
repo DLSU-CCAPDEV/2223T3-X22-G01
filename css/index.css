@@ -104,6 +104,32 @@ body {
 	
 }
 
+.user-info-page {
+    text-align: center;
+    justify-content: center;
+    margin:auto;
+    padding: 4% 0;
+    width: 100%;
+    gap: 5px;
+    border-radius: 10px;
+    background-color: #bad1c2;
+    align-content: middle;
+	display: flex;
+    flex-direction: column;
+}
+
+.user-pfp-page {
+    margin: auto;
+    border-style: none;
+    border-radius: 10px;
+
+    background-image: url(../images/eve_test.jpg);
+    background-position: 975px -10px;
+    height: 100px;
+	width: 100px;
+}
+
+
 
 .username-action {
 	font-weight: 100;
@@ -330,8 +356,10 @@ div.side-footer ion-icon{
 textarea, input[type="text"] {
 	background-color: var(--BGsecondary);
 	resize: none;
-	
+	border: none;
 }
+
+
 
 .post-pfp {
 	position: relative;
@@ -432,6 +460,10 @@ textarea, input[type="text"] {
 	background-image: url(../images/pfp_kuzuha.jpg);
 }
 
+.pfp-4 {
+	background-image: url(../images/pfp_eve.jpg);
+}
+
 @media only screen and (max-width: 1000px) {
     .post-query {
 		font-size: 23px;
@@ -470,12 +502,6 @@ textarea, input[type="text"] {
 	display: flex;
 	flex-direction: row;
 	height: auto;
-}
-
-.post-settings {
-	cursor: pointer;
-	margin-left: auto;
-	margin-right: -5px;
 }
 
 .main-post {
@@ -687,4 +713,168 @@ textarea, input[type="text"] {
 	color: #433D3D;
 	line-height: 25px;
 	text-align: justify;
+}
+
+.post-settings {
+	margin-left: auto;
+	margin-right: -5px;
+	position: relative;
+  	display: inline-block;
+}
+
+.postsetbtn {
+	cursor: pointer;
+	outline: none;
+	border: none;
+	background-color: var(--primary);
+}
+
+.post-setting-option {
+	border-radius: 10px;
+	display: none;
+  	position: absolute;
+	transform: translate(-50px,0px);
+  	background-color: var(--BGsecondary);
+  	padding: 10px;
+
+	overflow: auto;
+  	box-shadow: 0px 8px 16px var(--shadow);
+  	z-index: 1;
+}
+
+.post-option {
+	outline: none;
+	border: none;
+	background-color: var(--BGsecondary);
+	
+	text-align: left;
+	width: 100%;
+	transition: 0.5s;
+}
+
+.post-option:hover {
+	background-color: var(--BGprimary);
+}
+
+[contenteditable="true"]:active, [contenteditable="true"]:focus {
+	outline: none;
+	border: 1px solid #9fbeaa;
+	border-radius: 10px;
+}
+
+.edit-button {
+	outline:none;
+	border: none;
+	
+	background-color: #4fa095;
+	padding: 10px 20px;
+	color: #ececec;
+	font-size: 15px;
+	border-radius: 20px;
+	float: right;
+	margin-left: auto;
+
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.edit-button:hover {
+	background-color: #428a80;
+}
+
+.notice-box {
+	text-align: center;
+    justify-content: center;
+    margin:auto;
+    padding: 4% 0;
+    width: 100%;
+    gap: 5px;
+    border-radius: 10px;
+    background-color: white;
+    align-content: middle;
+	display: flex;
+    flex-direction: column;
+}
+
+.show {
+	display: block;
+}
+
+.user-id {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.display-name {
+    padding: 5px 2px;
+    font-weight: 500;
+}
+
+.username {
+    padding:5px;
+    font-weight:400;
+    font-style: italic;
+}
+
+.user-bio {
+    padding: 5px;
+    width: 60%;
+    margin: auto;
+    gap: -2px;
+}
+
+
+.user-edit-profile {
+    background-color: var(--primary);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    width: fit-content;
+
+    margin: auto;
+}
+
+.post-button {
+	outline:none;
+	border: none;
+	
+	background-color: #4fa095;
+	padding: 10px 20px;
+	color: #ececec;
+	font-size: 15px;
+	border-radius: 20px;
+	float: right;
+	margin-left: auto;
+
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.write-post {
+	width: 92%;
+	height: 100%;
+	position: relative;
+
+	padding: 30px;
+	gap: 5px;
+
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+	border: none;
+	border-radius: 10px;
+	transition: 0.5s;
+
+	display: flex;
+	flex-direction: column;
+
+    text-align: center;
+    justify-content: center;
+    align-content: middle;
 }
