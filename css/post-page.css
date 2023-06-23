@@ -114,9 +114,100 @@ body {
 }
 
 .post-settings {
-	cursor: pointer;
 	margin-left: auto;
 	margin-right: -5px;
+	position: relative;
+  	display: inline-block;
+}
+
+.postsetbtn {
+	cursor: pointer;
+	outline: none;
+	border: none;
+	background-color: #bad1c2;
+}
+
+.postsetbtn:hover {
+	border-radius: 5px;
+	padding: 0 -10px;
+	background-color: #9fbeaa;
+}
+
+.post-setting-option {
+	border-radius: 5px;
+	display: none;
+  	position: absolute;
+  	background-color: #9fbeaa;
+  	min-width: 75px;
+	font-size: 15px;
+	overflow: auto;
+  	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  	z-index: 1;
+}
+
+.post-setting-option button {
+	border-radius: 5px;
+	color: #433D3D;
+  	padding: 12px 16px;
+  	text-decoration: none;
+  	display: block;
+}
+
+.post-setting-option button:hover {
+	background-color: #89a392;
+}
+
+.post-option {
+	outline: none;
+	border: none;
+	background-color: #9fbeaa;
+	color: #433D3D;
+	text-align: left;
+	width: 100%;
+}
+
+[contenteditable="true"]:active, [contenteditable="true"]:focus {
+	outline: none;
+	border: 1px solid #9fbeaa;
+	border-radius: 10px;
+}
+
+.edit-button {
+	outline:none;
+	border: none;
+	
+	background-color: #4fa095;
+	padding: 10px 20px;
+	color: #ececec;
+	font-size: 15px;
+	border-radius: 20px;
+	float: right;
+	margin-left: auto;
+
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.edit-button:hover {
+	background-color: #428a80;
+}
+
+.notice-box {
+	text-align: center;
+    justify-content: center;
+    margin:auto;
+    padding: 4% 0;
+    width: 100%;
+    gap: 5px;
+    border-radius: 10px;
+    background-color: white;
+    align-content: middle;
+	display: flex;
+    flex-direction: column;
+}
+
+.show {
+	display: block;
 }
 
 .main-post {
@@ -295,6 +386,7 @@ body {
 	background-size: cover;
 	height: 60px;
 	width: 60px;
+	background-image: url(../images/eve_square.jpg);
 }
 
 #pfp-1 {
@@ -339,3 +431,4 @@ ion-icon{
 	font-size: 32px;
 	color: #428a80;
 }
+
