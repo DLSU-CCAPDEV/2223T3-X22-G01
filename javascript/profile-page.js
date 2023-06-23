@@ -13,6 +13,13 @@ $(document).ready( function(){
         prof_userBio.setAttribute("contenteditable", "true");
 
         $('.user-edit-profile').text("Save changes");
+
+        $('.user-edit-profile').on('click', function(){
+            prof_displayName.setAttribute("contenteditable", "false");
+            prof_username.setAttribute("contenteditable", "false");
+            prof_userBio.setAttribute("contenteditable", "false");
+            $('.user-edit-profile').text("Edit profile");
+        });
         
     });
 
@@ -20,7 +27,6 @@ $(document).ready( function(){
     $('.post-button').on('click', function(){
         var div_userPost,
             div_leftPost,
-            div_userPfp,
             div_votePost,
             div_rightPost,
             div_userDetails,
@@ -35,29 +41,24 @@ $(document).ready( function(){
         //div for user-post
         div_userPost = document.createElement('div');
 
-        $(div_userPost).addClass('user-post');
+        $(div_userPost).addClass('post');
         post.appendChild(div_userPost);
 
         //div for left-post
         div_leftPost = document.createElement('div');
 
-        $(div_leftPost).addClass('left-post');
+        $(div_leftPost).addClass('post-content glasshover');
         div_userPost.appendChild(div_leftPost);
 
         // div for right-post
         div_rightPost = document.createElement('div');
 
-        $(div_rightPost).addClass('right-post');
+        $(div_rightPost).addClass('post-pfp glasshover pfp-4');
         div_userPost.appendChild(div_rightPost);
-
-        // div for user-pfp
-        div_userPfp = document.createElement('div');
-
-        $(div_userPfp).addClass('user-pfp');
-        div_leftPost.appendChild(div_userPfp);
 
         //div for vote-post
         div_votePost = document.createElement('div');
+        $(div_votePost).addClass('post-vote')
 
         var upvote = document.createElement('ion-button');
         upvote.innerHTML = '<ion-icon slot="icon-only" name="caret-up-outline" class="upvote"></ion-icon>';
@@ -71,47 +72,31 @@ $(document).ready( function(){
         downvote.innerHTML = '<ion-icon slot="icon-only" name="caret-down-outline" class="downvote"></ion-icon>';
         div_votePost.appendChild(downvote);
 
-        $(div_votePost).addClass('vote-post');
         div_leftPost.appendChild(div_votePost);
 
         //div for user-details
         div_userDetails = document.createElement('div');
 
-        $(div_userDetails).addClass('user-details');
-        div_rightPost.appendChild(div_userDetails);
-
-        //div for display-name
-        div_displayName = document.createElement('div');
-
-        $(div_displayName).text("Eve");
-
-        $(div_displayName).addClass('display-name');
-        div_userDetails.appendChild(div_displayName);
-
-        //div for username
-        div_userName = document.createElement('div');
-
-        $(div_userName).text("@eveiscool");
-
-        $(div_userName).addClass('username');
-        div_userDetails.appendChild(div_userName);
+        $(div_userDetails).addClass('post-text');
+        div_leftPost.appendChild(div_userDetails);
 
         //div for post
         div_post = document.createElement('div');
-        var postContent = $('.post-box').val();
+        var postContent = $('.post-title').val();
+        var username = $('.username').text();
 
         $(div_post).text(postContent);
 
-        $(div_post).addClass('post');
-        div_rightPost.appendChild(div_post);
+        $(div_post).addClass('post-query');
+        div_userDetails.appendChild(div_post);
 
         //div for post-details
         div_postDetails = document.createElement('div');
 
-        $(div_postDetails).text("Just now | 0 replies");
+        $(div_postDetails).text(username + " | Just now | 0 replies");
 
         $(div_postDetails).addClass('post-details');
-        div_rightPost.appendChild(div_postDetails);
+        div_userDetails.appendChild(div_postDetails);
 
         postSection.appendChild(post);
     });

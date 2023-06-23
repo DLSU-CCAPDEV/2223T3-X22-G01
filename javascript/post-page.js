@@ -18,17 +18,27 @@ $(document).ready( function(){
     $('#post-edit').off('click').on('click', function(){
         var postContent = document.getElementById("post-content-main");
         var postBody = document.getElementById("post-body");
-        postContent.setAttribute("contenteditable", "true");
-        
+
+        $(postContent).attr("contenteditable", "true");
         var editFooter = document.createElement('div');
+
         var editConfirm = document.createElement('button');
-        editConfirm.setAttribute("contenteditable", "false");
+        $(editConfirm).attr("contenteditable", "false");
         $(editFooter).addClass('edit-footer');
+        $(editFooter).attr("id", "edit-footer-1");
         $(editConfirm).addClass('edit-button');
+        $(editConfirm).attr("id", "edit-button-1");
         $(editConfirm).text("Edit");
         editFooter.appendChild(editConfirm);
         postBody.appendChild(editFooter);
 
+        $('#edit-button-1').off('click').on('click', function(){
+            var editFooter = document.getElementById('edit-footer-1');
+
+            $(postContent).attr("contenteditable", "false");
+            $(editFooter).remove();
+        });
+        
     });
 
     $('#edit-button').off('click').on('click', function(){
@@ -139,7 +149,7 @@ $(document).ready( function(){
     });
 
     // edit comment
-
+    
 
     // delete comment
     
