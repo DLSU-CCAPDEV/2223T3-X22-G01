@@ -1,0 +1,434 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*{
+	font-family: "Roboto", sans-serif;
+}
+
+body {
+	background-color: #ececec;
+	height:100%;
+	margin: 0;
+}
+
+.page {
+	box-sizing: border-box;
+}
+
+.profile-side {
+	position: fixed;
+
+	top: 0;
+	
+	width: 34%;
+	height: 98vh;
+	overflow: hidden;
+	
+	padding: 10px;
+
+	background-image: url(../images/eve_test.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	box-shadow: inset -20px 0px 20px -20px #1b001d;
+	
+	color: white;
+
+	display: flex;
+	flex-direction: column;
+}
+
+
+#salamin-logo {
+	
+
+	max-width: 100%;
+	max-height: 100%;
+	width: 250px;
+	height: auto;
+	
+	filter: invert(100%);
+	
+
+}
+
+#salamin-logo:hover {
+	cursor: pointer;
+}
+
+.side-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	margin-top: auto;
+
+	padding: 40px;
+	gap: 10px
+}
+
+.side-message {
+	font-size: 32px;
+	font-weight: 300;
+}
+
+.user-info {
+	font-weight: 200;
+}
+
+.side-footer {
+	
+	display: flex;
+	flex-direction: row;
+	vertical-align: middle;
+	justify-content: space-around;
+	margin-top: 120px;
+	margin-bottom: 10px;
+}
+
+
+.username-action {
+	font-weight: 100;
+	letter-spacing: 3px;
+}
+
+.post-page-content {
+    display:flex;
+	flex-direction: column;
+	gap: 30px;
+	margin: 20px;
+	margin-left: 45%;
+	/* margin-right: 10%; */
+}
+
+.post-page-header {
+	align-content: middle;
+	margin-top: 10px;
+	display: flex;
+}
+
+.main-post-header {
+	display: flex;
+	flex-direction: row;
+}
+
+.post-settings {
+	margin-left: auto;
+	margin-right: -5px;
+	position: relative;
+  	display: inline-block;
+}
+
+.postsetbtn {
+	cursor: pointer;
+	outline: none;
+	border: none;
+	background-color: #bad1c2;
+}
+
+.postsetbtn:hover {
+	border-radius: 5px;
+	padding: 0 -10px;
+	background-color: #9fbeaa;
+}
+
+.post-setting-option {
+	border-radius: 5px;
+	display: none;
+  	position: absolute;
+  	background-color: #9fbeaa;
+  	min-width: 75px;
+	font-size: 15px;
+	overflow: auto;
+  	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  	z-index: 1;
+}
+
+.post-setting-option button {
+	border-radius: 5px;
+	color: #433D3D;
+  	padding: 12px 16px;
+  	text-decoration: none;
+  	display: block;
+}
+
+.post-setting-option button:hover {
+	background-color: #89a392;
+}
+
+.post-option {
+	outline: none;
+	border: none;
+	background-color: #9fbeaa;
+	color: #433D3D;
+	text-align: left;
+	width: 100%;
+}
+
+[contenteditable="true"]:active, [contenteditable="true"]:focus {
+	outline: none;
+	border: 1px solid #9fbeaa;
+	border-radius: 10px;
+}
+
+.edit-button {
+	outline:none;
+	border: none;
+	
+	background-color: #4fa095;
+	padding: 10px 20px;
+	color: #ececec;
+	font-size: 15px;
+	border-radius: 20px;
+	float: right;
+	margin-left: auto;
+
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.edit-button:hover {
+	background-color: #428a80;
+}
+
+.notice-box {
+	text-align: center;
+    justify-content: center;
+    margin:auto;
+    padding: 4% 0;
+    width: 100%;
+    gap: 5px;
+    border-radius: 10px;
+    background-color: white;
+    align-content: middle;
+	display: flex;
+    flex-direction: column;
+}
+
+.show {
+	display: block;
+}
+
+.main-post {
+	width: 80%;
+	height: 100%;
+	position: relative;
+
+	padding: 30px;
+	gap: 15px;
+
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #bad1c2;
+	border: none;
+	border-radius: 10px;
+	transition: 0.5s;
+
+	box-shadow: 0px 10px 20px -20px #1b001d;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.post-title {
+	font-size: 30px;
+	color: #433D3D;
+}
+
+.post-content {
+	line-height: 25px;
+	color: #433D3D;
+}
+
+.post-footer {
+	display: flex;
+	flex-direction: row;
+}
+
+.vote-post {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content:space-around;
+
+	color: #433D3D;
+	
+
+	border-radius: 20px 0px 0px 0px;
+	width: 15%;
+
+	padding: 10px 0;
+}
+
+.poster-pfp {
+	margin-left: auto;
+	margin-right: 5px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 60px;
+	width: 60px;
+
+	background-image: url(../images/pfp_soraru.jpg);
+}
+
+.poster {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+
+	color: #433D3D;
+}
+
+.username {
+	cursor: pointer;
+	color: #153462;
+}
+
+.upvote, .downvote {
+	cursor: pointer;
+}
+
+.write-comment {
+	width: 80%;
+	height: 100%;
+	position: relative;
+
+	padding: 30px;
+	gap: 5px;
+
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+	border: none;
+	border-radius: 10px;
+	transition: 0.5s;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.comment-box {
+	outline: none;
+	border:none;
+	font-size: 15px;
+	background-color: white;
+	padding: 10px;
+	display: flex;
+	overflow:visible;
+	flex-direction: column;
+}
+
+.comment-button {
+	outline:none;
+	border: none;
+	
+	background-color: #4fa095;
+	padding: 10px 20px;
+	color: #ececec;
+	font-size: 15px;
+	border-radius: 20px;
+	float: right;
+	margin-left: auto;
+
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.comment-button:hover {
+	background-color: #428a80;
+}
+
+.comment-section {
+	width: 80%;
+	height: 100%;
+	position: relative;
+
+	padding: 30px;
+	gap: 15px;
+
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+	border: none;
+	border-radius: 10px;
+	transition: 0.5s;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.comment {
+	display: flex;
+	flex-direction: row;
+}
+
+.left-comment, .right-comment {
+	display: flex;
+	flex-direction: column;
+}
+
+.right-comment {
+	gap: 5px;
+}
+
+.pfp-comment {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 60px;
+	width: 60px;
+	background-image: url(../images/eve_square.jpg);
+}
+
+#pfp-1 {
+	background-image: url(../images/pfp_kanae.jpg);
+}
+
+#pfp-2 {
+	background-image: url(../images/pfp_kuzuha.jpg);
+}
+
+.vote-comment {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content:space-around;
+	
+
+	color: #433D3D;
+	font-size: 15px;
+
+	border-radius: 20px 0px 0px 0px;
+	width: 15%;
+
+	padding: 5px 23px;
+}
+
+.commenter {
+	font-weight: 500;
+	color: #433D3D;
+}
+
+.commenter-clickable {
+	cursor: pointer;
+}
+
+.comment-content {
+	color: #433D3D;
+	line-height: 20px;
+}
+
+ion-icon{
+	font-size: 32px;
+	color: #428a80;
+}
+
