@@ -360,7 +360,7 @@ input.post-title::placeholder, input.post-title {
 }
 
 .post{
-	display: flex;
+	display: grid;
 	align-items: center;
 
 	gap: 10px;
@@ -444,8 +444,28 @@ input.post-title::placeholder, input.post-title {
 	font-size: 25px;
 }
 
+.post-description{
+	font-size: 16px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+
+	--max-lines: 1;
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: var(--max-lines);
+	position: relative;
+}
+
+.post-description::before{
+	content: "";
+	position: absolute;
+	height: calc(1em * var(--max-lines));
+}
+
 .post-details {
 	font-weight: 300;
+	font-size: 13px;
 }
 
 .post-text {
