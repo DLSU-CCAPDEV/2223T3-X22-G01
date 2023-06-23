@@ -4,25 +4,15 @@
 	<title>Salamin | Home</title>
 	<link rel="stylesheet" type="text/css" href="../css/index.css">
 
-	<style>
-		
-
-		.post-content:hover {
-			box-shadow: 15px 30px 32px var(--shadow);
-			transform: translateY(-10px);
-			background-color: var(--HLprimary);
-		}	
-	</style>
-
 </head>
 <body>
 
 <div class="page">
 	
-	<div class="profile-side"> <!-- side bar -->
+	<div class="profile-side glasshover" onclick="location.href='profile-page.html'"> <!-- side bar -->
 
 		<div class="side-header"> <!-- logo -->
-			<img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo">
+			<a href="timeline.html"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
 		</div>
 
 		<div class="side-content"> <!-- profile pic bg & profile text thing -->
@@ -46,24 +36,24 @@
 	<div class="timeline-page">
 
 		<div class="page-header"> <!-- search -->
-			<div class="user-pfp"></div>
+			<div class="user-pfp glasshover" onclick="location.href='profile-page.html'"></div>
 			<div class="search-bar">
 				<ion-icon name="search-outline"></ion-icon>
 				<input type="text" placeholder="Search" id="search" name="search">
 			</div>
 			<nav class="search-action"> <!-- change to sprites -->
-				<span class="search-latest">
-					<a href="#"><ion-icon name="time-outline"></ion-icon></a>
-				</span class="search-popular">
-				<span>
-					<a href="#"><ion-icon name="trending-up-outline"></ion-icon></a>
-				</span>
-				<span class="search-answered">
-					<a href="#"><ion-icon name="checkmark"></ion-icon></a>
-				</span>
-				<span class="search=unanswered">
-					<a href="#"><ion-icon name="help"></ion-icon></a>
-				</span>
+				<button class="filter-button">
+
+					<ion-icon name="filter-outline"></ion-icon>
+				</button>
+				<div class = "dropdown-content">
+					<a href="#">Recent</a>
+					<a href="#">Popular</a>
+					<a href="#">Answered</a>
+					<a href="#">Unanswered</a>
+				</div>
+				
+				
 			</nav>
 			
 		</div>
@@ -103,24 +93,25 @@
 						<div>29</div>
 						<ion-icon name="caret-down-outline"></ion-icon>
 					</div>
-					
-					<div class="post-text">
-						<div class="post-query" id="post-query-1">
-							How do you make friends once done in school?
-						</div>
 
-						<div class="post-details" id="post-details-1">
-							@soraruru | 6 days ago | 10 replies
+					<a href="post-page.html">
+						<div class="post-text">
+							<div class="post-query" id="post-query-1">
+								How do you make friends once done in school?
+							</div>
+
+							<div class="post-details" id="post-details-1">
+								@soraruru | 6 days ago | 10 replies
+							</div>
 						</div>
-					</div>
-				
+					</a>
 
 				</div>
 				
-				<div class="post-pfp" id="pfp-1">
+				<div class="post-pfp glasshover" id="pfp-1">
 					
 				</div>
-
+				
 			</div>
 
 			<div class="post" id="post-2"> <!-- posts proper -->
@@ -147,7 +138,7 @@
 
 				
 
-				<div class="post-pfp" id="pfp-2">
+				<div class="post-pfp glasshover" id="pfp-2">
 					
 				</div>
 
@@ -156,7 +147,7 @@
 			<div class="post" id="post-3"> <!-- posts proper -->
 				
 				
-				<div class="post-content glasshover" id="post-content-1">
+				<div class="post-content" id="post-content-1">
 					<div class="post-vote" id="post-vote-1">
 						<ion-icon name="caret-up-outline"></ion-icon>
 						<div>29</div>
@@ -177,7 +168,7 @@
 			
 				
 
-				<div class="post-pfp" id="pfp-3">
+				<div class="post-pfp glasshover" id="pfp-3">
 					
 				</div>
 
