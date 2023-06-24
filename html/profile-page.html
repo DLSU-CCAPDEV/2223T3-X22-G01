@@ -4,99 +4,134 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Salamin | @eveiscool</title>
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../css/profile-page.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
     <script src="../javascript/profile-page.js"></script>
-    <style>
-        .page {
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin: 2% 20%;
-        }
+    <script>
+        loadImg(event);
 
-    </style>
+        const plus = document.querySelector(".upvote");
+        const minus = document.querySelector(".downvote");
+        const num = document.querySelector(".numvote");
+
+        let a = 12;
+
+        plus.addEventListener("click", () => {
+            a++;
+            num.innerText = a;
+            console.log(a);
+        });
+
+        minus.addEventListener("click", () => {
+            if (a > 0){
+                a--;
+                num.innerText = a;
+                console.log(a);
+            }
+        });
+
+        let b = 10;
+    
+        plus.addEventListener("click", () => {
+            b++;
+            num.innerText = b;
+            console.log(b);
+        });
+
+        minus.addEventListener("click", () => {
+            if (b > 0){
+                b--;
+                num.innerText = b;
+                console.log(b);
+            }
+        });
+    </script>
 </head>
 <body>
 
     <div class="page">
-        <div class="post-page-header">
-            <span class="page-back">
-                <a href="timeline.html"><ion-icon name="arrow-back-outline"></ion-icon></a>
-            </span>
-        </div>
 
-        <div class="user-info-page">
-            <div class="user-pfp-page">
+        <div class="user-info" id="user-info-1">
+            <div class="user-pfp" id="user-pfp-1">
+                <img src="../images/eve_square.jpg" width="100" height="100" id="user-icon">
             </div>
             <div class="user-id">
-                <div class="display-name" id="display-name-1">Eve</div>
-                <div class="username" id="username-1">@eveiscool</div>
+                <div class="display-name" id="display-name-1" contenteditable="false">Eve</div>
+                <div class="username" id="username-1" contenteditable="false">@eveiscool</div>
             </div>
-            <div class="user-bio" id="user-bio-1">
+            <div class="user-bio" id="user-bio-1" contenteditable="false">
                 is there color in your world?
             </div>
-            <button class="user-edit-profile">
+            <button class="user-edit-profile" id="edit-profile">
                 Edit profile
             </button>
+            <button class="user-edit-profile" id="save-changes">
+                Save changes
+            </button>
         </div>
-        
-        <div class="page-post"> <!-- post prompt -->
-			
-			<input type="text" placeholder="Title" class="post-title" name="post-title">
 
-			<textarea type="text" placeholder="Go ahead. Write down a question." class="post-user" name="post-user"></textarea>
+        <div class="write-post">
+            <textarea type="text" placeholder="What's happening?" class="post-box" name="post-box"></textarea>
+            <button class="post-button">Post</button>
+        </div>
 
-			<div class="post-user-actions">
-				<span class="bold"></span>
-				<span class="italic"></span>
-				<span class="strikethrough"></span>
-				<span class="bullet-list"></span>
-				<span class="number-list"></span>
-				<span class="embed"></span>
-				<span class="left-justify"></span>
-				<span class="center-justify"></span>
-				<span class="right-justify"></span>
-				<span class="justify"></span>
-				<span class="insert-img"></span>
-				<button class="post-button">Post</button>
-			</div>
+        <div class="posts-section" id="posts-section-1">
+            <div class="user-post" id="user-post-1">
+                <div class="left-post">
+                    <div class="user-pfp"></div>
+                    <div class="vote-post">
+                        <ion-button class="upvote">
+                            <ion-icon slot="icon-only" name="caret-up-outline"></ion-icon>
+                        </ion-button>
+                        <div class="numvote" id="numvote-1">12</div>
+                        <ion-button class="downvote">
+                            <ion-icon slot="icon-only" name="caret-down-outline"></ion-icon>
+                        </ion-button>
 
-		</div>
-
-        <div class="page-content" id="posts-section-1">
-            <div class="post" id="post-1"> <!-- posts proper -->
-				
-				
-				<div class="post-content glasshover" id="post-content-1">
-					
-					<div class="post-vote" id="post-vote-1">
-						<ion-icon name="caret-up-outline"></ion-icon>
-						<div>12</div>
-						<ion-icon name="caret-down-outline"></ion-icon>
-					</div>
-
-					
-                    <div class="post-text">
-                        <div class="post-query" id="post-query-1">
-                            How do you make friends once done in school?
-                        </div>
-
-                        <div class="post-details" id="post-details-1">
-                            @eveiscool | 6 days ago | 10 replies
-                        </div>
+                        
                     </div>
-					
+                </div>
+                <div class="right-post">
+                    <div class="user-details">
+                        <div class="display-name">Eve</div>
+                        <div class="username">@eveiscool</div>
+                    </div>
+                    <div class="post" id="post-1">
+                        I prayed, I prayed that even when I get reborn I won't
+                        forget an uncertain future forever.
+                    </div>
+                    <div class="post-details">6 days ago | 10 replies</div>
+                </div>
+                
+            </div>
+            <div class="user-post" id="user-post-2">
+                <div class="left-post">
+                    <div class="user-pfp"></div>
+                    <div class="vote-post">
+                        <ion-button class="upvote">
+                            <ion-icon slot="icon-only" name="caret-up-outline"></ion-icon>
+                        </ion-button>
+                        <div class="numvote" id="numvote-2">10</div>
+                        <ion-button class="downvote">
+                            <ion-icon slot="icon-only" name="caret-down-outline"></ion-icon>
+                        </ion-button>
 
-				</div>
-				
-				<div class="post-pfp glasshover pfp-4">
-					
-				</div>
-				
-			</div>
-
+                    </div>
+                </div>
+                <div class="right-post">
+                    <div class="user-details">
+                        <div class="display-name">Eve</div>
+                        <div class="username">@eveiscool</div>
+                    </div>
+                    <div class="post" id="post-2">
+                        Sometimes crying, and feeding my loneliness - I'm sure there's
+                        nothing wrong with that since I could walk so well through this night.
+                        I'm sure morning will fall for you, too.
+                    </div>
+                    <div class="post-details">6 days ago | 10 replies</div>
+                </div>
+                
+            </div>
         </div>
         
 
