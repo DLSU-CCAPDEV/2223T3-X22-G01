@@ -1,11 +1,11 @@
 //Login and Sign-in Form
-const form_Open_Btn = document.querySelector("#form-open"),
-form_Post_Open_Btn = document.querySelector("#open_form_post"),
-home = document.querySelector(".home"),
-form_Content = document.querySelector(".form_content"),
-form_Close_Btn = document.querySelector(".form_close"),
-signup_Btn = document.querySelector("#sign-up"),
-login_Btn = document.querySelector("#login"),
+const form_Open_Btn = document.getElementById("form-open");
+form_Post_Open_Btn = document.getElementById("form-open-post");
+home = document.querySelector(".home");
+form_Content = document.querySelector(".form_content");
+form_Close_Btn = document.querySelector(".form_close");
+signup_Btn = document.getElementById("sign-up");
+login_Btn = document.getElementById("login");
 pw_Show_Hide = document.querySelectorAll(".pw_hide");
 
 form_Open_Btn.addEventListener("click", () => toggleFormVisibility(true));

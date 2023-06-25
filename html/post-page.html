@@ -3,203 +3,301 @@
 <head>
 	<title>Salamin | Post by @soraruru</title>
     <link rel="stylesheet" type="text/css" href="../css/index.css">
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
-    <script src="../javascript/post-page.js"></script>
-    <script>
-        postSettings();
-    </script>
 </head>
 <body>
-    
 
-    <div class="page">
+    <div class="profile-side glasshover"  onclick="location.href='profile-page.html?userID=4'"> <!-- side bar -->
 
-        <div class="profile-side"> <!-- side bar -->
+		<div class="side-header"> <!-- logo -->
+			<a href="timeline.html"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
+            
+		</div>
 
-            <div class="side-header"> <!-- logo -->
-                <img src="../images/salamin_logo.png" alt="Salamin" width="500" height="200" id="salamin-logo">
-            </div>
-    
-            <div class="side-content"> <!-- profile pic bg & profile text thing -->
-                <div class="side-message">Good morning, <br> Eve! You're doing just fine.</div>
-                <div class="user-info">5 posts | 3 comments</div>
-            </div>
-    
-            <div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-                <ion-icon name="log-out-outline"></ion-icon>
-                
-                <div class="username-action">
-                    @eveiscool
-                </div>
-    
-                <ion-icon name="sunny-outline"></ion-icon>
-                
-            </div>
-    
-        </div>
+		<div class="side-content"> <!-- profile pic bg & profile text thing -->
+			<div class="side-message">Good morning, Eve! <br> You're doing just fine.</div>
+			<div class="user-info">5 posts | 3 comments</div>
+		</div>
 
-        <div class="timeline-page" id="post-page-content-1">
-
-            <div class="post-page-header">
-                <span class="page-back">
-                    <a href="timeline.html"><ion-icon name="arrow-back-outline"></ion-icon></a>
-                </span>
-            </div>
-
-            <div class="main-post" id="main-post-1">
-                <div class="main-post-header">
-                    <div class="post-title">
-                        How do you make friends once done in school?
-                    </div>
-                    <div class="post-settings">
-                        <ion-button fill="clear" onclick="postSettings()">
-                            <ion-icon slot="icon-only" class="postsetbtn" name="ellipsis-vertical"></ion-icon>
-                        </ion-button>
-                        <div id="setoptions" class="post-setting-option">
-                            <button class="post-option" id="post-edit">Edit</button>
-                            <button class="post-option" id="post-delete">Delete</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="post-description" id="post-body">
-                    <div id="post-content-main" contenteditable="false">
-                        I'm 22M fresh graduate. I would like to ask
-                        how do you make friends once done in school?
-                        Many people have been saying na your workmates
-                        aren't your friends kaya ekis na siguro don.
-                        Unfortunately, I don't really have a friend in
-                        college that I can hang out with (gala, party,
-                        vacation). I do have some friends nung JHS and
-                        SHS but they all have friends na they gala with
-                        most of the time since I'm quite far from them.
-                        I know streamer QuarterJade have a similar story
-                        where she told that she really didn't have friends
-                        from college but now she has a lot of friends and
-                        support system because of streaming. Now, I am not
-                        a streamer and second, my work setup is work from
-                        home kaya I feel like it will be a lot harder to
-                        make friends then. Before any of you say, na it's
-                        okay gumala alone ganyan, I've been doing that okayy
-                        like going to concerts alone and such. It's just that
-                        I think it will be more fun to go with some people
-                        and the activities that I want to try (e.g. laser tag,
-                        camping, ek) are more fun with a group of people.
-                        Also now that I have already started working na,
-                        I will have more money to spare for leisure activities.
-                    </div>
-                </div>
-                <div class="post-footer">
-                    <div class="vote-post">
-
-                        <ion-icon name="caret-up-outline" class="upvote"></ion-icon>
-
-                        <div class="num-vote">29</div> 
-
-			<ion-icon name="caret-down-outline" class="downvote"></ion-icon>
-
-                    <script>
-                        const plus = document.querySelector(".upvote");
-                        const minus = document.querySelector(".downvote");
-                        const num = document.querySelector(".num-vote");
-
-                        let a = 29;
-
-                        plus.addEventListener("click", () => {
-                            a++;
-                            num.innerText = a;
-                            console.log(a);
-                        });
-
-                        minus.addEventListener("click", () => {
-                            if (a > 0){
-                                a--;
-                                num.innerText = a;
-                                console.log(a);
-                            }
-                        });
-                    </script>
-                    </div>
+		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
+			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='index.html'"></ion-icon>
 			
-                    <div class="poster-pfp"></div>
-                    <div class="poster">Posted by&nbsp;<span class="username">@soraruru</span></div>
-                </div>
+			<div class="username-action">
+				@eveiscool
+			</div>
 
-            </div>
+			<ion-icon name="sunny-outline"></ion-icon>
+			
+		</div>
+	</div>
 
-            <div class="write-comment" id="comment-box-1">
-                <textarea type="text" placeholder="Write a comment..." class="comment-box" name="comment-box"></textarea>
-                <button class="comment-button">Comment</button>
-            </div>
+    <div class="post-side">
 
-            <div class="comment-section" id="comment-section-1">
-                <div class="comment" id="comment-1">
-                    <div class="left-comment">
-                        <div class="pfp-comment" id="pfp-1">
-                            <!-- <img src="../images/pfp_kanae.jpg" class="pfp-dimension" id="pfp-1"> -->
-                        </div>
-                        <div class="vote-comment">
-                            <ion-button fill="clear">
-                                <ion-icon slot="icon-only" name="caret-up-outline" class="upvote"></ion-icon>
-                            </ion-button>
-                            <div>12</div>
-                            <ion-button fill="clear">
-                                <ion-icon slot="icon-only" name="caret-down-outline" class="downvote"></ion-icon>
-                            </ion-button>
-                            
-                        </div>
-                    </div>
-                    <div class="right-comment">
-                        <div class="commenter"><span class="commenter-clickable">@Kanae_2434</span></div>
-                        <div class="comment-content">
-                            You know what, I see that comment a lot
-                            dito na your workmatyes are not your friends
-                            but it is the total opposite for me. An dami
-                            ko naging friends from work and kahit saan
-                            ako mag work nagkaka friends talaga ako and
-                            a lot of them kahit 4-5 years na kame di na
-                            workmates, I still interact with them on social
-                            media and I still care for them. I don';t know
-                            why people feel na they cant make friends at work.
-                            Im sure they have reasons and I totally understand
-                            na iba iba tayo e. But sa mga fresh grad,
-                            lage ko talaga advice wag muna mag work from
-                            home. Mag onsite muna and meet new people.
-                            May makaka vibes ka talaga e as long as you are open.
-                        </div>
-                    </div>
-                </div>
-                <div class="comment" id="comment-2">
-                    <div class="left-comment">
-                        <div class="pfp-comment" id="pfp-2">
+        <div class="post-page-header">
+           
+            <a href="timeline.html"><ion-icon name="arrow-back-outline"></ion-icon></a>
+            <div class="user-pfp glasshover" style="background-image: url(/images/pfp_eve.jpg)" onclick="location.href='profile-page.html?userID=4'"></div>
+        </div>
 
-                        </div>
-                        <div class="vote-comment">
-                            <ion-button fill="clear">
-                                <ion-icon slot="icon-only" name="caret-up-outline" class="upvote"></ion-icon>
-                            </ion-button>
-                            <div>10</div>
-                            <ion-button fill="clear">
-                                <ion-icon slot="icon-only" name="caret-down-outline" class="downvote"></ion-icon>
-                            </ion-button>
-                        </div>
-                    </div>
-                    <div class="right-comment">
-                        <div class="commenter"><span class="commenter-clickable">@Vamp_Kuzu</span></div>
-                        <div class="comment-content">Hi! I'm into hiking/camping/backpacking (everything outdoorsy).
-                            Solo traveler ako most of the time, pero I have a group of friends that I go camping with.
-                            I'm also part of a gc na nabuo nung 2021 from a different FB group,
-                            and we're from different parts of the country (yung iba nagmigrate na).
-                            Super solid yung friendship na nabuo kahit di kami magkaka-age (teenage-30s).
-                            Message mo lang ako if you're interested to join :)
-                            </div>
-                    </div>
-                </div>
-            </div>
+        <div class="box green" id="post-section">
+            
 
         </div>
+
+        <div class="box">
+            <span class="textarea" role="textbox" id="comment-box" contenteditable></span>
+            
+            <button id="comment-button">Comment</button>
+        </div>
+
+        <div class="box" id="comment-section"></div>
 
     </div>
+
+    <script src="/javascript/data.js"></script>
+    <script>
+        var id = window.location.search.slice(1);
+
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        var p = post.find(t => t.id == params.postID);
+
+        if (p==null || p.deleted){
+            window.location.href = 'timeline.html';
+        }
+
+        var postContainer = document.getElementById('post-section');
+        var poster = user.find(t => t.userID == p.userID);
+        var postHTML = `
+            <div class="post-header">
+                <div class="vote-container">
+                    <ion-icon name="caret-up-outline" id="p-up-${p.id}" onclick="upvotePost(this.id)"></ion-icon>
+                    <div id="p-votes-${p.id}">${p.votes}</div> 
+                    <ion-icon name="caret-down-outline" id="p-down-${p.id}" onclick="downvotePost(this.id)"></ion-icon>
+                </div>
+
+                <h1 contenteditable="false" id="post-title">
+                    ${p.title}
+                </h1>
+
+                <nav class="dropdown-container">
+                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                    <div class = "dropdown-items">
+                        <button id="p-edit-${p.id}" onclick="editPost(this.id)">Edit</button>
+                        <button id="p-del-${p.id}" onclick="delPost(this.id)">Delete</button>
+                    </div>
+			    </nav>
+            </div>
+
+            <div class="flex-column" id="post-description-container">
+                <p id="post-description" contenteditable="false">${p.description}</p>
+            </div>
+            <div class="post-footer">
+                
+                <div><h2>${poster.username} | ${new Date(p.date).toLocaleString()}</h2></div>
+                <a href="profile-page.html?userID=${poster.userID}"><div style="background-image: url(/images/${poster.icon})" class="post-pfp pfp-small glasshover"></div></a>
+                
+            </div>
+        `
+
+        postContainer.insertAdjacentHTML('beforeend', postHTML);
+
+        function addComment(c) {
+            var u = user.find(t => t.userID == c.userID);
+            var commentHTML = `
+                <div class="comment">
+                    <div class="comment-inner">
+                        <a href="profile-page.html?userID=${u.userID}"><div style="background-image: url(/images/${u.icon})" class="post-pfp pfp-small glasshover"></div></a>
+                        <div class="vote-container">
+                            
+                            <ion-icon name="caret-up-outline" id="up-${c.id}" onclick="upvote(this.id)"></ion-icon>     
+                            <div id="votes-${c.id}">${c.votes}</div>
+                            <ion-icon name="caret-down-outline" id="down-${c.id}" onclick="downvote(this.id)"></ion-icon>
+    
+                        </div>
+                    </div>
+                    <div class="comment-inner full">
+                        <div class="comment-header">
+                            ${u.username}
+                            <nav class="dropdown-container">
+                                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                                    <div class="dropdown-items">
+                                        <button id="edit-${c.id}" onclick="edit(this.id)">Edit</button>
+                                        <button id="del-${c.id}" onclick="del(this.id)">Delete</button>
+                                    </div>
+                            </nav>
+                        </div>
+                        <p class="comment-content full" id="comment-description-${c.id}" contenteditable="false">
+                           ${c.description}
+                        </p>
+
+                        <div id="comment-footer-${c.id}" class="comment-footer">
+
+                        </div>
+                    </div>
+                </div>
+            `
+            commentContainer.insertAdjacentHTML('beforeend', commentHTML);
+        }
+
+        var commentContainer = document.getElementById('comment-section');
+        for (let c of p.comments) {
+            if (!c.deleted) addComment(c);
+        };
+
+        var commentBtn = document.getElementById('comment-button');
+        commentBtn.addEventListener('click', function(){
+            var text = document.getElementById('comment-box');
+            
+            if (text.innerHTML.trim().length === 0){
+
+            }
+            else {
+                var comment = {
+                description: text.innerHTML,
+                id: p.comments.length+1,
+                userID: 4,
+                date: Date.now(),
+                votes: 0,
+                }
+                addComment(comment);
+                p.comments.push(comment);
+                localStorage.setItem('post',JSON.stringify(post)); //save function
+            }
+            
+            text.innerHTML = '';
+        });
+
+        function upvote(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('votes-'+id_num);
+            var c = p.comments.find(t => t.id == id_num);
+            c.votes++;
+            
+            vote_count.innerHTML = c.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function downvote(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('votes-'+id_num);
+            var c = p.comments.find(t => t.id == id_num);
+            c.votes--;
+            
+            vote_count.innerHTML = c.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function upvotePost(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('p-votes-'+id_num);
+            
+            p.votes++;
+            vote_count.innerHTML = p.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function downvotePost(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('p-votes-'+id_num);
+
+            p.votes--;
+            vote_count.innerHTML = p.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function editPost(id){
+            var id_num = id.replace(/^\D+/g, '');
+            
+            //stops adding more edit buttons
+            if(document.getElementById("post-save-"+id_num)==null){
+                var postTitle = document.getElementById("post-title");
+                var postBody = document.getElementById("post-description");
+                
+                var postBodyContainer = document.getElementById("post-description-container");
+
+                postTitle.contentEditable = "true";
+                postBody.contentEditable = "true";
+
+                var saveButton = `
+                    <div class="edit-footer">
+                        <button class="edit-button" id="post-save-${id_num}" onclick="savePost(this)" contenteditable="false">Save</button>    
+                    </div>
+                `
+                postBodyContainer.insertAdjacentHTML('beforeend', saveButton);
+            }
+        }
+
+        function savePost(button){
+            var id_num = button.id.replace(/^\D+/g, '');
+            
+            button.remove();
+
+            var postTitle = document.getElementById("post-title");
+            var postBody = document.getElementById("post-description");
+
+            postTitle.contentEditable = "false";
+            postBody.contentEditable = "false";
+
+            p.title = postTitle.innerHTML;
+            p.description = postBody.innerHTML;
+
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        }
+
+        function delPost(){
+            p.deleted = true;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+            location.reload();
+        }
+
+        function edit(id){
+            var id_num = id.replace(/^\D+/g, '');
+            
+            //stops adding more edit buttons
+            if(document.getElementById("save-"+id_num)==null){
+                var commentBody = document.getElementById("comment-description-"+id_num);
+                var commentFooter = document.getElementById("comment-footer-"+id_num);
+
+                commentBody.contentEditable = "true";
+                
+                var saveButton = `
+                    
+                   <button id="save-${id_num}" onclick="save(this)" contenteditable="false">Save</button>    
+                    
+                `
+                commentFooter.insertAdjacentHTML('beforeend', saveButton);
+            }
+        }
+
+        function save(button){
+            var id_num = button.id.replace(/^\D+/g, '');
+            
+            button.remove();
+
+            var commentBody = document.getElementById("comment-description-"+id_num);
+            commentBody.contentEditable = "false";
+
+            var c = p.comments.find(t => t.id == id_num);
+            c.description = commentBody.innerHTML;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        }
+
+        function del(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var c = p.comments.find(t => t.id == id_num);
+
+            c.deleted = true;
+
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+            location.reload();
+        }
+
+
+    </script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

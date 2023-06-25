@@ -1,145 +1,218 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Salamin | @eveiscool</title>
-    <link rel="stylesheet" type="text/css" href="../css/profile-page.css">
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
-    <script src="../javascript/profile-page.js"></script>
-    <script>
-        loadImg(event);
-
-        const plus = document.querySelector(".upvote");
-        const minus = document.querySelector(".downvote");
-        const num = document.querySelector(".numvote");
-
-        let a = 12;
-
-        plus.addEventListener("click", () => {
-            a++;
-            num.innerText = a;
-            console.log(a);
-        });
-
-        minus.addEventListener("click", () => {
-            if (a > 0){
-                a--;
-                num.innerText = a;
-                console.log(a);
-            }
-        });
-
-        let b = 10;
-    
-        plus.addEventListener("click", () => {
-            b++;
-            num.innerText = b;
-            console.log(b);
-        });
-
-        minus.addEventListener("click", () => {
-            if (b > 0){
-                b--;
-                num.innerText = b;
-                console.log(b);
-            }
-        });
-    </script>
+	<title>Salamin | Home</title>
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
 </head>
 <body>
+	
 
-    <div class="page">
-
-        <div class="user-info" id="user-info-1">
-            <div class="user-pfp" id="user-pfp-1">
-                <img src="../images/eve_square.jpg" width="100" height="100" id="user-icon">
-            </div>
-            <div class="user-id">
-                <div class="display-name" id="display-name-1" contenteditable="false">Eve</div>
-                <div class="username" id="username-1" contenteditable="false">@eveiscool</div>
-            </div>
-            <div class="user-bio" id="user-bio-1" contenteditable="false">
-                is there color in your world?
-            </div>
-            <button class="user-edit-profile" id="edit-profile">
-                Edit profile
-            </button>
-            <button class="user-edit-profile" id="save-changes">
-                Save changes
-            </button>
+	<div class="page">
+		<div class="post-page-header">
+            
+           <a href="timeline.html"><ion-icon name="arrow-back-outline"></ion-icon></a>
         </div>
 
-        <div class="write-post">
-            <textarea type="text" placeholder="What's happening?" class="post-box" name="post-box"></textarea>
-            <button class="post-button">Post</button>
+        <div class="box green noPadding" id="profile-section">
+            
+
         </div>
 
-        <div class="posts-section" id="posts-section-1">
-            <div class="user-post" id="user-post-1">
-                <div class="left-post">
-                    <div class="user-pfp"></div>
-                    <div class="vote-post">
-                        <ion-button class="upvote">
-                            <ion-icon slot="icon-only" name="caret-up-outline"></ion-icon>
-                        </ion-button>
-                        <div class="numvote" id="numvote-1">12</div>
-                        <ion-button class="downvote">
-                            <ion-icon slot="icon-only" name="caret-down-outline"></ion-icon>
-                        </ion-button>
-
-                        
-                    </div>
-                </div>
-                <div class="right-post">
-                    <div class="user-details">
-                        <div class="display-name">Eve</div>
-                        <div class="username">@eveiscool</div>
-                    </div>
-                    <div class="post" id="post-1">
-                        I prayed, I prayed that even when I get reborn I won't
-                        forget an uncertain future forever.
-                    </div>
-                    <div class="post-details">6 days ago | 10 replies</div>
-                </div>
-                
-            </div>
-            <div class="user-post" id="user-post-2">
-                <div class="left-post">
-                    <div class="user-pfp"></div>
-                    <div class="vote-post">
-                        <ion-button class="upvote">
-                            <ion-icon slot="icon-only" name="caret-up-outline"></ion-icon>
-                        </ion-button>
-                        <div class="numvote" id="numvote-2">10</div>
-                        <ion-button class="downvote">
-                            <ion-icon slot="icon-only" name="caret-down-outline"></ion-icon>
-                        </ion-button>
-
-                    </div>
-                </div>
-                <div class="right-post">
-                    <div class="user-details">
-                        <div class="display-name">Eve</div>
-                        <div class="username">@eveiscool</div>
-                    </div>
-                    <div class="post" id="post-2">
-                        Sometimes crying, and feeding my loneliness - I'm sure there's
-                        nothing wrong with that since I could walk so well through this night.
-                        I'm sure morning will fall for you, too.
-                    </div>
-                    <div class="post-details">6 days ago | 10 replies</div>
-                </div>
-                
-            </div>
+		<div class="box">
+			<input type="text" placeholder="Title" class="post-title" id="post-title">
+            <span class="textarea" role="textbox" id="post-box" contenteditable></span>
+            
+            <button id="post-button">Post</button>
         </div>
-        
 
-    </div>
+		<div class="page-content" id="page-content"> <!-- timeline -->
+			
+			
+		</div>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	</div>
 
 
+<!-- Load in posts from data.js -->
+<script src = "/javascript/data.js"></script>
+<script>
+	const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+	
+
+	var container = document.getElementById('page-content');
+	function addPost(p) {
+		var u = user.find(t => t.userID == p.userID);
+
+		var html = `
+		<div class="post"> <!-- posts proper -->
+			<div class="post-content glasshover">
+				
+				<div class="vote-container vote-width">
+					<ion-icon name="caret-up-outline" id="up-${p.id}" onclick="upvote(this.id)"></ion-icon>
+					<div id="votes-${p.id}">${p.votes}</div>
+					<ion-icon name="caret-down-outline" id="down-${p.id}" onclick="downvote(this.id)"></ion-icon>
+				</div>
+
+				<a href="post-page.html?postID=${p.id}">
+					<div class="post-text">
+						
+						<h1>${p.title}</h1>
+						<h2>${u.username} | ${new Date(p.date).toLocaleString()} | ${p.comments.length} replies</h2>
+						
+					</div>
+				</a>
+
+			</div>
+			
+			<a href="profile-page.html?userID=${u.userID}">
+				<div style="background-image: url(/images/${u.icon})" class="post-pfp glasshover"></div>
+			</a>	
+				
+		</div>
+		`
+		container.insertAdjacentHTML('beforeend',html);
+	}
+	
+	for (let p of post) {
+		if(p.userID == params.userID)addPost(p);
+	}
+
+	var postBtn = document.getElementById('post-button');
+	postBtn.addEventListener('click', function(){
+		var title = document.getElementById('post-title');
+		var desc = document.getElementById('post-box');
+		
+		if (!(desc.innerHTML.trim().length === 0) && !(title.value.trim().length === 0)){
+			var p = {
+			title: title.value,
+			description: desc.innerHTML,
+			id: post.length+1,
+			userID: 4,
+			deleted: false,
+			date: Date.now(),
+			votes: 0,
+			comments: [],
+			}
+			addPost(p);
+			post.push(p);
+			localStorage.setItem('post',JSON.stringify(post)); //save function
+
+			
+			title.value = '';
+			desc.innerHTML = '';
+		}
+		
+	});
+
+	function upvote(id){
+		var id_num = id.replace(/^\D+/g, '');
+		var vote_count = document.getElementById('votes-'+id_num);
+		var p = post.find(t => t.id == id_num);
+		p.votes++;
+		
+		vote_count.innerHTML = p.votes;
+		localStorage.setItem('post',JSON.stringify(post)); //save function
+	};
+
+	function downvote(id){
+		var id_num = id.replace(/^\D+/g, '');
+		var vote_count = document.getElementById('votes-'+id_num);
+		var p = post.find(t => t.id == id_num);
+		p.votes--;
+		
+		vote_count.innerHTML = p.votes;
+		localStorage.setItem('post',JSON.stringify(post)); //save function
+	};
+
+	var pUser = user.find(t => t.userID == params.userID);
+
+	
+	if (pUser==null ){
+		window.location.href = 'timeline.html';
+	}
+
+	var profileArea = document.getElementById('profile-section');
+
+	var profileHTML = `
+		<div class="user-banner" style="background-image: url('/images/${pUser.banner}')"></div>
+		<div class="profile-info-header">
+			<div style="background-image: url('/images/${pUser.icon}')" class="post-pfp glasshover" id="profile-photo"></div>
+			<div class="profile-info-body">
+				<h1 id="display-name" contenteditable="false">${pUser.name}</h1>
+				<h2 id="username" contenteditable="false">${pUser.username}</h2>
+				<div class="user-bio" id="user-bio" contenteditable="false"> ${pUser.bio} </div>
+			</div>
+
+			<button id="edit-profile" onclick="editProfile()">
+				Edit profile
+			</button>
+		</div>
+	`;
+
+	profileArea.insertAdjacentHTML('beforeend', profileHTML)
+	
+	function editProfile(){
+		document.getElementById('display-name').contentEditable = "true";
+		document.getElementById('username').contentEditable = "true";
+		document.getElementById('user-bio').contentEditable = "true";
+		var button = document.getElementById('edit-profile');
+		
+		var pfp = document.getElementById('profile-photo');
+		var editpfp = `
+			
+			<div id="image-upload">
+				<label for="file-input">
+					<ion-icon name="image-outline"></ion-icon>
+				</label>
+
+				<input id="file-input" type='file' onchange='loadImg(event)'>
+			</div>
+		`
+
+		pfp.insertAdjacentHTML('afterend',editpfp);
+
+		button.innerHTML="Save Profile";
+		button.setAttribute('onclick','saveProfile()')
+
+	}
+
+	function loadImg(event) {
+		var newIcon = document.getElementById('profile-photo');
+		newIcon.style.backgroundImage = "url('"+URL.createObjectURL(event.target.files[0])+"')";
+	}
+
+	function saveProfile(){
+		var name = document.getElementById('display-name');
+		var username = document.getElementById('username');
+		var bio = document.getElementById('user-bio');
+		var button = document.getElementById('edit-profile');
+
+		document.getElementById('image-upload').remove();
+
+		name.contentEditable = "false";
+		username.contentEditable = "false";
+		bio.contentEditable = "false";
+
+		pUser.name = name.innerHTML;
+		pUser.username = username.innerHTML;
+		pUser.bio = bio.innerHTML;
+
+		localStorage.setItem('user',JSON.stringify(user)); //save function
+
+		button.innerHTML="Edit Profile";
+		button.setAttribute('onclick','editProfile()')
+
+	}
+
+
+
+</script>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	
 </body>
 </html>

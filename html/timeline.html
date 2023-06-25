@@ -3,14 +3,10 @@
 <head>
 	<title>Salamin | Home</title>
 	<link rel="stylesheet" type="text/css" href="../css/index.css">
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
-    <script src="../javascript/profile-page.js"></script>
 </head>
 <body>
-
-<div class="page">
 	
-	<div class="profile-side glasshover" onclick="location.href='profile-page.html'"> <!-- side bar -->
+	<div class="profile-side glasshover"  onclick="location.href='profile-page.html?userID=4'"> <!-- side bar -->
 
 		<div class="side-header"> <!-- logo -->
 			<a href="timeline.html"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
@@ -22,7 +18,7 @@
 		</div>
 
 		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline"></ion-icon>
+			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='index.html'"></ion-icon>
 			
 			<div class="username-action">
 				@eveiscool
@@ -31,155 +27,132 @@
 			<ion-icon name="sunny-outline"></ion-icon>
 			
 		</div>
-
 	</div>
 
-	<div class="timeline-page">
+	<div class="post-side">
 
 		<div class="page-header"> <!-- search -->
-			<div class="user-pfp glasshover" onclick="location.href='profile-page.html'"></div>
+			<div class="user-pfp glasshover"style="background-image: url(/images/pfp_eve.jpg)" onclick="location.href='profile-page.html?userID=4'"></div>
 			<div class="search-bar">
 				<ion-icon name="search-outline"></ion-icon>
 				<input type="text" placeholder="Search" id="search" name="search">
 			</div>
-			<nav class="search-action"> <!-- change to sprites -->
-				<button class="filter-button">
 
-					<ion-icon name="filter-outline"></ion-icon>
-				</button>
-				<div class = "dropdown-content">
-					<a href="#">Recent</a>
-					<a href="#">Popular</a>
-					<a href="#">Answered</a>
-					<a href="#">Unanswered</a>
+			<nav class="dropdown-container">
+				<ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
+
+				<div class = "dropdown-items">
+					<button >Recent</button>
+					<button >Popular</button>
+					<button >Answered</button>
+					<button >Unanswered</button>
 				</div>
-				
-				
 			</nav>
-			
 		</div>
 
-		<div class="page-post"> <!-- post prompt -->
-			
-			<input type="text" placeholder="Title" class="post-title" name="post-title">
 
-			<textarea type="text" placeholder="Go ahead. Write down a question." class="post-user" name="post-user"></textarea>
+		<div class="box">
+			<input type="text" placeholder="Title" class="post-title" id="post-title">
+            <span class="textarea" role="textbox" id="post-box" contenteditable></span>
+            
+            <button id="post-button">Post</button>
+        </div>
 
-			<div class="post-user-actions">
-				<span class="bold"></span>
-				<span class="italic"></span>
-				<span class="strikethrough"></span>
-				<span class="bullet-list"></span>
-				<span class="number-list"></span>
-				<span class="embed"></span>
-				<span class="left-justify"></span>
-				<span class="center-justify"></span>
-				<span class="right-justify"></span>
-				<span class="justify"></span>
-				<span class="insert-img"></span>
-				<button class="post-button">Post</button>
-			</div>
-
-		</div>
-
-		<div class="page-content" id="posts-section-1"> <!-- timeline -->
-			
-			<div class="post" id="post-1"> <!-- posts proper -->
-				
-				
-				<div class="post-content glasshover" id="post-content-1">
-					
-					<div class="post-vote" id="post-vote-1">
-						<ion-icon name="caret-up-outline"></ion-icon>
-						<div>29</div>
-						<ion-icon name="caret-down-outline"></ion-icon>
-					</div>
-
-					<a href="post-page.html">
-						<div class="post-text">
-							<div class="post-query" id="post-query-1">
-								How do you make friends once done in school?
-							</div>
-
-							<div class="post-details" id="post-details-1">
-								@soraruru | 6 days ago | 10 replies
-							</div>
-						</div>
-					</a>
-
-				</div>
-				
-				<div class="post-pfp glasshover" id="pfp-1">
-					
-				</div>
-				
-			</div>
-
-			<div class="post" id="post-2"> <!-- posts proper -->
-				
-				
-				<div class="post-content glasshover" id="post-content-1">
-					<div class="post-vote" id="post-vote-1">
-						<ion-icon name="caret-up-outline"></ion-icon>
-						<div>29</div>
-						<ion-icon name="caret-down-outline"></ion-icon>
-					</div>
-					
-					<div class="post-text">
-						<div class="post-query" id="post-query-1">
-							How long does it take for passports to get delivered?
-						</div>
-
-						<div class="post-details" id="post-details-1">
-							@Kanae_2434 | 6 days ago | 10 replies
-						</div>
-					</div>
-
-				</div>
-
-				
-
-				<div class="post-pfp glasshover" id="pfp-2">
-					
-				</div>
-
-			</div>
-
-			<div class="post" id="post-3"> <!-- posts proper -->
-				
-				
-				<div class="post-content" id="post-content-1">
-					<div class="post-vote" id="post-vote-1">
-						<ion-icon name="caret-up-outline"></ion-icon>
-						<div>29</div>
-						<ion-icon name="caret-down-outline"></ion-icon>
-					</div>
-					
-					<div class="post-text">
-						<div class="post-query" id="post-query-1">
-							How long does it take for passports to get delivered?
-						</div>
-
-						<div class="post-details" id="post-details-1">
-							@Vamp_Kuzu | 6 days ago | 10 replies
-						</div>
-					</div>
-
-				</div>
-			
-				
-
-				<div class="post-pfp glasshover" id="pfp-3">
-					
-				</div>
-
-			</div>
-		</div>
+		<div class="page-content" id="page-content"></div><!-- timeline -->
 
 	</div>
 
-</div>
+
+<!-- Load in posts from data.js -->
+<script src = "/javascript/data.js"></script>
+<script>
+	console.log(post);
+	var container = document.getElementById('page-content');
+	function addPost(p) {
+		var u = user.find(t => t.userID == p.userID);
+
+		var html = `
+		<div class="post"> <!-- posts proper -->
+			<div class="post-content glasshover">
+				
+				<div class="vote-container vote-width">
+					<ion-icon name="caret-up-outline" id="up-${p.id}" onclick="upvote(this.id)"></ion-icon>
+					<div id="votes-${p.id}">${p.votes}</div>
+					<ion-icon name="caret-down-outline" id="down-${p.id}" onclick="downvote(this.id)"></ion-icon>
+				</div>
+
+				<a href="post-page.html?postID=${p.id}">
+					<div class="post-text">
+						
+						<h1>${p.title}</h1>
+						<h2>${u.username} | ${new Date(p.date).toLocaleString()} | ${p.comments.length} replies</h2>
+						
+					</div>
+				</a>
+
+			</div>
+			
+			<a href="profile-page.html?userID=${u.userID}">
+				<div style="background-image: url(/images/${u.icon})" class="post-pfp glasshover"></div>
+			</a>	
+				
+		</div>
+		`
+		container.insertAdjacentHTML('beforeend',html);
+	}
 	
+	for (let p of post) {
+		addPost(p);
+	}
+
+	var postBtn = document.getElementById('post-button');
+	postBtn.addEventListener('click', function(){
+		var title = document.getElementById('post-title');
+		var desc = document.getElementById('post-box');
+		
+		if (!(desc.innerHTML.trim().length === 0) && !(title.value.trim().length === 0)){
+			var p = {
+			title: title.value,
+			description: desc.innerHTML,
+			id: post.length+1,
+			userID: 4,
+			deleted: false,
+			date: Date.now(),
+			votes: 0,
+			comments: [],
+			}
+			addPost(p);
+			post.push(p);
+			localStorage.setItem('post',JSON.stringify(post)); //save function
+
+			
+			title.value = '';
+			desc.innerHTML = '';
+		}
+	});
+
+	function upvote(id){
+		var id_num = id.replace(/^\D+/g, '');
+		var vote_count = document.getElementById('votes-'+id_num);
+		var p = post.find(t => t.id == id_num);
+		p.votes++;
+		
+		vote_count.innerHTML = p.votes;
+		localStorage.setItem('post',JSON.stringify(post)); //save function
+	};
+
+	function downvote(id){
+		var id_num = id.replace(/^\D+/g, '');
+		var vote_count = document.getElementById('votes-'+id_num);
+		var p = post.find(t => t.id == id_num);
+		p.votes--;
+		
+		vote_count.innerHTML = p.votes;
+		localStorage.setItem('post',JSON.stringify(post)); //save function
+	};
+
+</script>
+
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	
