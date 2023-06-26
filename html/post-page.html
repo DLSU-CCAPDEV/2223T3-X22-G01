@@ -72,9 +72,17 @@
         var postHTML = `
             <div class="post-header">
                 <div class="vote-container">
-                    <ion-icon name="caret-up-outline" id="p-up-${p.id}" onclick="upvotePost(this.id)"></ion-icon>
+
+                    <ion-button id="p-up-${p.id}" onclick="upvotePost(this.id)">
+                        <ion-icon name="caret-up-outline"></ion-icon>
+                    </ion-button>
+                    
                     <div id="p-votes-${p.id}">${p.votes}</div> 
-                    <ion-icon name="caret-down-outline" id="p-down-${p.id}" onclick="downvotePost(this.id)"></ion-icon>
+
+                    <ion-button id="p-down-${p.id}" onclick="downvotePost(this.id)">
+                        <ion-icon name="caret-down-outline"></ion-icon>
+                    </ion-button>
+                    
                 </div>
 
                 <h1 contenteditable="false" id="post-title">
@@ -104,6 +112,15 @@
 
         postContainer.insertAdjacentHTML('beforeend', postHTML);
 
+        if (p.clickvote){
+            if (p.dirvote) {
+                document.getElementById('p-up-'+p.id).style.color = "var(--HLsecondary)";
+            } else {
+                document.getElementById('p-down-'+p.id).style.color = "var(--HLsecondary)";
+            }
+        }
+
+
         function addComment(c) {
             var u = user.find(t => t.userID == c.userID);
             var commentHTML = `
@@ -111,10 +128,17 @@
                     <div class="comment-inner">
                         <a href="profile-page.html?userID=${u.userID}"><div style="background-image: url(/images/${u.icon})" class="post-pfp pfp-small glasshover"></div></a>
                         <div class="vote-container">
-                            
-                            <ion-icon name="caret-up-outline" id="up-${c.id}" onclick="upvote(this.id)"></ion-icon>     
+
+                            <ion-button id="up-${c.id}" onclick="upvote(this.id)">
+                                <ion-icon name="caret-up-outline"></ion-icon>
+                            </ion-button>
+                                 
                             <div id="votes-${c.id}">${c.votes}</div>
-                            <ion-icon name="caret-down-outline" id="down-${c.id}" onclick="downvote(this.id)"></ion-icon>
+
+                            <ion-button id="down-${c.id}" onclick="downvote(this.id)">
+                                <ion-icon name="caret-down-outline"></ion-icon>
+                            </ion-button>
+                            
     
                         </div>
                     </div>
@@ -141,6 +165,16 @@
                 </div>
             `
             commentContainer.insertAdjacentHTML('beforeend', commentHTML);
+
+            if (c.clickvote){
+                if (c.dirvote) {
+                    document.getElementById('up-'+c.id).style.color = "var(--HLsecondary)";
+                } else {
+                    document.getElementById('down-'+c.id).style.color = "var(--HLsecondary)";
+                }
+            }
+
+            
         }
 
         var commentContainer = document.getElementById('comment-section');
@@ -171,11 +205,31 @@
             text.innerHTML = '';
         });
 
-        function upvote(id){
+       function upvote(id){
             var id_num = id.replace(/^\D+/g, '');
             var vote_count = document.getElementById('votes-'+id_num);
             var c = p.comments.find(t => t.id == id_num);
-            c.votes++;
+            var up_button = document.getElementById('up-'+id_num);
+        
+            if (c.clickvote) {
+                if (c.dirvote){
+                    c.clickvote = false;
+                    c.votes -= 1;
+                    up_button.style.color = "var(--secondary)";
+                } else {
+                    c.dirvote = true;
+                    c.votes += 2;
+                    up_button.style.color = "var(--HLsecondary)";
+                    document.getElementById('down-'+id_num).style.color = "var(--secondary)";
+                }
+
+                
+            } else {
+                c.clickvote = true;
+                c.dirvote = true;
+                c.votes += 1;
+                up_button.style.color = "var(--HLsecondary)";
+            }
             
             vote_count.innerHTML = c.votes;
             localStorage.setItem('post',JSON.stringify(post)); //save function
@@ -185,7 +239,25 @@
             var id_num = id.replace(/^\D+/g, '');
             var vote_count = document.getElementById('votes-'+id_num);
             var c = p.comments.find(t => t.id == id_num);
-            c.votes--;
+            var down_button = document.getElementById('down-'+id_num);
+        
+            if (c.clickvote) {
+                if (c.dirvote){
+                    c.dirvote = false;
+                    c.votes -= 2;
+                    down_button.style.color = "var(--HLsecondary)";
+                    document.getElementById('up-'+id_num).style.color = "var(--secondary)";
+                } else {
+                    c.clickvote = false;
+                    c.votes += 1;
+                    down_button.style.color = "var(--secondary)";
+                }
+            } else {
+                c.clickvote = true;
+                c.dirvote = false;
+                c.votes -= 1;
+                down_button.style.color = "var(--HLsecondary)";
+            }
             
             vote_count.innerHTML = c.votes;
             localStorage.setItem('post',JSON.stringify(post)); //save function
@@ -194,8 +266,28 @@
         function upvotePost(id){
             var id_num = id.replace(/^\D+/g, '');
             var vote_count = document.getElementById('p-votes-'+id_num);
-            
-            p.votes++;
+            var up_button = document.getElementById('p-up-'+id_num);
+
+            if (p.clickvote) {
+                if (p.dirvote){
+                    p.clickvote = false;
+                    p.votes -= 1;
+                    up_button.style.color = "var(--secondary)";
+                } else {
+                    p.dirvote = true;
+                    p.votes += 2;
+                    document.getElementById('p-down-'+id_num).style.color = "var(--secondary)";
+                    up_button.style.color = "var(--HLsecondary)";
+                }
+
+                
+            } else {
+                p.clickvote = true;
+                p.dirvote = true;
+                p.votes += 1;
+                up_button.style.color = "var(--HLsecondary)";
+            }
+
             vote_count.innerHTML = p.votes;
             localStorage.setItem('post',JSON.stringify(post)); //save function
         };
@@ -203,8 +295,28 @@
         function downvotePost(id){
             var id_num = id.replace(/^\D+/g, '');
             var vote_count = document.getElementById('p-votes-'+id_num);
-
-            p.votes--;
+            var down_button = document.getElementById('p-down-'+id_num);
+            
+            if (p.clickvote) {
+                if (p.dirvote){
+                    p.dirvote = false;
+                    p.votes -= 2;
+                    down_button.style.color = "var(--HLsecondary)";
+                    document.getElementById('p-up-'+id_num).style.color = "var(--secondary)";
+                } else {
+                    p.clickvote = false;
+                    p.votes += 1;
+                    down_button.style.color = "var(--secondary)";
+                }
+                
+            } else {
+                p.clickvote = true;
+                p.dirvote = false;
+                p.votes -= 1;
+                down_button.style.color = "var(--HLsecondary)";
+            }
+        
+            // p.votes--;
             vote_count.innerHTML = p.votes;
             localStorage.setItem('post',JSON.stringify(post)); //save function
         };

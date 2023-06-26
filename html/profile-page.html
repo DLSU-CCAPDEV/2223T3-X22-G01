@@ -74,6 +74,14 @@
 		</div>
 		`
 		container.insertAdjacentHTML('beforeend',html);
+
+		if (p.clickvote){
+			if (p.dirvote) {
+				document.getElementById('up-'+p.id).style.color = "var(--HLsecondary)";
+			} else {
+				document.getElementById('down-'+p.id).style.color = "var(--HLsecondary)";
+			}
+		}
 	}
 	
 	for (let p of post) {
@@ -111,7 +119,27 @@
 		var id_num = id.replace(/^\D+/g, '');
 		var vote_count = document.getElementById('votes-'+id_num);
 		var p = post.find(t => t.id == id_num);
-		p.votes++;
+		var up_button = document.getElementById('up-'+id_num);
+        
+		if (p.clickvote) {
+			if (p.dirvote){
+				p.clickvote = false;
+				p.votes -= 1;
+				up_button.style.color = "var(--secondary)";
+			} else {
+				p.dirvote = true;
+				p.votes += 2;
+				document.getElementById('down-'+id_num).style.color = "var(--secondary)";
+				up_button.style.color = "var(--HLsecondary)";
+			}
+
+			
+		} else {
+			p.clickvote = true;
+			p.dirvote = true;
+			p.votes += 1;
+			up_button.style.color = "var(--HLsecondary)";
+		}
 		
 		vote_count.innerHTML = p.votes;
 		localStorage.setItem('post',JSON.stringify(post)); //save function
@@ -121,7 +149,26 @@
 		var id_num = id.replace(/^\D+/g, '');
 		var vote_count = document.getElementById('votes-'+id_num);
 		var p = post.find(t => t.id == id_num);
-		p.votes--;
+		var down_button = document.getElementById('down-'+id_num);
+		
+		if (p.clickvote) {
+			if (p.dirvote){
+				p.dirvote = false;
+				p.votes -= 2;
+				document.getElementById('up-'+id_num).style.color = "var(--secondary)";
+				down_button.style.color = "var(--HLsecondary)";
+			} else {
+				p.clickvote = false;
+				p.votes += 1;
+				down_button.style.color = "var(--secondary)";
+			}
+			
+		} else {
+			p.clickvote = true;
+			p.dirvote = false;
+			p.votes -= 1;
+			down_button.style.color = "var(--HLsecondary)";
+		}
 		
 		vote_count.innerHTML = p.votes;
 		localStorage.setItem('post',JSON.stringify(post)); //save function

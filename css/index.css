@@ -8,7 +8,7 @@
 	--secondary: #459f93;
 
 	--HLprimary: #d8ecd6;
-	--HLsecondary: #64c297;
+	--HLsecondary: #87e9a8;
 
 	--glassshadow: #27543c5b;
 	--textshadow: #434a2d1e;
@@ -34,6 +34,7 @@ input[type="text"] {
 	border-color: transparent;
 	overflow: auto;
 	outline: none;
+	width: 100%;
 }
 
 .post-title {
@@ -80,10 +81,20 @@ button:hover {
 	background-color: var(--HLsecondary);
 }
 
+ion-button{
+	font-size: 32px;
+	color: var(--secondary);
+	transition: 0.5s;
+}
+
 ion-icon{
 	font-size: 32px;
 	color: var(--secondary);
 	transition: 0.5s;
+}
+
+ion-button ion-icon {
+	color: inherit;
 }
 
 ion-icon:hover, button:hover ion-icon {
@@ -447,6 +458,11 @@ a {
 .page-header {
 	align-content: middle;
 	
+	display: flex;
+}
+
+form {
+	width: 100%;
 	display: flex;
 }
 

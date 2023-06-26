@@ -91,17 +91,19 @@
     
                         <div class="search-bar">
                             <ion-icon name="search-outline"></ion-icon>
-                            <input type="text" placeholder="Search" id="search" name="search">
+                            <form>
+                                <input type="text" placeholder="Search" id="search" name="filter">
+                            </form>
                         </div>
             
                         <nav class="dropdown-container">
                             <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
             
                             <div class = "dropdown-items">
-                                <button >Recent</button>
-                                <button >Popular</button>
-                                <button >Answered</button>
-                                <button >Unanswered</button>
+                                <button onclick="window.location.href = 'index.html?sortBy=recent';">Recent</button>
+                                <button onclick="window.location.href = 'index.html?sortBy=old';">Old</button>
+                                <button onclick="window.location.href = 'index.html?sortBy=popular';">Popular</button>
+                                <button onclick="window.location.href = 'index.html?sortBy=unpopular';">Unpopuar</button>
                             </div>
                         </nav>
                     
@@ -134,7 +136,53 @@
     <!-- Load in posts from data.js -->
 <script src = "/javascript/data.js"></script>
 <script>
-	console.log(post);
+
+const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+	var post2;
+	if (!(params.filter === null)){
+		post2 = post.filter(function(item)
+		{
+			if (item.title.toLowerCase().includes(params.filter)) return true;
+			if (item.description.toLowerCase().includes(params.filter)) return true;
+	
+		});
+	} else {
+		post2 = post; 
+	}
+		
+	
+	switch(params.sortBy) {
+		case 'popular':
+			post2.sort((a, b) => {
+				return b.votes - a.votes;
+			});
+			break;
+		case 'recent':
+			post2.sort((a, b) => {
+				return b.date - a.date;
+			});
+			break;
+		case 'unpopular':
+			post2.sort((a, b) => {
+				return a.votes - b.votes;
+			});
+			break;
+		case 'old':
+			post2.sort((a, b) => {
+				return a.date - b.date;
+			});
+			break;
+		
+		default:
+			//sort by id
+			post2.sort((a, b) => {
+				return a.id - b.id;
+			});
+	}
+
 	var container = document.getElementById('page-content');
 	function addPost(p) {
 		var u = user.find(t => t.userID == p.userID);
@@ -168,7 +216,7 @@
 		container.insertAdjacentHTML('beforeend',html);
 	}
 	
-	for (let p of post) {
+	for (let p of post2) {
 		addPost(p);
 	}
     </script>
