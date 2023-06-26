@@ -461,7 +461,7 @@ a {
 	display: flex;
 }
 
-form {
+.searchForm {
 	width: 100%;
 	display: flex;
 }
