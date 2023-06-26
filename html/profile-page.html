@@ -34,7 +34,7 @@
 
 
 <!-- Load in posts from data.js -->
-<script src = "/javascript/data.js"></script>
+<script src = "../javascript/data.js"></script>
 <script>
 	const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
@@ -68,7 +68,7 @@
 			</div>
 			
 			<a href="profile-page.html?userID=${u.userID}">
-				<div style="background-image: url(/images/${u.icon})" class="post-pfp glasshover"></div>
+				<div style="background-image: url(../images/${u.icon})" class="post-pfp glasshover"></div>
 			</a>	
 				
 		</div>
@@ -184,9 +184,9 @@
 	var profileArea = document.getElementById('profile-section');
 
 	var profileHTML = `
-		<div class="user-banner" style="background-image: url('/images/${pUser.banner}')"></div>
+		<div class="user-banner" style="background-image: url('../images/${pUser.banner}')"></div>
 		<div class="profile-info-header">
-			<div style="background-image: url('/images/${pUser.icon}')" class="post-pfp glasshover" id="profile-photo"></div>
+			<div style="background-image: url('../images/${pUser.icon}')" class="post-pfp glasshover" id="profile-photo"></div>
 			<div class="profile-info-body">
 				<h1 id="display-name" contenteditable="false">${pUser.name}</h1>
 				<h2 id="username" contenteditable="false">${pUser.username}</h2>

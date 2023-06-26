@@ -21,7 +21,7 @@
 
     </div>
 
-    <script src="/javascript/data.js"></script>
+    <script src="../javascript/data.js"></script>
     <script>
         var id = window.location.search.slice(1);
 
@@ -56,7 +56,7 @@
             <div class="post-footer">
                 
                 <div><h2>${poster.username} | ${new Date(p.date).toLocaleString()}</h2></div>
-                <div style="background-image: url(/images/${poster.icon})" class="post-pfp pfp-small"></div>
+                <div style="background-image: url(../images/${poster.icon})" class="post-pfp pfp-small"></div>
                 
             </div>
         `
@@ -68,7 +68,7 @@
             var commentHTML = `
                 <div class="comment">
                     <div class="comment-inner">
-                        <div style="background-image: url(/images/${u.icon})" class="post-pfp pfp-small"></div>
+                        <div style="background-image: url(../images/${u.icon})" class="post-pfp pfp-small"></div>
                         <div class="vote-container">
                             
                             <ion-icon name="caret-up-outline" id="up-${c.id}" ></ion-icon>     
