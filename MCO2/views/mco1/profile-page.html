@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Salamin | Home</title>
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+<body>
+	
+
+	<div class="page">
+		<div class="post-page-header">
+            
+           <a href="timeline.html"><ion-icon name="arrow-back-outline"></ion-icon></a>
+        </div>
+
+        <div class="box green noPadding" id="profile-section">
+            
+
+        </div>
+
+		<div class="box">
+			<input type="text" placeholder="Title" class="post-title" id="post-title">
+            <span class="textarea" role="textbox" id="post-box" contenteditable></span>
+            
+            <button id="post-button">Post</button>
+        </div>
+
+		<div class="page-content" id="page-content"> <!-- timeline -->
+			
+			
+		</div>
+
+	</div>
+
+
+<!-- Load in posts from data.js -->
+<script src = "../javascript/data.js"></script>
+<script>
+	const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+	
+
+	var container = document.getElementById('page-content');
+	function addPost(p) {
+		var u = user.find(t => t.userID == p.userID);
+
+		var html = `
+		<div class="post"> <!-- posts proper -->
+			<div class="post-content glasshover">
+				
+				<div class="vote-container vote-width">
+					<ion-icon name="caret-up-outline" id="up-${p.id}" onclick="upvote(this.id)"></ion-icon>
+					<div id="votes-${p.id}">${p.votes}</div>
+					<ion-icon name="caret-down-outline" id="down-${p.id}" onclick="downvote(this.id)"></ion-icon>
+				</div>
+
+				<a href="post-page.html?postID=${p.id}">
+					<div class="post-text">
+						
+						<h1>${p.title}</h1>
+						<h2>${u.username} | ${new Date(p.date).toLocaleString()} | ${p.comments.length} replies</h2>
+						
+					</div>
+				</a>
+
+			</div>
+			
+			<a href="profile-page.html?userID=${u.userID}">
+				<div style="background-image: url(../images/${u.icon})" class="post-pfp glasshover"></div>
+			</a>	
+				
+		</div>
+		`
+		container.insertAdjacentHTML('beforeend',html);
+
+		if (p.clickvote){
+			if (p.dirvote) {
+				document.getElementById('up-'+p.id).style.color = "var(--HLsecondary)";
+			} else {
+				document.getElementById('down-'+p.id).style.color = "var(--HLsecondary)";
+			}
+		}
+	}
+	
+	for (let p of post) {
+		if(p.userID == params.userID)addPost(p);
+	}
+
+	var postBtn = document.getElementById('post-button');
+	postBtn.addEventListener('click', function(){
+		var title = document.getElementById('post-title');
+		var desc = document.getElementById('post-box');
+		
+		if (!(desc.innerHTML.trim().length === 0) && !(title.value.trim().length === 0)){
+			var p = {
+			title: title.value,
+			description: desc.innerHTML,
+			id: post.length+1,
+			userID: 4,
+			deleted: false,
+			date: Date.now(),
+			votes: 0,
+			comments: [],
+			}
+			addPost(p);
+			post.push(p);
+			localStorage.setItem('post',JSON.stringify(post)); //save function
+
+			
+			title.value = '';
+			desc.innerHTML = '';
+		}
+		
+	});
+
+	function upvote(id){
+		var id_num = id.replace(/^\D+/g, '');
+		var vote_count = document.getElementById('votes-'+id_num);
+		var p = post.find(t => t.id == id_num);
+		var up_button = document.getElementById('up-'+id_num);
+        
+		if (p.clickvote) {
+			if (p.dirvote){
+				p.clickvote = false;
+				p.votes -= 1;
+				up_button.style.color = "var(--secondary)";
+			} else {
+				p.dirvote = true;
+				p.votes += 2;
+				document.getElementById('down-'+id_num).style.color = "var(--secondary)";
+				up_button.style.color = "var(--HLsecondary)";
+			}
+
+			
+		} else {
+			p.clickvote = true;
+			p.dirvote = true;
+			p.votes += 1;
+			up_button.style.color = "var(--HLsecondary)";
+		}
+		
+		vote_count.innerHTML = p.votes;
+		localStorage.setItem('post',JSON.stringify(post)); //save function
+	};
+
+	function downvote(id){
+		var id_num = id.replace(/^\D+/g, '');
+		var vote_count = document.getElementById('votes-'+id_num);
+		var p = post.find(t => t.id == id_num);
+		var down_button = document.getElementById('down-'+id_num);
+		
+		if (p.clickvote) {
+			if (p.dirvote){
+				p.dirvote = false;
+				p.votes -= 2;
+				document.getElementById('up-'+id_num).style.color = "var(--secondary)";
+				down_button.style.color = "var(--HLsecondary)";
+			} else {
+				p.clickvote = false;
+				p.votes += 1;
+				down_button.style.color = "var(--secondary)";
+			}
+			
+		} else {
+			p.clickvote = true;
+			p.dirvote = false;
+			p.votes -= 1;
+			down_button.style.color = "var(--HLsecondary)";
+		}
+		
+		vote_count.innerHTML = p.votes;
+		localStorage.setItem('post',JSON.stringify(post)); //save function
+	};
+
+	var pUser = user.find(t => t.userID == params.userID);
+
+	
+	if (pUser==null ){
+		window.location.href = 'timeline.html';
+	}
+
+	var profileArea = document.getElementById('profile-section');
+
+	var profileHTML = `
+		<div class="user-banner" style="background-image: url('../images/${pUser.banner}')"></div>
+		<div class="profile-info-header">
+			<div style="background-image: url('../images/${pUser.icon}')" class="post-pfp glasshover" id="profile-photo"></div>
+			<div class="profile-info-body">
+				<h1 id="display-name" contenteditable="false">${pUser.name}</h1>
+				<h2 id="username" contenteditable="false">${pUser.username}</h2>
+				<div class="user-bio" id="user-bio" contenteditable="false"> ${pUser.bio} </div>
+			</div>
+
+			<button id="edit-profile" onclick="editProfile()">
+				Edit profile
+			</button>
+		</div>
+	`;
+
+	profileArea.insertAdjacentHTML('beforeend', profileHTML)
+	
+	function editProfile(){
+		document.getElementById('display-name').contentEditable = "true";
+		document.getElementById('username').contentEditable = "true";
+		document.getElementById('user-bio').contentEditable = "true";
+		var button = document.getElementById('edit-profile');
+		
+		var pfp = document.getElementById('profile-photo');
+		var editpfp = `
+			
+			<div id="image-upload">
+				<label for="file-input">
+					<ion-icon name="image-outline"></ion-icon>
+				</label>
+
+				<input id="file-input" type='file' onchange='loadImg(event)'>
+			</div>
+		`
+
+		pfp.insertAdjacentHTML('afterend',editpfp);
+
+		button.innerHTML="Save Profile";
+		button.setAttribute('onclick','saveProfile()')
+
+	}
+
+	function loadImg(event) {
+		var newIcon = document.getElementById('profile-photo');
+		newIcon.style.backgroundImage = "url('"+URL.createObjectURL(event.target.files[0])+"')";
+	}
+
+	function saveProfile(){
+		var name = document.getElementById('display-name');
+		var username = document.getElementById('username');
+		var bio = document.getElementById('user-bio');
+		var button = document.getElementById('edit-profile');
+
+		document.getElementById('image-upload').remove();
+
+		name.contentEditable = "false";
+		username.contentEditable = "false";
+		bio.contentEditable = "false";
+
+		pUser.name = name.innerHTML;
+		pUser.username = username.innerHTML;
+		pUser.bio = bio.innerHTML;
+
+		localStorage.setItem('user',JSON.stringify(user)); //save function
+
+		button.innerHTML="Edit Profile";
+		button.setAttribute('onclick','editProfile()')
+
+	}
+
+
+
+</script>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	
+</body>
+</html>
