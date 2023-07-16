@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Salamin | Post by @soraruru</title>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+<body>
+
+    <div class="profile-side glasshover"  onclick="location.href='profile-page.html?userID=4'"> <!-- side bar -->
+
+		<div class="side-header"> <!-- logo -->
+			<a href="timeline.html"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
+            
+		</div>
+
+		<div class="side-content"> <!-- profile pic bg & profile text thing -->
+			<div class="side-message">Good morning, Eve! <br> You're doing just fine.</div>
+			<div class="user-info">5 posts | 3 comments</div>
+		</div>
+
+		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
+			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='index.html'"></ion-icon>
+			
+			<div class="username-action">
+				@eveiscool
+			</div>
+
+			<ion-icon name="sunny-outline"></ion-icon>
+			
+		</div>
+	</div>
+
+    <div class="post-side">
+
+        <div class="post-page-header">
+           
+            <a href="timeline.html"><ion-icon name="arrow-back-outline"></ion-icon></a>
+            <div class="user-pfp glasshover" style="background-image: url(../images/pfp_eve.jpg)" onclick="location.href='profile-page.html?userID=4'"></div>
+        </div>
+
+        <div class="box green" id="post-section">
+            
+
+        </div>
+
+        <div class="box">
+            <span class="textarea" role="textbox" id="comment-box" contenteditable></span>
+            
+            <button id="comment-button">Comment</button>
+        </div>
+
+        <div class="box" id="comment-section"></div>
+
+    </div>
+
+    <script src="../javascript/data.js"></script>
+    <script>
+        var id = window.location.search.slice(1);
+
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        var p = post.find(t => t.id == params.postID);
+
+        if (p==null || p.deleted){
+            window.location.href = 'timeline.html';
+        }
+
+        var postContainer = document.getElementById('post-section');
+        var poster = user.find(t => t.userID == p.userID);
+        var postHTML = `
+            <div class="post-header">
+                <div class="vote-container">
+
+                    <ion-button id="p-up-${p.id}" onclick="upvotePost(this.id)">
+                        <ion-icon name="caret-up-outline"></ion-icon>
+                    </ion-button>
+                    
+                    <div id="p-votes-${p.id}">${p.votes}</div> 
+
+                    <ion-button id="p-down-${p.id}" onclick="downvotePost(this.id)">
+                        <ion-icon name="caret-down-outline"></ion-icon>
+                    </ion-button>
+                    
+                </div>
+
+                <h1 contenteditable="false" id="post-title">
+                    ${p.title}
+                </h1>
+
+                <nav class="dropdown-container">
+                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                    <div class = "dropdown-items">
+                        <button id="p-edit-${p.id}" onclick="editPost(this.id)">Edit</button>
+                        <button id="p-del-${p.id}" onclick="delPost(this.id)">Delete</button>
+                    </div>
+			    </nav>
+            </div>
+
+            <div class="flex-column" id="post-description-container">
+                <p id="post-description" contenteditable="false">${p.description}</p>
+            </div>
+            <div class="post-footer">
+                
+                <div><h2>${poster.username} | ${new Date(p.date).toLocaleString()}</h2></div>
+                <a href="profile-page.html?userID=${poster.userID}"><div style="background-image: url(../images/${poster.icon})" class="post-pfp pfp-small glasshover"></div></a>
+                
+            </div>
+        `
+
+        postContainer.insertAdjacentHTML('beforeend', postHTML);
+
+        if (p.clickvote){
+            if (p.dirvote) {
+                document.getElementById('p-up-'+p.id).style.color = "var(--HLsecondary)";
+            } else {
+                document.getElementById('p-down-'+p.id).style.color = "var(--HLsecondary)";
+            }
+        }
+
+
+        function addComment(c) {
+            var u = user.find(t => t.userID == c.userID);
+            var commentHTML = `
+                <div class="comment">
+                    <div class="comment-inner">
+                        <a href="profile-page.html?userID=${u.userID}"><div style="background-image: url(../images/${u.icon})" class="post-pfp pfp-small glasshover"></div></a>
+                        <div class="vote-container">
+
+                            <ion-button id="up-${c.id}" onclick="upvote(this.id)">
+                                <ion-icon name="caret-up-outline"></ion-icon>
+                            </ion-button>
+                                 
+                            <div id="votes-${c.id}">${c.votes}</div>
+
+                            <ion-button id="down-${c.id}" onclick="downvote(this.id)">
+                                <ion-icon name="caret-down-outline"></ion-icon>
+                            </ion-button>
+                            
+    
+                        </div>
+                    </div>
+                    <div class="comment-inner full">
+                        <div class="comment-header">
+                            ${u.username}
+                            <nav class="dropdown-container">
+                                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                                    <div class="dropdown-items">
+                                        <button id="edit-${c.id}" onclick="edit(this.id)">Edit</button>
+                                        <button id="del-${c.id}" onclick="del(this.id)">Delete</button>
+                                    </div>
+                            </nav>
+                        </div>
+                        <p class="comment-content full" id="comment-description-${c.id}" contenteditable="false">
+                           ${c.description}
+                        </p>
+
+                        <div id="comment-footer-${c.id}" class="comment-footer">
+
+                        </div>
+                    </div>
+                </div>
+            `
+            commentContainer.insertAdjacentHTML('beforeend', commentHTML);
+
+            if (c.clickvote){
+                if (c.dirvote) {
+                    document.getElementById('up-'+c.id).style.color = "var(--HLsecondary)";
+                } else {
+                    document.getElementById('down-'+c.id).style.color = "var(--HLsecondary)";
+                }
+            }
+
+            
+        }
+
+        var commentContainer = document.getElementById('comment-section');
+        for (let c of p.comments) {
+            if (!c.deleted) addComment(c);
+        };
+
+        var commentBtn = document.getElementById('comment-button');
+        commentBtn.addEventListener('click', function(){
+            var text = document.getElementById('comment-box');
+            
+            if (text.innerHTML.trim().length === 0){
+
+            }
+            else {
+                var comment = {
+                description: text.innerHTML,
+                id: p.comments.length+1,
+                userID: 4,
+                date: Date.now(),
+                votes: 0,
+                }
+                addComment(comment);
+                p.comments.push(comment);
+                localStorage.setItem('post',JSON.stringify(post)); //save function
+            }
+            
+            text.innerHTML = '';
+        });
+
+       function upvote(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('votes-'+id_num);
+            var c = p.comments.find(t => t.id == id_num);
+            var up_button = document.getElementById('up-'+id_num);
+        
+            if (c.clickvote) {
+                if (c.dirvote){
+                    c.clickvote = false;
+                    c.votes -= 1;
+                    up_button.style.color = "var(--secondary)";
+                } else {
+                    c.dirvote = true;
+                    c.votes += 2;
+                    up_button.style.color = "var(--HLsecondary)";
+                    document.getElementById('down-'+id_num).style.color = "var(--secondary)";
+                }
+
+                
+            } else {
+                c.clickvote = true;
+                c.dirvote = true;
+                c.votes += 1;
+                up_button.style.color = "var(--HLsecondary)";
+            }
+            
+            vote_count.innerHTML = c.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function downvote(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('votes-'+id_num);
+            var c = p.comments.find(t => t.id == id_num);
+            var down_button = document.getElementById('down-'+id_num);
+        
+            if (c.clickvote) {
+                if (c.dirvote){
+                    c.dirvote = false;
+                    c.votes -= 2;
+                    down_button.style.color = "var(--HLsecondary)";
+                    document.getElementById('up-'+id_num).style.color = "var(--secondary)";
+                } else {
+                    c.clickvote = false;
+                    c.votes += 1;
+                    down_button.style.color = "var(--secondary)";
+                }
+            } else {
+                c.clickvote = true;
+                c.dirvote = false;
+                c.votes -= 1;
+                down_button.style.color = "var(--HLsecondary)";
+            }
+            
+            vote_count.innerHTML = c.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function upvotePost(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('p-votes-'+id_num);
+            var up_button = document.getElementById('p-up-'+id_num);
+
+            if (p.clickvote) {
+                if (p.dirvote){
+                    p.clickvote = false;
+                    p.votes -= 1;
+                    up_button.style.color = "var(--secondary)";
+                } else {
+                    p.dirvote = true;
+                    p.votes += 2;
+                    document.getElementById('p-down-'+id_num).style.color = "var(--secondary)";
+                    up_button.style.color = "var(--HLsecondary)";
+                }
+
+                
+            } else {
+                p.clickvote = true;
+                p.dirvote = true;
+                p.votes += 1;
+                up_button.style.color = "var(--HLsecondary)";
+            }
+
+            vote_count.innerHTML = p.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function downvotePost(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var vote_count = document.getElementById('p-votes-'+id_num);
+            var down_button = document.getElementById('p-down-'+id_num);
+            
+            if (p.clickvote) {
+                if (p.dirvote){
+                    p.dirvote = false;
+                    p.votes -= 2;
+                    down_button.style.color = "var(--HLsecondary)";
+                    document.getElementById('p-up-'+id_num).style.color = "var(--secondary)";
+                } else {
+                    p.clickvote = false;
+                    p.votes += 1;
+                    down_button.style.color = "var(--secondary)";
+                }
+                
+            } else {
+                p.clickvote = true;
+                p.dirvote = false;
+                p.votes -= 1;
+                down_button.style.color = "var(--HLsecondary)";
+            }
+        
+            // p.votes--;
+            vote_count.innerHTML = p.votes;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        };
+
+        function editPost(id){
+            var id_num = id.replace(/^\D+/g, '');
+            
+            //stops adding more edit buttons
+            if(document.getElementById("post-save-"+id_num)==null){
+                var postTitle = document.getElementById("post-title");
+                var postBody = document.getElementById("post-description");
+                
+                var postBodyContainer = document.getElementById("post-description-container");
+
+                postTitle.contentEditable = "true";
+                postBody.contentEditable = "true";
+
+                var saveButton = `
+                    <div class="edit-footer">
+                        <button class="edit-button" id="post-save-${id_num}" onclick="savePost(this)" contenteditable="false">Save</button>    
+                    </div>
+                `
+                postBodyContainer.insertAdjacentHTML('beforeend', saveButton);
+            }
+        }
+
+        function savePost(button){
+            var id_num = button.id.replace(/^\D+/g, '');
+            
+            button.remove();
+
+            var postTitle = document.getElementById("post-title");
+            var postBody = document.getElementById("post-description");
+
+            postTitle.contentEditable = "false";
+            postBody.contentEditable = "false";
+
+            p.title = postTitle.innerHTML;
+            p.description = postBody.innerHTML;
+
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        }
+
+        function delPost(){
+            p.deleted = true;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+            location.reload();
+        }
+
+        function edit(id){
+            var id_num = id.replace(/^\D+/g, '');
+            
+            //stops adding more edit buttons
+            if(document.getElementById("save-"+id_num)==null){
+                var commentBody = document.getElementById("comment-description-"+id_num);
+                var commentFooter = document.getElementById("comment-footer-"+id_num);
+
+                commentBody.contentEditable = "true";
+                
+                var saveButton = `
+                    
+                   <button id="save-${id_num}" onclick="save(this)" contenteditable="false">Save</button>    
+                    
+                `
+                commentFooter.insertAdjacentHTML('beforeend', saveButton);
+            }
+        }
+
+        function save(button){
+            var id_num = button.id.replace(/^\D+/g, '');
+            
+            button.remove();
+
+            var commentBody = document.getElementById("comment-description-"+id_num);
+            commentBody.contentEditable = "false";
+
+            var c = p.comments.find(t => t.id == id_num);
+            c.description = commentBody.innerHTML;
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+        }
+
+        function del(id){
+            var id_num = id.replace(/^\D+/g, '');
+            var c = p.comments.find(t => t.id == id_num);
+
+            c.deleted = true;
+
+            localStorage.setItem('post',JSON.stringify(post)); //save function
+            location.reload();
+        }
+
+
+    </script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
