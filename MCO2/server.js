@@ -4,6 +4,7 @@ const express = require(`express`);
 const bodyParser = require(`body-parser`);
 const hbs = require(`hbs`);
 const routes = require('./routes/routes.js');
+const connectDB = require('./config/dbConn')
 const mongoose = require(`mongoose`);
 
 const app = express();
@@ -11,6 +12,8 @@ const app = express();
 dotenv.config();
 port = process.env.PORT;
 hostname = process.env.HOSTNAME;
+
+connectDB();
 
 app.set(`view engine`, `hbs`);
 
@@ -29,7 +32,11 @@ app.use(function (req, res) {
     res.send(`Page not found`);
 });
 
-app.listen(port, hostname, function() {
-    console.log(`Server running at:`);
-    console.log(`http://` + hostname + `:` + port);
-});
+mongoose.connection.once('open' , () => {
+    console.log('connected to salaminDB');
+        app.listen(port, hostname, () => {
+        console.log(`Server running at:`);
+        console.log(`http://` + hostname + `:` + port);
+    });
+}) 
+
