@@ -25,19 +25,19 @@ var PostSchema = new mongoose.Schema({
         required: true
     },
     clickvote: {
-        data: Boolean,
+        type: Boolean,
         required: true
     },
     dirvotes: {
-        data: Boolean,
+        type: Boolean,
         required: true
     },
     deleted: {
-        data: Boolean,
+        type: Boolean,
         required: true
     },
     description: {
-        data: String,
+        type: String,
         required: true
     },
     comments: {
