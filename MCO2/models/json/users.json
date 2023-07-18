@@ -1,0 +1,39 @@
+{
+    "users": [
+        {
+            "username": "soraruru",
+            "displayName": "soraru",
+            "bio": "i like to sing",
+            "icon": "pfp_soraru.jpg",
+            "banner": "banner_soraru.jpg"
+        },
+        {
+            "username": "Kanae_2434",
+            "displayName": "Kanae",
+            "bio": "let's enjoy the miracle",
+            "icon": "pfp_kanae.jpg",
+            "banner": "banner_kanae.jpg"
+        },
+        {
+            "username": "Vamp_Kuzu",
+            "displayName": "Kuzuha",
+            "bio": "i'm vtuber kuzuha, a wannabe rich pimp",
+            "icon": "pfp_kuzuha.jpg",
+            "banner": "banner_kuzuha.jpg"
+        },
+        {
+            "username": "oO0Eve0Oo",
+            "displayName": "Eve",
+            "bio": "is there color in your world?",
+            "icon": "pfp_eve.jpg",
+            "banner": "banner_eve.jpg"
+        },
+        {
+            "username": "uni_mafumafu",
+            "displayName": "mafumafu",
+            "bio": "jack of all trades. sleeping",
+            "icon": "pfp_mafumafu.jpg",
+            "banner": "banner_mafumafu.jpg"
+        }
+    ]
+}
