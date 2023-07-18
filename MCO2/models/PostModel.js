@@ -41,7 +41,7 @@ var PostSchema = new mongoose.Schema({
         required: true
     },
     comments: {
-        type: Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Comment'
     }
 });
