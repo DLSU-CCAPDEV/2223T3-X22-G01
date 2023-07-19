@@ -8,14 +8,18 @@ const User = require('../models/UserModel.js');
 
 */
 
+const db = require('../models/db.js');
+const User = require('../models/UserModel.js');
+
 const profileController = {
     getProfile: async function (req, res) {
 
         // query where `idNum` is equal to URL parameter `idNum`
-        var query = {idNum: req.params.idNum};
+        var u = req.params.username;
+        var query = {username: u};
 
         // fields to be returned
-        var projection = 'fName lName idNum';
+        var projection = 'username displayName bio icon banner';
 
         /*
             calls the function findOne()
@@ -24,30 +28,29 @@ const profileController = {
             based on the value set in object `query`
             the third parameter is a string containing fields to be returned
         */
-        var result = await db.findOne(User, query, projection);
-
-        /*
-            if the user exists in the database
-            render the profile page with their details
-        */
-        if(result != null) {
-            var details = {
-                fName: result.fName,
-                lName: result.lName,
-                idNum: result.idNum
-            };
-
-            // render `../views/profile.hbs`
-            res.render('profile', details);
-        }
-
-        /*
-            if the user does not exist in the database
-            render the error page
-        */
-        else {
-            res.render('error');
-        }
+        db.findOne('users', query, function (result) {
+            if(result != null) {
+                var details = {
+                    username: result.username,
+                    displayName: result.displayName,
+                    bio: result.bio,
+                    icon: result.icon,
+                    banner: result.banner
+                };
+    
+                // render `../views/profile.hbs`
+                res.render('profile-page', details);
+            }
+    
+            /*
+                if the user does not exist in the database
+                render the error page
+            */
+            else {
+                res.render('error');
+            }
+        });
+        
     }
 }
 
