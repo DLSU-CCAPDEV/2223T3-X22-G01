@@ -23,11 +23,13 @@ const profileController = require('../controllers/profileController.js');
 
 const app = express();
 
-app.get('/favicon.ico', controller.getFavicon);
+app.get('/favicon.ico', timelineController.getFavicon);
 
-app.get('/', controller.getIndex);
+app.get('/', timelineController.getTimelineReg);
 
-app.get('/');
+app.get('/:username', profileController.getProfile);
+
+app.get('/post', postController.getPostPage);
 
 // /*
 //     execute function getSignUp()
