@@ -3,10 +3,13 @@
 // import Post from "../models/PostModel.js";
 // import Comment from "../models/CommentModel.js";
 
-// const mongoose = require(`mongoose`);
+const mongoose = require('mongoose');
 const mongodb = require('mongodb');
+const dotenv = require(`dotenv`);
+
+dotenv.config();
 // Connect to MONGODB_URI, which also includes the database name
-const url = 'mongodb+srv://apdev-salamin:NCOwKuSfzOcIEhEI@salamin.pwmvajm.mongodb.net/?retryWrites=true&w=majority';
+const url = process.env.MONGODB_URI;
 const client = mongodb.MongoClient;
 
 const dbName = 'salamindb';
@@ -186,16 +189,18 @@ const database = {
               db.close();
           });
       });
+  },
+
+  connect: async () => {
+    try {
+        await mongoose.connect(url, {
+            useUnifiedTopology: true,
+            useNewUrlParser: true
+        });
+    } catch (err) {
+        console.error(err);
+    }
   }
 }
-
-// export default {
-//   /*
-//     connects to database
-//   */
-//   connect: () => {
-//     return mongoose.connect(url);
-//   },
-// };
 
 module.exports = database;
