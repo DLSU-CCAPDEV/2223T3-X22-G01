@@ -12,6 +12,7 @@
 
     </head>
     <body>
+        
 
         <!-- Home -->
         <div class="home">
@@ -44,7 +45,7 @@
                         </div>
 
                         <button class="button">
-                            <a href="timeline.html" style="color: white; text-decoration: none;">Login Now</a>
+                            <a href="/" style="color: white; text-decoration: none;">Login Now</a>
                         </button>
 
                         <div class="login_sign-up">Don't have an account yet? <a href="#" id="sign-up"> Sign-up</a></div>
@@ -74,7 +75,7 @@
                         </div>
 
                         <button class="button">
-                            <a href="timeline.html" style="color: white; text-decoration: none;">Sign-Up Now</a>
+                            <a href="/timeline" style="color: white; text-decoration: none;">Sign-Up Now</a>
                         </button>
 
                         <div class="login_sign-up">Already have an account?<a href="#" id="sign-up"> Log-in</a></div>
@@ -99,10 +100,10 @@
                             <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
             
                             <div class = "dropdown-items">
-                                <button onclick="window.location.href = 'index.html?sortBy=recent';">Recent</button>
-                                <button onclick="window.location.href = 'index.html?sortBy=old';">Old</button>
-                                <button onclick="window.location.href = 'index.html?sortBy=popular';">Popular</button>
-                                <button onclick="window.location.href = 'index.html?sortBy=unpopular';">Unpopuar</button>
+                                <button onclick="window.location.href = '/index?sortBy=recent';">Recent</button>
+                                <button onclick="window.location.href = '/index?sortBy=old';">Old</button>
+                                <button onclick="window.location.href = '/index?sortBy=popular';">Popular</button>
+                                <button onclick="window.location.href = '/index?sortBy=unpopular';">Unpopuar</button>
                             </div>
                         </nav>
                     
@@ -121,11 +122,101 @@
         
                 <div class="page-content" id="page-content"> <!-- timeline -->
                     
+                <div class="post"> <!-- posts proper -->
+                <div class="post-content glasshover">
                     
+                    <div class="vote-container vote-width">
+                        <ion-icon name="caret-up-outline" ></ion-icon>
+                        <div >{{votes}}</div>
+                        <ion-icon name="caret-down-outline" ></ion-icon>
+                    </div>
+
+                    <a href="/:username/:postID">
+                        <div class="post-text">
+                            
+                            <h1>{{title}}</h1>
+                            <h2>{{username}} | {{date}} | {{numComments}} replies</h2>
+                            
+                        </div>
+                    </a>
+
+                </div>
+                
+                
+                <div style="background-image: url(/images/{{icon}})" class="post-pfp"></div>
+
+            </div>  
                 </div>
             </div>
         </div>
 
         
+   
+        
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="..\javascript\unregistered.js"></script>
+    <!-- Load in posts from data.js -->
+<script src = "../javascript/data.js"></script>
+<script>
+
+const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+	var post2;
+	if (!(params.filter === null)){
+		post2 = post.filter(function(item)
+		{
+			if (item.title.toLowerCase().includes(params.filter)) return true;
+			if (item.description.toLowerCase().includes(params.filter)) return true;
+	
+		});
+	} else {
+		post2 = post; 
+	}
+		
+	
+	switch(params.sortBy) {
+		case 'popular':
+			post2.sort((a, b) => {
+				return b.votes - a.votes;
+			});
+			break;
+		case 'recent':
+			post2.sort((a, b) => {
+				return b.date - a.date;
+			});
+			break;
+		case 'unpopular':
+			post2.sort((a, b) => {
+				return a.votes - b.votes;
+			});
+			break;
+		case 'old':
+			post2.sort((a, b) => {
+				return a.date - b.date;
+			});
+			break;
+		
+		default:
+			//sort by id
+			post2.sort((a, b) => {
+				return a.id - b.id;
+			});
+	}
+
+	var container = document.getElementById('page-content');
+	function addPost(p) {
+		var u = user.find(t => t.userID == p.userID);
+
+
+		container.insertAdjacentHTML('beforeend',html);
+	}
+	
+	for (let p of post2) {
+		addPost(p);
+	}
+    </script>
     </body>
 </html>
