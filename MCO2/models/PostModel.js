@@ -4,10 +4,7 @@ var mongoose = require('mongoose'),
 
 // defines the schema for collection `posts`
 var PostSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true
-    },
+    
     title: {
         type: String,
         required: false
@@ -40,10 +37,41 @@ var PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    comments: {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }
+    comments: [
+        // type: Schema.Types.ObjectId,
+        // ref: 'Comment'
+        {
+            
+            username: {
+                type: String,
+                required: true
+            },
+            votes: {
+                type: Number,
+                required: true
+            },
+            date: {
+                type: Date,
+                required: true
+            },
+            clickvote: {
+                type: Boolean,
+                required: true
+            },
+            dirvotes: {
+                type: Boolean,
+                required: true
+            },
+            deleted: {
+                type: Boolean,
+                required: true
+            },
+            description: {
+                type: String,
+                required: true
+            }
+        }
+    ]
 });
 
 /*

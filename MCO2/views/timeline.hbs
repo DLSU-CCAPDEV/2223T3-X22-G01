@@ -9,19 +9,21 @@
 	<div class="profile-side glasshover"  onclick="location.href='profile-page.html?userID=4'"> <!-- side bar -->
 
 		<div class="side-header"> <!-- logo -->
-			<a href="timeline.html"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
+			<a href="/timeline"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
 		</div>
 
 		<div class="side-content"> <!-- profile pic bg & profile text thing -->
-			<div class="side-message">Good morning, Eve! <br> You're doing just fine.</div>
-			<div class="user-info">5 posts | 3 comments</div>
+			<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine. </div>
+			{{!-- Good morning, displayName!
+					You're doing just fine.  --}}
+			<div class="user-info">{{numPosts}} posts | {{numComments}} comments</div>
 		</div>
 
 		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='index.html'"></ion-icon>
+			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/index'"></ion-icon>
 			
 			<div class="username-action">
-				@eveiscool
+				{{username}}
 			</div>
 
 			<ion-icon name="sunny-outline"></ion-icon>

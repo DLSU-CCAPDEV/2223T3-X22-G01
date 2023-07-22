@@ -8,49 +8,53 @@ const User = require('../models/UserModel.js');
 
 */
 
-// const db = require('../models/db.js');
+const db = require('../models/db.js');
 const User = require('../models/UserModel.js');
+const Post = require('../models/PostModel.js');
 
 const profileController = {
     getProfile: async function (req, res) {
 
         // query where `idNum` is equal to URL parameter `idNum`
-        var u = req.params.username;
-        var query = {username: u};
+        // var u = req.params.username;
+        var query = {username: req.params.username};
 
         // fields to be returned
+        // posts
         var projection = 'username displayName bio icon banner';
+        var postProjection = 'id title votes date comments';
 
-        /*
-            calls the function findOne()
-            defined in the `database` object in `../models/db.js`
-            this function searches the collection `users`
-            based on the value set in object `query`
-            the third parameter is a string containing fields to be returned
-        */
-        db.findOne('users', query, function (result) {
-            if(result != null) {
-                var details = {
-                    username: result.username,
-                    displayName: result.displayName,
-                    bio: result.bio,
-                    icon: result.icon,
-                    banner: result.banner
-                };
-    
-                // render `../views/profile.hbs`
-                res.render('profile-page', details);
-            }
-    
-            /*
-                if the user does not exist in the database
-                render the error page
-            */
-            else {
-                res.render('error');
-            }
-        });
+        var result = await db.findOne(User, query, projection);
+        var postResult = await db.findOne(Post, query, postProjection);
         
+        if(result != null || postResult != null) { 
+            
+            // var commentCt = postResult.comments;
+            var details = {
+                
+                username: result.username,
+                displayName: result.displayName,
+                bio: result.bio,
+                icon: result.icon,
+                banner: result.banner,
+                postID: postResult._id,
+                title: postResult.title,
+                votes: postResult.votes,
+                date: postResult.date,
+                numComments: postResult.comments.length
+            };
+
+            res.render('profile-page', details);
+        }
+
+        else {
+            res.render('error', {collectionType: "user"});
+        }
+        
+    },
+
+    getError: async function (req, res) {
+        res.render('error', {collectionType: "user"});
     }
 }
 

@@ -16,12 +16,16 @@ var UserSchema = new mongoose.Schema({
         required: true
     },
     icon: {
-        data: Buffer,
-        contentType: String
+        // data: Buffer,
+        // contentType: String
+        type: String,
+        required: true
     },
     banner: {
-        data: Buffer,
-        contentType: String
+        // data: Buffer,
+        // contentType: String
+        type: String,
+        required: true
     }
 });
 
