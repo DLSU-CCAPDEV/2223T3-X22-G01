@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Salamin | Home</title>
-	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<title>Salamin | @{{username}}</title>
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 	
 
 	<div class="page">
-		{{!-- {{> header-nav-prev}} --}}
-		<div class="post-page-header">
-			<a href="timeline.html"><ion-icon name="arrow-back-outline"></ion-icon></a>
-		</div>
+		{{> headernp}}
 
         <div class="box green noPadding" id="profile-section">
             
+			<div class="user-banner" style="background-image: url('/images/{{banner}}')"></div>
+			<div class="profile-info-header">
+				<div style="background-image: url('/images/{{icon}}')" class="post-pfp glasshover" id="profile-photo"></div>
+				<div class="profile-info-body">
+					<h1 id="display-name" contenteditable="false">{{displayName}}</h1>
+					<h2 id="username" contenteditable="false">@{{username}}</h2>
+					<div class="user-bio" id="user-bio" contenteditable="false"> {{bio}} </div>
+				</div>
+
+				<button id="edit-profile" onclick="editProfile()">
+					Edit profile
+				</button>
+			</div>
 
         </div>
 
@@ -26,8 +37,11 @@
         </div>
 
 		<div class="page-content" id="page-content"> <!-- timeline -->
-			
-			
+			{{#if username}}
+				{{#each posts}}
+					{{> postprev}}
+				{{/each}}
+			{{/if}}
 		</div>
 
 	</div>

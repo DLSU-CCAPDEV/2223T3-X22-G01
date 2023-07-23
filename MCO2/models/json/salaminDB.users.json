@@ -1,0 +1,55 @@
+[{
+  "_id": {
+    "$oid": "64bb7c7f64502d2315ff473a"
+  },
+  "username": "soraruru",
+  "displayName": "soraru",
+  "bio": "i like to sing",
+  "icon": "pfp_soraru.jpg",
+  "banner": "banner_soraru.jpg",
+  "password": "myhero"
+},
+{
+  "_id": {
+    "$oid": "64bb7d2164502d2315ff473b"
+  },
+  "username": "Kanae_2434",
+  "displayName": "Kanae",
+  "bio": "let's enjoy the miracle",
+  "icon": "pfp_kanae.jpg",
+  "banner": "banner_kanae.jpg",
+  "password": "flores"
+},
+{
+  "_id": {
+    "$oid": "64bb7d7164502d2315ff473c"
+  },
+  "username": "Vamp_Kuzu",
+  "displayName": "Kuzuha",
+  "bio": "i'm vtuber kuzuha, a wannabe rich pimp",
+  "icon": "pfp_kuzuha.jpg",
+  "banner": "banner_kuzuha.jpg",
+  "password": "contrail"
+},
+{
+  "_id": {
+    "$oid": "64bb7da264502d2315ff473d"
+  },
+  "username": "oO0Eve0Oo",
+  "displayName": "Eve",
+  "bio": "is there color in your world?",
+  "icon": "pfp_eve.jpg",
+  "banner": "banner_eve.jpg",
+  "password": "kiminisekai"
+},
+{
+  "_id": {
+    "$oid": "64bb7dbd64502d2315ff473e"
+  },
+  "username": "uni_mafumafu",
+  "displayName": "mafumafu",
+  "bio": "jack of all trades. sleeping",
+  "icon": "pfp_mafumafu.jpg",
+  "banner": "banner_mafumafu.jpg",
+  "password": "takt"
+}]
