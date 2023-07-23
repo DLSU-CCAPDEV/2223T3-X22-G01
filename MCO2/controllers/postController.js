@@ -1,3 +1,7 @@
+const db = require('../models/db.js');
+const User = require('../models/UserModel.js');
+const Post = require('../models/PostModel.js');
+
 const postController = {
 
     getFavicon: function (req, res) {
@@ -5,13 +9,72 @@ const postController = {
     },
 
     getPostPage: async function (req, res) {
-        // var query for logged in (boolean)
-        // var projection
+        var query = {_id: req.params.postID};
+        var poster = {username: req.params.username};
 
-        // var result = await db.findOne
+        // fields to be returned
+        var projection = 'postID title username votes date description comments';
+        var userProjection = 'icon';
+
+        var result = await db.findOne(Post, query, projection);
+        var posterIcon = await db.findOne(User, poster, userProjection);
+
+        var comments = result.comments;
+        console.log(comments);
+
+        // var commentRes = await db.findOne(Post, comments, commentProjection);
+        
+        // var commentRes = comments.map(comments => comments);
+        // console.log(commentRes);
+        
+        // var postDate = new Date(result.date).toLocaleString;
+        // var commenterUsername = comments.username;
+        // console.log(commentRes);
+
+        //${new Date(p.date).toLocaleString()}
+        
+        // var commenterIcon = await db.findOne(User, commenterUsername, userProjection);
+
+        //projection
+        var commentProj = comments.map(comments => {
+            return {
+                commenterUsername: comments.username,
+                commentVotes: comments.votes,
+                commentDesc: comments.description
+            }    
+        });
+
+        if(result != null) {
+            var details = {
+                votes: result.votes,
+                title: result.title,
+                description: result.description,
+                username: result.username,
+                // date: postDate,
+
+                comments: commentProj,
+                
+                // commenterIcon: commenterIcon.icon,
+
+                icon: posterIcon.icon,
+                route: result.username
+                
+            };
+            // console.log('comments projection: ' + details.comments);
+            // console.log('commenterUsername projection: ' + details.commenterUsername);
+            // console.log('commentVotes projection: ' + details.commentVotes);
+            // console.log('commentDesc projection: ' + details.commentDesc);
+            
+
+            res.render('post-page-u', details);
+        };
 
         
-        res.render('post-page');
+    },
+
+    insertComment: async function (req, res) {
+        var commentProjection = 'username date votes clickvote deleted description';
+        // var commentQuery = await ;
     }
 }
 

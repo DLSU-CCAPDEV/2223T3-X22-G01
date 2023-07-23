@@ -9,19 +9,21 @@
 	<div class="profile-side glasshover"  onclick="location.href='profile-page.html?userID=4'"> <!-- side bar -->
 
 		<div class="side-header"> <!-- logo -->
-			<a href="timeline.html"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
+			<a href="/timeline"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
 		</div>
 
 		<div class="side-content"> <!-- profile pic bg & profile text thing -->
-			<div class="side-message">Good morning, Eve! <br> You're doing just fine.</div>
-			<div class="user-info">5 posts | 3 comments</div>
+			<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine. </div>
+			{{!-- Good morning, displayName!
+					You're doing just fine.  --}}
+			<div class="user-info">{{numPosts}} posts | {{numComments}} comments</div>
 		</div>
 
 		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='index.html'"></ion-icon>
-			
+			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/index'"></ion-icon>
+
 			<div class="username-action">
-				@eveiscool
+				{{username}}
 			</div>
 
 			<ion-icon name="sunny-outline"></ion-icon>
@@ -61,203 +63,13 @@
             <button id="post-button">Post</button>
         </div>
 
-		<div class="page-content" id="page-content"></div><!-- timeline -->
+		<div class="page-content" id="page-content">
+			{{#each posts}}
+				{{> postprev}}
+			{{/each}}
+		</div><!-- timeline -->
 
 	</div>
-
-
-<!-- Load in posts from data.js -->
-<script src = "../javascript/data.js"></script>
-<script>
-
-	const params = new Proxy(new URLSearchParams(window.location.search), {
-        get: (searchParams, prop) => searchParams.get(prop),
-    });
-
-	var post2;
-	if (!(params.filter === null)){
-		post2 = post.filter(function(item)
-		{
-			if (item.title.toLowerCase().includes(params.filter)) return true;
-			if (item.description.toLowerCase().includes(params.filter)) return true;
-	
-		});
-	} else {
-		post2 = post; 
-	}
-		
-	
-	switch(params.sortBy) {
-		case 'popular':
-			post2.sort((a, b) => {
-				return b.votes - a.votes;
-			});
-			break;
-		case 'recent':
-			post2.sort((a, b) => {
-				return b.date - a.date;
-			});
-			break;
-		case 'unpopular':
-			post2.sort((a, b) => {
-				return a.votes - b.votes;
-			});
-			break;
-		case 'old':
-			post2.sort((a, b) => {
-				return a.date - b.date;
-			});
-			break;
-		
-		default:
-			//sort by id
-			post2.sort((a, b) => {
-				return a.id - b.id;
-			});
-	}
-	
-	
-
-	var container = document.getElementById('page-content');
-	function addPost(p) {
-		var u = user.find(t => t.userID == p.userID);
-
-		var html = `
-		<div class="post"> <!-- posts proper -->
-			<div class="post-content glasshover">
-				
-				<div class="vote-container vote-width">
-					<ion-button id="up-${p.id}" onclick="upvote(this.id)">
-                        <ion-icon name="caret-up-outline"></ion-icon>
-                    </ion-button>
-					
-					<div id="votes-${p.id}">${p.votes}</div>
-
-					<ion-button id="down-${p.id}" onclick="downvote(this.id)">
-                        <ion-icon name="caret-down-outline"></ion-icon>
-                    </ion-button>
-					
-				</div>
-
-				<a href="post-page.html?postID=${p.id}">
-					<div class="post-text">
-						
-						<h1>${p.title}</h1>
-						<h2>${u.username} | ${new Date(p.date).toLocaleString()} | ${p.comments.length} replies</h2>
-						
-					</div>
-				</a>
-
-			</div>
-			
-			<a href="profile-page.html?userID=${u.userID}">
-				<div style="background-image: url(../images/${u.icon})" class="post-pfp glasshover"></div>
-			</a>	
-				
-		</div>
-		`
-
-		container.insertAdjacentHTML('beforeend',html);
-
-		if (p.clickvote){
-			if (p.dirvote) {
-				document.getElementById('up-'+p.id).style.color = "var(--HLsecondary)";
-			} else {
-				document.getElementById('down-'+p.id).style.color = "var(--HLsecondary)";
-			}
-		}
-	}
-	
-	for (let p of post2) {
-		addPost(p);
-	}
-
-	var postBtn = document.getElementById('post-button');
-	postBtn.addEventListener('click', function(){
-		var title = document.getElementById('post-title');
-		var desc = document.getElementById('post-box');
-		
-		if (!(desc.innerHTML.trim().length === 0) && !(title.value.trim().length === 0)){
-			var p = {
-			title: title.value,
-			description: desc.innerHTML,
-			id: post.length+1,
-			userID: 4,
-			deleted: false,
-			date: Date.now(),
-			votes: 0,
-			comments: [],
-			}
-			addPost(p);
-			post.push(p);
-			localStorage.setItem('post',JSON.stringify(post)); //save function
-
-			
-			title.value = '';
-			desc.innerHTML = '';
-		}
-	});
-
-	function upvote(id){
-		var id_num = id.replace(/^\D+/g, '');
-		var vote_count = document.getElementById('votes-'+id_num);
-		var p = post.find(t => t.id == id_num);
-		var up_button = document.getElementById('up-'+id_num);
-        
-		if (p.clickvote) {
-			if (p.dirvote){
-				p.clickvote = false;
-				p.votes -= 1;
-				up_button.style.color = "var(--secondary)";
-			} else {
-				p.dirvote = true;
-				p.votes += 2;
-				document.getElementById('down-'+id_num).style.color = "var(--secondary)";
-				up_button.style.color = "var(--HLsecondary)";
-			}
-
-			
-		} else {
-			p.clickvote = true;
-			p.dirvote = true;
-			p.votes += 1;
-			up_button.style.color = "var(--HLsecondary)";
-		}
-		
-		vote_count.innerHTML = p.votes;
-		localStorage.setItem('post',JSON.stringify(post)); //save function
-	};
-
-	function downvote(id){
-		var id_num = id.replace(/^\D+/g, '');
-		var vote_count = document.getElementById('votes-'+id_num);
-		var p = post.find(t => t.id == id_num);
-		var down_button = document.getElementById('down-'+id_num);
-		
-		if (p.clickvote) {
-			if (p.dirvote){
-				p.dirvote = false;
-				p.votes -= 2;
-				document.getElementById('up-'+id_num).style.color = "var(--secondary)";
-				down_button.style.color = "var(--HLsecondary)";
-			} else {
-				p.clickvote = false;
-				p.votes += 1;
-				down_button.style.color = "var(--secondary)";
-			}
-			
-		} else {
-			p.clickvote = true;
-			p.dirvote = false;
-			p.votes -= 1;
-			down_button.style.color = "var(--HLsecondary)";
-		}
-		
-		vote_count.innerHTML = p.votes;
-		localStorage.setItem('post',JSON.stringify(post)); //save function
-	};
-
-</script>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

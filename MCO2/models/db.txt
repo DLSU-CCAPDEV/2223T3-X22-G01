@@ -1,45 +1,26 @@
+// import mongoose from "mongoose";
+// import User from "../models/UserModel.js";
+// import Post from "../models/PostModel.js";
+// import Comment from "../models/CommentModel.js";
 
-// import module `mongoose`
 const mongoose = require('mongoose');
 
-// import module `User` from `../models/UserModel.js`
+// Connect to MONGODB_URI, which also includes the database name
+const url = 'mongodb://localhost:27017/salaminDB';
 const User = require('./UserModel.js');
-const { MongoClient } = require('mongodb');
 
-// ccapdev-mongoose is the name of the database
-const url = 'mongodb://127.0.0.1:27017/salaminDB';
-const client = new MongoClient(url);
-
-const salamin = client.db("salaminDB");
-
-// additional connection options
 const options = {
     useUnifiedTopology: true,
     useNewUrlParser: true
 };
 
-// defines an object which contains necessary database functions
 const database = {
 
-    /*
-        connects to database
-    */
     connect: async function () {
         await mongoose.connect(url, options);
         console.log('Connected to: ' + url);
     },
 
-    collectionToArray: async function (collection) {
-        return await salamin.collection(collection).find({}).toArray();
-    },
-
-    collectionToArray: async function (collection, query) {
-        return await salamin.collection(collection).find(query).toArray();
-    },
-
-    /*
-        inserts a single `doc` to the database based on the model `model`
-    */
     insertOne: async function(model, doc) {
         return await model.create(doc);
     },
@@ -104,11 +85,15 @@ const database = {
     deleteMany: async function(model, conditions) {
         return await model.deleteMany(conditions);
     }
-
 }
 
-/*
-    exports the object `database` (defined above)
-    when another script exports from this file
-*/
+// const connection = mongoose.connection;
+// connection.once('open', _ => {
+//   console.log('Database connected:', url)
+// })
+
+// connection.on('error', err => {
+//   console.error('connection error:', err)
+// })
+
 module.exports = database;

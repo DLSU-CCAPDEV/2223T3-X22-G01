@@ -1,0 +1,41 @@
+<div class="comment">
+                <div class="comment-inner">
+                    <a href="/{{commenterUsername}}"><div style="background-image: url(../images/{{commenterIcon}})" class="post-pfp pfp-small glasshover"></div></a>
+                    <div class="vote-container">
+
+                        <ion-button>
+                            <ion-icon name="caret-up-outline"></ion-icon>
+                        </ion-button>
+                                
+                        <div>{{commentVotes}}</div>
+
+                        <ion-button>
+                            <ion-icon name="caret-down-outline"></ion-icon>
+                        </ion-button>
+                        
+
+                    </div>
+                </div>
+                <div class="comment-inner full">
+                    <div class="comment-header">
+                        {{commenterUsername}}
+                        <nav class="dropdown-container">
+                                <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                                {{!-- for loop? array 0 to n-1 
+                                      if logged in --}}
+                                <div class="dropdown-items">
+                                    <button id="edit-${c.id}" onclick="edit(this.id)">Edit</button>
+                                    <button id="del-${c.id}" onclick="del(this.id)">Delete</button>
+                                </div>
+                        </nav>
+                    </div>
+                    <p class="comment-content full" id="comment-description-${c.id}" contenteditable="false">
+                        {{commentDesc}}
+                    </p>
+
+                    <div id="comment-footer-${c.id}" class="comment-footer">
+
+                    </div>
+                </div>
+            </div>
