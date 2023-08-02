@@ -15,9 +15,15 @@ app.get('/favicon.ico', timelineController.getFavicon);
 
 app.get('/', timelineController.getTimeline);
 
-app.post('/', timelineController.postSignUp);
+//signup.hbs page
+app.get('/signup', timelineController.getSignUp);
 
-app.post('/', timelineController.postLogin);
+//login.hbs page
+app.get('/login', timelineController.getLogin);
+
+app.post('/signup', timelineController.postSignUp);
+
+app.post('/login', timelineController.postLogin);
 
 app.get('/home', successController.getSuccess);
 
