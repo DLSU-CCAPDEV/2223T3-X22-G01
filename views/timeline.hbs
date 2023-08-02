@@ -11,7 +11,7 @@
     <body>
 
         {{!-- PROFILE SIDE --}}
-        <a href="/{{username}}"><div class="profile-side glasshover" style="background-image: url(../images/{{banner}})"></div></a>
+        <a href="/{{loggedUsername}}"><div class="profile-side glasshover" style="background-image: url(../images/{{banner}})"></div></a>
 
             <div class="side-header">
                 <a href="/home"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
@@ -28,7 +28,7 @@
                 <a href="/"><ion-icon name="log-out-outline"></ion-icon></a>
 
                 <div class="username-action">
-                    <a href="/{{username}}">{{username}}</a>
+                    <a href="/{{loggedUsername}}">{{loggedUsername}}</a>
                 </div>
 
                 <ion-icon name="sunny-outline"></ion-icon>

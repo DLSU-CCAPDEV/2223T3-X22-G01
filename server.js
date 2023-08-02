@@ -12,7 +12,7 @@ const app = express();
 
 dotenv.config();
 port = process.env.PORT;
-// hostname = process.env.HOSTNAME;
+hostname = process.env.HOSTNAME;
 
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('views', path.join(__dirname, 'views'));
@@ -25,16 +25,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(`/`, routes);
 
 app.use(function (req, res) {
-    var error = {
-        collectionType: "page",
-        route: "/"
-    }
-    res.render('error', error);
+    res.render('error', {collectionType: "page", route: "/"});
 });
 
 
-app.listen(port, () => {
+app.listen(port, hostname, () => {
     db.connect();
-    console.log(`Server running at`);
-    console.log(` port `+ port);
+    console.log(`Server running at:`);
+    console.log(`http://` + hostname + `:` + port);
 });

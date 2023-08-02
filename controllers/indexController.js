@@ -34,7 +34,11 @@ const indexController = {
 
             res.render('index', details);
         } else {
-            res.render('error', {collectionType: "page", route: "/"});
+            var error = {
+                collectionType: "page",
+                route: "/"
+            }
+            res.render('error', error);
         }
     }
 
