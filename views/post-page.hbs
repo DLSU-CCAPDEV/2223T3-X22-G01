@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Salamin | Post by {{username}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+<body>
+
+    <div class="profile-side glasshover"  onclick="location.href='/profile-page?userID=4'"> <!-- side bar -->
+
+		<div class="side-header"> <!-- logo -->
+			<a href="/"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
+            
+		</div>
+
+		<div class="side-content"> <!-- profile pic bg & profile text thing -->
+			<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine.</div>
+			<div class="user-info">{{numUserPosts}} posts | {{numUserComments}} comments</div>
+		</div>
+
+		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
+			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/index'"></ion-icon>
+			
+			<div class="username-action">
+				{{username}}
+			</div>
+
+			<ion-icon name="sunny-outline"></ion-icon>
+			
+		</div>
+	</div>
+
+    <div class="post-side">
+
+        {{> headernp}}
+
+        <div class="box green" id="post-section">
+            <div class="post-header">
+                <div class="vote-container">
+
+                    <ion-button >
+                        <ion-icon name="caret-up-outline"></ion-icon>
+                    </ion-button>
+                    
+                    <div>{{votes}}</div> 
+
+                    <ion-button>
+                        <ion-icon name="caret-down-outline"></ion-icon>
+                    </ion-button>
+                    
+                </div>
+
+                <h1 contenteditable="false" id="post-title">
+                    {{title}}
+                </h1>
+
+                <nav class="dropdown-container">
+                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                    <div class = "dropdown-items">
+                        <button id="p-edit-{{postID}}" onclick="editPost(this.id)">Edit</button>
+                        <button id="p-del-{{postID}}" onclick="delPost(this.id)">Delete</button>
+                    </div>
+			    </nav>
+            </div>
+
+            <div class="flex-column" id="post-description-container">
+                <p id="post-description" contenteditable="false">${p.description}</p>
+            </div>
+            <div class="post-footer">
+                
+                <div><h2>{{username}} | {{date}}</h2></div>
+                <a href="/{{username}}"><div style="background-image: url(../images/{{icon}})" class="post-pfp pfp-small glasshover"></div></a>
+                
+            </div>
+
+        </div>
+
+        <div class="box">
+            <span class="textarea" role="textbox" id="comment-box" contenteditable></span>
+            
+            <button id="comment-button">Comment</button>
+        </div>
+
+        <div class="box" id="comment-section">
+            {{#each comments}}
+                {{> comment}} {{!-- logged in boolean --}}
+            {{/each}}
+        </div>
+
+    </div>
+
+    
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
