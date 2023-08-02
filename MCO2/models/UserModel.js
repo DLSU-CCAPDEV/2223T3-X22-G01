@@ -26,6 +26,10 @@ var UserSchema = new mongoose.Schema({
         // contentType: String
         type: String,
         required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 });
 

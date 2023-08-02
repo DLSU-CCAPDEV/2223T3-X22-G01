@@ -7,10 +7,11 @@ const User = require('./UserModel.js');
 const { MongoClient } = require('mongodb');
 
 // ccapdev-mongoose is the name of the database
-const url = 'mongodb://127.0.0.1:27017/salaminDB';
+const url = 'mongodb+srv://apdev-salamin:NCOwKuSfzOcIEhEI@salamin.pwmvajm.mongodb.net/SalaminDB?retryWrites=true&w=majority';
+// const url = process.env.MONGODB_URI;
 const client = new MongoClient(url);
 
-const salamin = client.db("salaminDB");
+const salamin = client.db("SalaminDB");
 
 // additional connection options
 const options = {
@@ -26,7 +27,8 @@ const database = {
     */
     connect: async function () {
         await mongoose.connect(url, options);
-        console.log('Connected to: ' + url);
+        // console.log('Connected to: ' + url);
+        console.log('Connected to SalaminDB');
     },
 
     collectionToArray: async function (collection) {

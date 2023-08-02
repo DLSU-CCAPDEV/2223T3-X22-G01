@@ -18,7 +18,7 @@
                 </div>
                 <div class="comment-inner full">
                     <div class="comment-header">
-                        {{commenterUsername}}
+                        <span class="commenter-username">{{commenterUsername}}</span>
                         <nav class="dropdown-container">
                                 <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
 
@@ -34,8 +34,8 @@
                         {{commentDesc}}
                     </p>
 
-                    <div id="comment-footer-${c.id}" class="comment-footer">
-
+                    <div class="comment-footer">
+                        Posted on {{commentDate}}
                     </div>
                 </div>
             </div>

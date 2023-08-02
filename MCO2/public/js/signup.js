@@ -1,21 +1,21 @@
 $(document).ready(function () {
 
-    $('#username').keyup(function () {
+    $('#username_signup').keyup(function () {
   
-        var username = $('#username').val();
+        var username = $('#username_signup').val();
   
-        $.get('/getUsername', {username: username}, function (result) {
+        $.get('/getCheckUsername', {username: username}, function (result) {
   
             
             if(result.username == username) {
-                $('#username').css('background-color', 'red');
+                $('#username_signup').css('background-color', 'red');
                 $('#error').text('username has already been used');
                 $('#submit').prop('disabled', true);
             }
   
             
             else {
-                $('#username').css('background-color', '#E3E3E3');
+                $('#username_signup').css('background-color', '#E3E3E3');
                 $('#error').text('');
                 $('#submit').prop('disabled', false);
             }

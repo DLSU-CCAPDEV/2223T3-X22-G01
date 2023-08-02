@@ -3,13 +3,14 @@
 <head>
 	<title>Salamin | Home</title>
 	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 	
-	<div class="profile-side glasshover"  onclick="location.href='profile-page.html?userID=4'"> <!-- side bar -->
+	<div class="profile-side glasshover"  onclick="event.stopPropagation(); window.location.href='/{{username}}" style="background-image: url(../images/{{banner}})"> <!-- side bar -->
 
 		<div class="side-header"> <!-- logo -->
-			<a href="/timeline"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
+			<a href="/home"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
 		</div>
 
 		<div class="side-content"> <!-- profile pic bg & profile text thing -->
@@ -20,10 +21,10 @@
 		</div>
 
 		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/index'"></ion-icon>
+			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/'"></ion-icon>
 
 			<div class="username-action">
-				{{username}}
+				<a href="/{{username}}">{{username}}</a>
 			</div>
 
 			<ion-icon name="sunny-outline"></ion-icon>
@@ -34,7 +35,7 @@
 	<div class="post-side">
 
 		<div class="page-header"> <!-- search -->
-			<div class="user-pfp glasshover"style="background-image: url(../images/pfp_eve.jpg)" onclick="location.href='profile-page.html?userID=4'"></div>
+			<div class="user-pfp glasshover"style="background-image: url(../images/{{icon}})" onclick="location.href='/{{username}}'"></div>
 			<div class="search-bar">
 				<ion-icon name="search-outline"></ion-icon>
 				<form class="searchForm">
@@ -57,10 +58,14 @@
 
 
 		<div class="box">
-			<input type="text" placeholder="Title" class="post-title" id="post-title">
-            <span class="textarea" role="textbox" id="post-box" contenteditable></span>
+			<form method="POST">
+				<input type="text" placeholder="Title" class="post-title" name="postTitle" id="post-title">
+				<textarea placeholder="What's on your mind?" name="postBox" class="textarea"  role="textbox" id="post-box" contenteditable></textarea>
+            	<button id="post-button" onclick="window.location.href='/home'">Post</button>
+			
+			</form>
+
             
-            <button id="post-button">Post</button>
         </div>
 
 		<div class="page-content" id="page-content">

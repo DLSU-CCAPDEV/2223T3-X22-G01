@@ -357,6 +357,15 @@ color: gray;
 
 .comment-footer {
 	display: flex;
+	font-size: 12px;
+	color:#aaaaaa;
+	margin-bottom: 10px;
+}
+
+.commenter-username {
+	margin-top: auto;
+	margin-bottom: auto;
+	font-weight:500;
 }
 
 .page-content {

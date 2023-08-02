@@ -9,7 +9,7 @@ $(document).ready(function () {
             
             if(result.username == username) {
                 $('#username').css('background-color', 'red');
-                $('#error').text('username has already been used');
+                $('#error').text('username does not exist');
                 $('#submit').prop('disabled', true);
             }
   

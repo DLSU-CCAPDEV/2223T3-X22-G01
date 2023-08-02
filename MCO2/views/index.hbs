@@ -5,11 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="/css/index.css">
-        <title>Salamin | Home</title>
+        {{!-- imports --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
 
         <!-- Unicons -->
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 
+        <title>Salamin | Home</title>
     </head>
     <body>
         
@@ -25,12 +28,12 @@
                         <h2>Login</h2>
 
                         <div class="input_box">
-                            <input type="username" placeholder="Enter your username" required />
+                            <input type="text" name="username" id="username" placeholder="Enter your username" required />
                             <i class="uil uil-at"></i>
                         </div>
 
                         <div class="input_box">
-                            <input type="password" placeholder="Enter your password" required />
+                            <input type="password" name="password" id="password" placeholder="Enter your password" required />
                             <i class="uil uil-lock password"></i>
                             <i class="uil uil-eye-slash pw_hide"></i>
                         </div>
@@ -45,7 +48,7 @@
                         </div>
 
                         <button class="button">
-                            <a href="timeline.html" style="color: white; text-decoration: none;">Login Now</a>
+                            <a href="/home" style="color: white; text-decoration: none;">Login Now</a>
                         </button>
 
                         <div class="login_sign-up">Don't have an account yet? <a href="#" id="sign-up"> Sign-up</a></div>
@@ -54,39 +57,43 @@
 
                 <!-- Sign-up Form -->
                 <div class="sign-up_form">
-                    <form action="#">
+                    <form id="signup" method="post">
                         <h2>Sign-up</h2>
 
                         <div class="input_box">
-                            <input type="name" placeholder="Enter your name" required />
+                            <input type="text" name="displayName" id="displayName" placeholder="Enter your name" required />
                             <i class="uil uil-user"></i>
+                            <p id="displayNameError" class="error">{{displayNameError}}</p>
                         </div>
 
                         <div class="input_box">
-                            <input type="username" placeholder="Enter your username" required />
+                            <input type="text" name="username" id="username_signup" placeholder="Enter your username" required />
                             <i class="uil uil-at"></i>
+                            <p id="usernameError" class="error">{{usernameError}}</p>
                         </div>
 
                         <div class="input_box">
-                            <input type="password" placeholder="Create your password" required />
+                            <input type="password" name="password" id="password" placeholder="Create your password" required />
                             <i class="uil uil-lock password"></i>
                             <i class="uil uil-eye-slash pw_hide"></i>
+                            <p id="pwError" class="error">{{pwError}}</p>
                         </div>
 
                         <div class="input_box">
-                            <input type="password" placeholder="Confirm your password" required />
+                            <input type="password" name="password2" id="password2" placeholder="Confirm your password" required />
                             <i class="uil uil-lock password"></i>
                             <i class="uil uil-eye-slash pw_hide"></i>
+                            <p id="pw2Error" class="error">{{pw2Error}}</p>
                         </div>
-
+                        
                         <button class="button">
-                            <a href="timeline.html" style="color: white; text-decoration: none;">Sign-Up Now</a>
+                            <a href="/home" style="color: white; text-decoration: none;">Sign-Up Now</a>
                         </button>
 
                         <div class="login_sign-up">Already have an account?<a href="#" id="sign-up"> Log-in</a></div>
                     </form>
                 </div>
-            </div>
+            </div> 
 
             <div class="page">
                 <!-- Header -->
@@ -115,7 +122,6 @@
                         
                         <!-- Login Button -->
                         <button class="nav_btn" id="form-open">Login</button>
-                    
                 </header>
     
                 <div class="box">
@@ -139,8 +145,8 @@
         
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="..\javascript\unregistered.js"></script>
-    <script src="..\javascript\signup.js"></script>
+    <script src="../js/unregistered.js"></script>
+    
     
     </body>
 </html>

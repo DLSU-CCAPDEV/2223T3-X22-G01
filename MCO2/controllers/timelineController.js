@@ -15,17 +15,76 @@ const timelineController = {
     postLogin: async function(req,res){
         var username = req.body.username;
         var password = req.body.password;
+        var projection = 'username displayName bio icon banner password';
 
-        var user = {
-            username: username,
-            password: password
-        }
+        var query = {username: username, password: password};
 
-        var response = await db.insertOne(User, user);
+        var response = await db.findOne(User, query, projection);
 
+        var postArray = await db.collectionToArray("posts");
+        var userArray = await db.collectionToArray("users");
+
+        var queryLoggedIn = {username: "oO0Eve0Oo"};
+        var postsByLoggedIn = await db.collectionToArray("posts", queryLoggedIn);
+        var postCount = postsByLoggedIn.length;
+
+        //projection
+        var postProj = postArray.map(postArray => {
+            var UserToMatch = postArray.username;
+            var icon = userArray.find(({username}) => username == UserToMatch).icon;
+            console.log(icon);
+            
+            var dateUnformat = new Date(postArray.date);
+            var dateProj = dateUnformat.toDateString();
+            return {
+                postID: postArray._id,
+                title: postArray.title,
+                votes: postArray.votes,
+                date: dateProj,
+                numComments: postArray.comments.length,
+                username: postArray.username,
+                icon: icon,
+                route: "/home"
+            }
+        });
+
+        /*
+            var postProj = postArray.map(postArray => {
+                var UserToMatch = postArray.username;
+                var icon = userArray.find(({username}) => username == UserToMatch).icon;
+
+                var dateUnformat = new Date(postArray.date);
+                var dateProj = dateUnformat.toDateString();
+                
+                return {
+                    postID: postArray._id,
+                    title: postArray.title,
+                    votes: postArray.votes,
+                    date: dateProj,
+                    numComments: postArray.comments.length,
+                    username: postArray.username,
+                    icon: icon
+                }
+                
+            });
+        */
+        
         if(response != null){
-            res.redirect('/success?username=' + username);
+            var details = {
+                //default user: oO0Eve0Oo
+                username: "oO0Eve0Oo",
+                banner: "banner_eve.jpg",
+                displayName: "Eve",
+                numPosts: postCount,
+
+                posts: postProj,
+
+                // icon: posterIcon.icon,
+                
+            };
+            res.redirect('/home', details);
         }
+
         else{
             res.render('error');
         }
@@ -50,15 +109,18 @@ const timelineController = {
         var password = req.body.password;
 
         var user = {
-            name: name,
+            displayName: name,
             username: username,
+            bio: "Hi, ka-Adult!",
+            icon: "pfp_" + name + ".jpg",
+            banner: "banner_" + name + ".jpg",
             password: password
         }
 
         var response = await db.insertOne(User, user);
 
         if(response != null){
-            res.redirect('/success?name=' + name +'&username=' + username);
+            res.redirect('/home');
         }
         else{
             res.render('error');
@@ -74,46 +136,40 @@ const timelineController = {
     },
 
     getTimeline: async function (req, res) {
-        // var query = db.getCollectionInfos();
 
-        var projection = 'id title username votes date comments';
+        var projection = 'icon';
         var postProjection = 'id title votes date comments';
 
-        // var result = await db.findMany(User, query, projection);
-        // var postResult = await db.findMany(Post, query, postProjection);
-        var result = await User.find();
-        var postResult = await Post.find();
+        
         var postArray = await db.collectionToArray("posts");
-
-        var posts = result.posts;
-        console.log(posts);
+        var userArray = await db.collectionToArray("users");
 
         //projection
         var postProj = postArray.map(postArray => {
+            var UserToMatch = postArray.username;
+            var icon = userArray.find(({username}) => username == UserToMatch).icon;
+
+            var dateUnformat = new Date(postArray.date);
+            var dateProj = dateUnformat.toDateString();
+            console.log(icon);
             return {
                 postID: postArray._id,
                 title: postArray.title,
                 votes: postArray.votes,
-                date: postArray.date,
+                date: dateProj,
                 numComments: postArray.comments.length,
                 username: postArray.username,
-                // icon: result.icon
+                icon: icon
             }
+            
         });
 
-        if(result != null || postResult != null){
+        if(userArray != null || postArray != null){
             var details = {
-                username: result.username,
-                displayName: result.displayName,
-                bio: result.bio,
-                icon: result.icon,
-                banner: result.banner,
-                //numComments: postResult.comments.length
-
                 posts: postProj,
 
                 // icon: posterIcon.icon,
-                route: result.username
+                route: userArray.username
             };
 
             res.render('index', details);
@@ -150,6 +206,52 @@ const timelineController = {
         // //         });
         // // }
 
+    },
+
+    // getSearch: async function(req,res){
+    //     var query = req.query.filter;
+
+    // },
+
+    // voteUpdate: async function(req,res){
+
+    // },
+
+    newPost: async function(req, res){
+        var title = req.body.postTitle;
+        var postText = req.body.postBox;
+
+        console.log('title: ' + title);
+        console.log('postText: ' + postText);
+
+        var post = {
+            title: title,
+            username: "oO0Eve0Oo",
+            votes: "0",
+            date: Date.now(),
+            deleted: false,
+            clickvote: false,
+            dirvotes: false,
+            description: postText,
+            comments: [
+                // username,
+                // date,
+                // votes,
+                // clickvote,
+                // dirvotes,
+                // deleted,
+                // description
+            ]
+        }
+
+        var response = await db.insertOne(Post, post);
+
+        if(response != null){
+            res.redirect('/home');
+        }
+        else{
+            res.render('error');
+        }
     },
 
     getError: async function (req,res){

@@ -19,6 +19,8 @@ const postController = {
         var result = await db.findOne(Post, query, projection);
         var posterIcon = await db.findOne(User, poster, userProjection);
 
+        var userArray = await db.collectionToArray("users");
+
         var comments = result.comments;
         console.log(comments);
 
@@ -37,20 +39,29 @@ const postController = {
 
         //projection
         var commentProj = comments.map(comments => {
+            var UserToMatch = comments.username;
+            var icon = userArray.find(({username}) => username == UserToMatch).icon;
+            
+            var dateUnformat = new Date(comments.date);
+            var dateProj = dateUnformat.toDateString();
             return {
                 commenterUsername: comments.username,
                 commentVotes: comments.votes,
-                commentDesc: comments.description
+                commentDesc: comments.description,
+                commentDate: dateProj,
+                commenterIcon: icon
             }    
         });
 
         if(result != null) {
+            var postDateUnformat = new Date(result.date);
+            var postDateProj = postDateUnformat.toDateString();
             var details = {
                 votes: result.votes,
                 title: result.title,
                 description: result.description,
                 username: result.username,
-                // date: postDate,
+                date: postDateProj,
 
                 comments: commentProj,
                 
