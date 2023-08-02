@@ -10,18 +10,17 @@
     <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="/css/index.css">
-    <title>Salamin | Home</title>
+    <title>Salamin | Sign-Up</title>
 
     <!-- Unicons -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 
 </head>
 <body>
-    <div class="home">
+    <div class="page">
         <div class="form_content">
-            <i class="uil uil-times form_close"></i>
+            <a href="/"><i class="uil uil-times form_close"></i></a>
             <!-- Sign-up Form -->
-            <div class="sign-up_form">
                 <form id="signup" method="post">
                     <h2>Sign-up</h2>
 
@@ -52,21 +51,19 @@
                     </div>
                     
                     <button class="button">
-                        <a href={{route}} style="color: white; text-decoration: none;">Sign-Up Now</a>
+                        <a href="{{route}}" style="color: white; text-decoration: none;">Sign-Up Now</a>
                     </button>
 
                     <div class="login_sign-up">Already have an account?<a href="/login" id="sign-up"> Log-in</a></div>
                 </form>
-            </div>
         </div> 
     </div>
-</div>
     
 
     
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script src="..\js\unregistered.js"></script>
+{{!-- <script src="..\js\unregistered.js"></script> --}}
     
 </body>
 </html>

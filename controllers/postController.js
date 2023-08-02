@@ -68,7 +68,7 @@ const postController = {
                 // commenterIcon: commenterIcon.icon,
 
                 icon: posterIcon.icon,
-                route: result.username
+                route: ""
                 
             };
             // console.log('comments projection: ' + details.comments);
