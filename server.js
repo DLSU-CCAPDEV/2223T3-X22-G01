@@ -25,7 +25,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(`/`, routes);
 
 app.use(function (req, res) {
-    res.render('error', {collectionType: "page", route: "/"});
+    var error = {
+        collectionType: "page",
+        route: "/"
+    }
+    res.render('error', error);
 });
 
 
