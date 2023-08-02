@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 
 const User = require('./UserModel.js');
-const Comment = require('./CommentModel.js');
 const Post = require('./PostModel.js');
 const { MongoClient } = require('mongodb');
 

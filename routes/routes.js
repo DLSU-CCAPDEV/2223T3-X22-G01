@@ -21,6 +21,16 @@ app.get('/favicon.ico', indexController.getFavicon);
 
 app.get('/', indexController.getIndex);
 
+app.get('/signup', signupController.getSignUp);
+
+app.post('/signup', signupController.postSignUp);
+
+app.get('/login', loginController.getLogin);
+
+app.get('/home', timelineController.getTimeline);
+
+app.get('/:username', profileController.getProfile);
+
 // ROUTES END
 
 module.exports = app;

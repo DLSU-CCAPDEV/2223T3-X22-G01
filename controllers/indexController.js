@@ -2,7 +2,6 @@ const db = require('../models/db.js');
 
 const User = require('../models/UserModel.js');
 const Post = require('../models/PostModel.js');
-const Comment = require('../models/CommentModel.js');
 
 const indexController = {
 
@@ -15,7 +14,8 @@ const indexController = {
         var iconProjection = 'icon'
 
         var posts = await db.findMany(Post, {}, postProjection);
-        var userIcon = await db.findMany(User, {username: posts.username}, icon);
+        var commentLength = await Post.find().populate({ path: 'comment_length', count: true }).exec();
+        var userIcon = await db.findMany(User, {username: posts.username}, iconProjection);
 
         if(posts != null) { 
 
@@ -28,7 +28,7 @@ const indexController = {
                 title: posts.title,
                 username: posts.username,
                 date: dateProj,
-                numComments: posts.comments.length,
+                numComments: commentLength,
                 icon: userIcon
             }
 
