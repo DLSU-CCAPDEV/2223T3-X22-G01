@@ -2,6 +2,8 @@ const db = require('../models/db.js');
 const User = require('../models/UserModel.js');
 const Post = require('../models/PostModel.js');
 
+const { validationResult } = require('express-validator');
+
 const timelineController = {
 
     getFavicon: function (req, res) {
@@ -104,6 +106,19 @@ const timelineController = {
         as defined in `../routes/routes.js`
     */
     postSignUp: async function(req,res){
+        var errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+
+            errors = errors.errors;
+
+            var details = {};
+            for(i = 0; i < errors.length; i++)
+                details[errors[i].path + 'Error'] = errors[i].msg;
+
+            res.render('signup', details);
+        }
+
         var name = req.body.name;
         var username = req.body.username;
         var password = req.body.password;
@@ -123,7 +138,7 @@ const timelineController = {
             res.redirect('/home');
         }
         else{
-            res.render('error');
+            res.render('error', {route: "/signup", collectionType: "page"});
         }
     },
 
