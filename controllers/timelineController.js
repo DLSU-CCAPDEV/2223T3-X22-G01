@@ -11,7 +11,7 @@ const timelineController = {
         var iconProjection = 'icon'
 
         var userLoggedIn = await db.findOne(User, {username: "oO0Eve0Oo"}, loggedProj);
-        var loggedPostCt = Post.where({username: userLoggedIn.username}).countDocuments();
+        var loggedPostCt = db.countDocuments(Post, {username: userLoggedIn.username});
 
         var posts = await db.findMany(Post, {}, postProjection);
         var commentLength = await Post.find().populate({ path: 'comment_length', count: true }).exec();

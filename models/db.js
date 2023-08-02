@@ -65,6 +65,10 @@ const database = {
         return await model.find(query, projection);
     },
 
+    countDocuments: async function(model, query) {
+        return await model.where(query).countDocuments();
+    },
+
     /*
         updates the value defined in the object `update`
         on a single document based on the model `model`
