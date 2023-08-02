@@ -25,10 +25,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(`/`, routes);
 
 app.use(function (req, res) {
-    res.render('error', {collectionType: "page"});
+    res.render('error', {collectionType: "page", route: "/"});
 });
 
-// db.connect();
 
 app.listen(port, hostname, () => {
     db.connect();

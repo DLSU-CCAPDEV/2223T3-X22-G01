@@ -2,8 +2,9 @@
 // import module `mongoose`
 const mongoose = require('mongoose');
 
-// import module `User` from `../models/UserModel.js`
 const User = require('./UserModel.js');
+const Comment = require('./CommentModel.js');
+const Post = require('./PostModel.js');
 const { MongoClient } = require('mongodb');
 
 // ccapdev-mongoose is the name of the database
@@ -29,14 +30,6 @@ const database = {
         await mongoose.connect(url, options);
         // console.log('Connected to: ' + url);
         console.log('Connected to SalaminDB');
-    },
-
-    collectionToArray: async function (collection) {
-        return await salamin.collection(collection).find({}).toArray();
-    },
-
-    collectionToArray: async function (collection, query) {
-        return await salamin.collection(collection).find(query).toArray();
     },
 
     /*

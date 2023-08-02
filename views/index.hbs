@@ -5,73 +5,86 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="/css/index.css">
+
         {{!-- imports --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
 
         <!-- Unicons -->
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 
         <title>Salamin | Home</title>
     </head>
-    <body>
-        
 
-        <!-- Home -->
+    <body>
+        {{!-- HOME --}}
         <div class="home">
-            
+
+            {{!-- PAGE --}}
             <div class="page">
-                <!-- Header -->
+
+                {{!-- HEADER --}}
                 <header class="header">
-                    
-                        <div class="header-logo"></div>
-    
-                        <div class="search-bar">
-                            <ion-icon name="search-outline"></ion-icon>
-                            <form class="searchForm">
-                                <input type="text" placeholder="Search" id="search" name="filter">
-                            </form>
-                        </div>
-            
-                        <nav class="dropdown-container">
-                            <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
-            
-                            <div class = "dropdown-items">
-                                <button onclick="window.location.href = '/index?sortBy=recent';">Recent</button>
-                                <button onclick="window.location.href = '/index?sortBy=old';">Old</button>
-                                <button onclick="window.location.href = '/index?sortBy=popular';">Popular</button>
-                                <button onclick="window.location.href = '/index?sortBy=unpopular';">Unpopuar</button>
-                            </div>
-                        </nav>
-                    
-                        
-                        <!-- Login Button -->
-                        <a href="/login"><button class="nav_btn" id="form-open">Login</button></a>
-                </header>
-    
-                <div class="box">
-                    <input type="text" placeholder="Title" class="post-title" id="post-title">
-                    <span class="textarea" role="textbox" id="post-box" contenteditable></span>
-                    
-                    <button id="form-open-post" >Post</button>
-                </div>
+
+                    <div class="header-logo"></div>
+
+                    {{!-- SEARCH BAR --}}
+                    <div class="search-bar">
+                        <ion-icon name="search-outline"></ion-icon>
+                        <form class="searchForm">
+                            <input type="text" placeholder="Search..." id="search" name="search">
+                        </form>
+                    </div>
+                    {{!-- SEARCH BAR END --}}
+
+                    {{!-- FILTER OPTIONS --}}
+                    <nav class="dropdown-container">
+                        <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
         
+                        <div class = "dropdown-items">
+                            <button>Recent</button>
+                            <button>Old</button>
+                            <button>Popular</button>
+                            <button>Unpopuar</button>
+                        </div>
+                    </nav>
+                    {{!-- FILTER OPTIONS END --}}
+
+                    {{!-- LOGIN BUTTON --}}
+                    <a href="/login"><button class="nav_btn" id="form-open">Login</button></a>
+                    {{!-- LOGIN BUTTON END --}}
+
+                </header>
+                {{!-- HEADER END --}}
+
+                {{!-- POST PROMPT --}}
+                <div class="box">
+                    <form method="POST">
+                        <input type="text" placeholder="Title" class="post-title" id="post-title">
+                        <textarea placeholder="What's on your mind?" name="postBox" class="textarea"  role="textbox" id="post-box" contenteditable></textarea>
+                        
+                        <a href="/login"><button type="submit">Post</button></a>
+                    </form>
+                </div>
+                {{!-- POST PROMPT END --}}
+
+                {{!-- POST PREVIEWS --}}
                 <div class="page-content" id="page-content"> <!-- timeline -->
                     {{#each posts}}
                         {{> postprev}}
                     {{/each}}
-                 
                 </div>
-            </div>
-        </div>
+                {{!-- POST PREVIEWS END --}}
 
-        
-   
-        
+            </div>
+            {{!-- PAGE END --}}
+
+        </div>
+        {{!-- HOME END --}}
+
+    {{!-- ICONS IMPORT --}}
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    {{!-- <script src="../js/unregistered.js"></script> --}}
-    
-    
+    {{!-- ICONS IMPORT END --}}
+
     </body>
 </html>

@@ -5,64 +5,75 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="/css/index.css">
+
+        {{!-- imports --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <title>Salamin | Login</title>
+        <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
 
         <!-- Unicons -->
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 
+        <title>Salamin | Login</title>
     </head>
     <body>
         
-
-        <!-- Home -->
-        
+        {{!-- PAGE --}}
         <div class="page">
+
+            {{!-- FORM --}}
             <div class="form_content">
                 <a href="/"><i class="uil uil-times form_close"></i></a>
 
-                <!-- Login Form -->
-                    <form action="#">
-                        <h2>Login</h2>
+                {{!-- LOGIN --}}
+                <form id="login" method="post">
+                    <h2>Login</h2>
 
-                        <div class="input_box">
-                            <input type="text" name="username" id="username" placeholder="Enter your username" required />
-                            <i class="uil uil-at"></i>
-                        </div>
+                    {{!-- USERNAME --}}
+                    <div class="input_box">
+                        <input type="text" name="username" id="username" placeholder="Enter your username" required />
+                        <i class="uil uil-at"></i>
+                    </div>
+                    {{!-- USERNAME END --}}
 
-                        <div class="input_box">
-                            <input type="password" name="password" id="password" placeholder="Enter your password" required />
-                            <i class="uil uil-lock password"></i>
-                            <i class="uil uil-eye-slash pw_hide"></i>
-                        </div>
+                    {{!-- PASSWORD --}}
+                    <div class="input_box">
+                        <input type="password" name="password" id="password" placeholder="Enter your password" required />
+                        <i class="uil uil-lock password"></i>
+                        <i class="uil uil-eye-slash pw_hide"></i>
+                    </div>
+                    {{!-- PASSWORD END --}}
 
+                    {{!-- OPTION TO STAY LOGGED IN --}}
+                    <div class="options">
+                        <span class="checkbox">
+                            <input type="checkbox" id="check">
+                            <label for="check">Remember me</label>
+                        </span>
+                    </div>
+                    {{!-- OPTION TO STAY LOGGED IN END --}}
 
-                        <div class="options">
-                            <span class="checkbox">
-                                <input type="checkbox" id="check">
-                                <label for="check">Remember me</label>
-                            </span>
-                            {{!-- <a href="#" class="forgot_pw">Forgot password?</a> --}}
-                        </div>
+                    {{!-- LOGIN BUTTON --}}
+                    <button type="submit" id="submit" class="button" style="color: white; text-decoration: none;">
+                        Login Now
+                    </button>
+                    {{!-- LOGIN BUTTON END --}}
 
-                        <button class="button">
-                            <a href="/home" style="color: white; text-decoration: none;">Login Now</a>
-                        </button>
+                    {{!-- REDIRECT TO SIGNUP --}}
+                    <div class="login_sign-up">Don't have an account yet? <a href="/signup" id="sign-up"> Sign-up</a></div>
+                    {{!-- REDIRECT TO SIGNUP END --}}
+                </form>
+                {{!-- LOGIN END --}}
 
-                        <div class="login_sign-up">Don't have an account yet? <a href="/signup" id="sign-up"> Sign-up</a></div>
-                    </form>
             </div>
+            {{!-- FORM END --}}
 
         </div>
-           
-        
+        {{!-- PAGE END --}}
 
-        
-   
-        
+    {{!-- ICONS IMPORT --}}
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    {{!-- <script src="..\javascript\unregistered.js"></script> --}}
-    
+    {{!-- ICONS IMPORT END --}}
+
     </body>
 </html>

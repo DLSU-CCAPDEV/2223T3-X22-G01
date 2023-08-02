@@ -1,83 +1,97 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Salamin | Home</title>
-	<link rel="stylesheet" type="text/css" href="../css/index.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
-<body>
-	
-	<div class="profile-side glasshover"  onclick="event.stopPropagation(); window.location.href='/{{username}}" style="background-image: url(../images/{{banner}})"> <!-- side bar -->
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/index.css">
 
-		<div class="side-header"> <!-- logo -->
-			<a href="/home"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
-		</div>
+        {{!-- import --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-		<div class="side-content"> <!-- profile pic bg & profile text thing -->
-			<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine. </div>
-			{{!-- Good morning, displayName!
-					You're doing just fine.  --}}
-			<div class="user-info">{{numPosts}} posts | {{numComments}} comments</div>
-		</div>
+        <title>Salamin | Home</title>
+    </head>
+    <body>
 
-		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/'"></ion-icon>
+        {{!-- PROFILE SIDE --}}
+        <a href="/{{username}}"><div class="profile-side glasshover" style="background-image: url(../images/{{banner}})"></div></a>
 
-			<div class="username-action">
-				<a href="/{{username}}">{{username}}</a>
-			</div>
+            <div class="side-header">
+                <a href="/home"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
+            </div>
 
-			<ion-icon name="sunny-outline"></ion-icon>
-			
-		</div>
-	</div>
+            <div class="side-content">
+                <div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine. </div>
+                
+                <div class="user-info">{{numPosts}} posts</div>
+                {{!--  | {{numComments}} comments --}}
+            </div>
 
-	<div class="post-side">
+            <div class="side-footer">
+                <a href="/"><ion-icon name="log-out-outline"></ion-icon></a>
 
-		<div class="page-header"> <!-- search -->
-			<div class="user-pfp glasshover"style="background-image: url(../images/{{icon}})" onclick="location.href='/{{username}}'"></div>
-			<div class="search-bar">
-				<ion-icon name="search-outline"></ion-icon>
-				<form class="searchForm">
-					<input type="text" placeholder="Search" id="search" name="filter">
-				</form>
-				
-			</div>
+                <div class="username-action">
+                    <a href="/{{username}}">{{username}}</a>
+                </div>
 
-			<nav class="dropdown-container">
-				<ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
-
-				<div class = "dropdown-items">
-					<button onclick="window.location.href = 'timeline.html?sortBy=recent';">Recent</button>
-					<button onclick="window.location.href = 'timeline.html?sortBy=old';">Old</button>
-					<button onclick="window.location.href = 'timeline.html?sortBy=popular';">Popular</button>
-					<button onclick="window.location.href = 'timeline.html?sortBy=unpopular';">Unpopuar</button>
-				</div>
-			</nav>
-		</div>
-
-
-		<div class="box">
-			<form method="POST">
-				<input type="text" placeholder="Title" class="post-title" name="postTitle" id="post-title">
-				<textarea placeholder="What's on your mind?" name="postBox" class="textarea"  role="textbox" id="post-box" contenteditable></textarea>
-            	<button id="post-button" onclick="window.location.href='/home'">Post</button>
-			
-			</form>
-
-            
+                <ion-icon name="sunny-outline"></ion-icon>
+                
+            </div>
         </div>
+        {{!-- PROFILE SIDE END --}}
 
-		<div class="page-content" id="page-content">
-			{{#each posts}}
-				{{> postprev}}
-			{{/each}}
-		</div><!-- timeline -->
+        {{!-- TIMELINE --}}
+        <div class="post-side">
 
-	</div>
+            {{!-- SEARCH BAR --}}
+            <div class="page-header">
+                
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <form class="searchForm">
+                        <input type="text" placeholder="Search..." id="search" name="search">
+                    </form>
+                    
+                </div>
 
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-	
-</body>
+                {{!-- FILTER POSTS --}}
+                <nav class="dropdown-container">
+                    <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
+
+                    <div class = "dropdown-items">
+                        <button>Recent</button>
+                        <button>Old</button>
+                        <button>Popular</button>
+                        <button>Unpopuar</button>
+                    </div>
+                </nav>
+                {{!-- FILTER POSTS END --}}
+            </div>
+            {{!-- SEARCH BAR END --}}
+
+            {{!-- POST PROMPT --}}
+            <div class="box">
+                <form method="POST">
+                    <input type="text" placeholder="Title" class="post-title" id="post-title">
+                    <textarea placeholder="What's on your mind?" name="postBox" class="textarea"  role="textbox" id="post-box" contenteditable></textarea>
+                    
+                    <button type="submit" id="post-button">Post</button>
+                </form>
+            </div>
+            {{!-- POST PROMPT END --}}
+
+            {{!-- POST PREVIEWS --}}
+            <div class="page-content" id="page-content">
+                {{#each posts}}
+                    {{> postprev}}
+                {{/each}}
+            </div>
+            {{!-- POST PREVIEWS END --}}
+        
+        </div>
+        {{!-- TIMELINE END --}}
+
+    {{!-- ICON IMPORT --}}
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {{!-- ICON IMPORT END --}}
+
+    </body>
 </html>

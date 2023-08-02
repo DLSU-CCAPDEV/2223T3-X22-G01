@@ -1,69 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/js/signup.js"></script>
-    <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
-    
-    <link rel="stylesheet" type="text/css" href="/css/index.css">
-    <title>Salamin | Sign-Up</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Unicons -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+        <link rel="stylesheet" type="text/css" href="/css/index.css">
 
-</head>
-<body>
-    <div class="page">
-        <div class="form_content">
-            <a href="/"><i class="uil uil-times form_close"></i></a>
-            <!-- Sign-up Form -->
+        {{!-- imports --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="/js/signup.js"></script>
+        <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
+
+        <!-- Unicons -->
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
+        <title>Salamin | Sign-Up</title>
+    </head>
+    <body>
+
+        {{!-- PAGE --}}
+        <div class="page">
+
+            {{!-- FORM --}}
+            <div class="form_content">
+                <a href="/"><i class="uil uil-times form_close"></i></a>
+                {{!-- SIGN UP --}}
                 <form id="signup" method="post">
                     <h2>Sign-up</h2>
 
+                    {{!-- DISPLAY NAME --}}
                     <div class="input_box">
-                        <input type="text" name="displayName" id="displayName" placeholder="Enter your name" required />
+                        <input type="text" name="name" id="name" placeholder="Enter your name" required />
                         <i class="uil uil-user"></i>
-                        <p id="displayNameError" class="error">{{displayNameError}}</p>
+                        <p id="nameError" class="error">{{nameError}}</p>
                     </div>
+                    {{!-- DISPLAY NAME END --}}
 
+                    {{!-- USERNAME --}}
                     <div class="input_box">
-                        <input type="text" name="username" id="username_signup" placeholder="Enter your username" required />
+                        <input type="text" name="username" id="username" placeholder="Enter your username" required />
                         <i class="uil uil-at"></i>
                         <p id="usernameError" class="error">{{usernameError}}</p>
                     </div>
-
+                    {{!-- USERNAME END --}}
+                    
+                    {{!-- PASSWORD --}}
                     <div class="input_box">
                         <input type="password" name="password" id="password" placeholder="Create your password" required />
                         <i class="uil uil-lock password"></i>
                         <i class="uil uil-eye-slash pw_hide"></i>
-                        <p id="pwError" class="error">{{pwError}}</p>
+                        <p id="passwordError" class="error">{{passwordError}}</p>
                     </div>
+                    {{!-- PASSWORD END --}}
 
+                    {{!-- CONFIRM PASSWORD --}}
                     <div class="input_box">
                         <input type="password" name="password2" id="password2" placeholder="Confirm your password" required />
                         <i class="uil uil-lock password"></i>
                         <i class="uil uil-eye-slash pw_hide"></i>
-                        <p id="pw2Error" class="error">{{pw2Error}}</p>
+                        <p id="password2Error" class="error">{{password2Error}}</p>
                     </div>
+                    {{!-- CONFIRM PASSWORD END --}}
                     
-                    <button class="button">
-                        <a href="{{route}}" style="color: white; text-decoration: none;">Sign-Up Now</a>
-                    </button>
+                    {{!-- SIGNUP BUTTON --}}
+                    <button type="submit" class="button" id="submit" style="color: white; text-decoration: none;">Sign-up Now</button>
+                    {{!-- SIGNUP BUTTON END --}}
 
+                    {{!-- REDIRECT TO LOGIN --}}
                     <div class="login_sign-up">Already have an account?<a href="/login" id="sign-up"> Log-in</a></div>
+                    {{!-- REDIRECT TO LOGIN END --}}
                 </form>
-        </div> 
-    </div>
-    
+                {{!-- SIGN UP END --}}
 
-    
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-{{!-- <script src="..\js\unregistered.js"></script> --}}
-    
-</body>
+            </div>
+            {{!-- FORM END --}}
+
+        </div>
+        {{!-- PAGE END --}}
+
+    {{!-- ICON IMPORT --}}
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {{!-- ICON IMPORT END --}}
+
+    </body>
 </html>
