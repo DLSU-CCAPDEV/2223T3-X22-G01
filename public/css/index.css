@@ -626,17 +626,17 @@ ion-icon[name="sunny-outline"]{
 		transform: translate(-50%, -50%) scale(1);
 	  }
 	  
-	  .sign-up_form{
+	  /* .sign-up_form{
 		display: none;
-	  }
+	  } */
 	  
 	  .form_content.active .sign-up_form {
 		display: block;
 	  }
 	  
-	  .form_content.active .login_form {
+	  /* .form_content.active .login_form {
 		display: none;
-	  }
+	  } */
 	  
 	  .form_close{
 		position: absolute;
