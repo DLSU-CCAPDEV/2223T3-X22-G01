@@ -11,54 +11,109 @@ const profileController = {
         var profile = 'username displayName bio icon banner';
         var posts = '_id title votes date comments username';
 
-        var userDetails = await db.findOne(User, query, profile).then((user) => {
-            if(user != null) {
+        var userPromise = db.findOne(User, query, profile);
+        var postPromise = db.findMany(Post, query, posts);
+
+        var promise = Promise.all([userPromise, postPromise]);
+
+        promise.then((results) => {
+            var user = results[0];
+            var post = results[1];
+
+            if(user != null || post != null) {
+                for(var eachPost of post) {
+                    var commentLength = eachPost.comments.length;
+                    var votes = eachPost.votes;
+                    var postID = eachPost._id;
+                    var username = eachPost.username;
+                    var title = eachPost.title;
+                    var date = new Date(eachPost.date).toDateString();
+                }
+
                 var details = {
                     username: user.username,
                     displayName: user.displayName,
                     bio: user.bio,
                     icon: user.icon,
-                    banner: user.banner
-                }
-                res.render('profile-page', details);
-                // return details;
-            } else {
-                // return null;
-                var error = {
-                    collectionType: "user",
-                    route: "/home"
-                }
-                res.render('error', error);
-            }
-            
-        });
+                    banner: user.banner,
 
-        var postDetails = await db.findMany(Post, query, posts).then((post) => {
-            for(var postCt of post) {
-                var commentLength = postCt.comments.length;
-            }
-            if(post != null) {
-                var details = {
-                    votes: post.votes,
-                    postID: post._id,
-                    username: post.username,
-                    title: post.title,
-                    date: new Date(post.date).toDateString(),
+                    posts: post,
+
+                    votes: votes,
+                    postID: postID,
+                    username: username,
+                    title: title,
+                    date: date,
                     numComments: commentLength
+
                 }
+
                 res.render('profile-page', details);
             } else {
-                // return null;
                 var error = {
                     collectionType: "user",
                     route: "/home"
                 }
                 res.render('error', error);
             }
+
+            console.log(`username from User: `+user.username)
+
+            console.log(`user: `+user)
+            console.log(`post: `+post)
         });
 
-        console.log(`user details: ` + userDetails)
-        console.log(`post details: ` + postDetails)
+        //               THIS WORKS ON ITS OWN
+        // var userDetails = await db.findOne(User, query, profile).then((user) => {
+        //     if(user != null) {
+                
+
+        //         var details = {
+        //             username: user.username,
+        //             displayName: user.displayName,
+        //             bio: user.bio,
+        //             icon: user.icon,
+        //             banner: user.banner
+        //         }
+        //         res.render('profile-page', details);
+        //         // return details;
+        //     } else {
+        //         // return null;
+        //         var error = {
+        //             collectionType: "user",
+        //             route: "/home"
+        //         }
+        //         res.render('error', error);
+        //     }
+            
+        // });
+
+        // var postDetails = await db.findMany(Post, query, posts).then((post) => {
+        //     for(var postCt of post) {
+        //         var commentLength = postCt.comments.length;
+        //     }
+        //     if(post != null) {
+        //         var details = {
+        //             votes: post.votes,
+        //             postID: post._id,
+        //             username: post.username,
+        //             title: post.title,
+        //             date: new Date(post.date).toDateString(),
+        //             numComments: commentLength
+        //         }
+        //         res.render('profile-page', details);
+        //     } else {
+        //         // return null;
+        //         var error = {
+        //             collectionType: "user",
+        //             route: "/home"
+        //         }
+        //         res.render('error', error);
+        //     }
+        // });
+
+        // console.log(`user details: ` + userDetails)
+        // console.log(`post details: ` + postDetails)
 
         // if(userDetails != null || postDetails != null) {
         //     res.render('profile-page', {userDetails, postDetails});
