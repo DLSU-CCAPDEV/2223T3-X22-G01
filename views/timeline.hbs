@@ -10,31 +10,7 @@
     </head>
     <body>
 
-        {{!-- PROFILE SIDE --}}
-        <div class="profile-side glasshover" style="background-image: url(../images/{{banner}})"><a href="/{{loggedUsername}}">
-
-            <div class="side-header">
-                <a href="/home"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
-            </div>
-
-            <div class="side-content">
-                <div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine. </div>
-                
-                <div class="user-info">{{numPosts}} posts</div>
-                {{!--  | {{numComments}} comments --}}
-            </div>
-
-            <div class="side-footer">
-                <a href="/"><ion-icon name="log-out-outline"></ion-icon></a>
-
-                <div class="username-action">
-                    <a href="/{{loggedUsername}}">{{loggedUsername}}</a>
-                </div>
-
-                <ion-icon name="sunny-outline"></ion-icon>
-                
-            </div></a>
-        </div>
+        {{> sidebar}}
         {{!-- PROFILE SIDE END --}}
 
         {{!-- TIMELINE --}}

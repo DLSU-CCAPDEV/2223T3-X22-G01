@@ -2,13 +2,15 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="../css/index.css">
-
         {{!-- imports --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <title>Salamin | Post by @{{username}}</title>
     </head>
     <body>
+        {{#if loggedIn}}
+            {{> sidebar}}
+        {{/if}}
 
         {{!-- PAGE --}}
         <div class="page">
@@ -39,18 +41,21 @@
                     
                 </div>
             </div>
+            
             {{!-- POST END --}}
-
+            
             {{!-- COMMENT PROMPT, show only if logged in (priority: sessions) --}}
-            <div class="box">
+            {{#if loggedIn}}
+              <div class="box">
             
                 <form method="POST">
                     <textarea placeholder="Write a comment..." name="commentBox" class="textarea"  role="textbox" id="comment-box" contenteditable></textarea>
                     
                     <button type="submit" id="comment-button">Comment</button>
                 </form>
-        
-            </div>
+              </div>
+            {{/if}}
+            
             {{!-- COMMENT PROMPT END --}}
 
             {{!-- COMMENTS SECTION --}}
@@ -60,14 +65,83 @@
                 {{/each}}
             </div>
             {{!-- COMMENTS SECTION END --}}
-
         </div>
         {{!-- PAGE END --}}
 
     {{!-- ICON IMPORT --}}
+    
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     {{!-- ICON IMPORT END --}}
 
-    </body>
+    <script>
+	    //asynchronously add comment without needing to reload the page
+        var commentBox = document.querySelector('#comment-box');
+        var commentButton = document.querySelector('#comment-button');
+        
+        commentButton.onclick = function(){
+            if (commentBox.value.replace(/\s+/g, '') == '') return;
+
+            var c = {
+                commenterUsername: "oO0Eve0Oo",
+                commentDate: Date.now(),
+                commentVotes: 0,
+                commenterIcon: "pfp_eve.jpg",
+                commentDesc: commentBox.value
+            }
+
+            var commentHTML = `
+                <div class="comment">
+                    <div class="comment-inner">
+                        <a href="/${c.commenterUsername}"><div style="background-image: url(../images/${c.commenterIcon})" class="post-pfp pfp-small glasshover"></div></a>
+                        <div class="vote-container">
+
+                            <ion-button>
+                                <ion-icon name="caret-up-outline"></ion-icon>
+                            </ion-button>
+                                    
+                            <div>${c.commentVotes}</div>
+
+                            <ion-button>
+                                <ion-icon name="caret-down-outline"></ion-icon>
+                            </ion-button>
+                            
+                        </div>
+                    </div>
+                    <div class="comment-inner full">
+                        <div class="comment-header">
+                            <span class="commenter-username">${c.commenterUsername}</span>
+                            <nav class="dropdown-container">
+                                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                                    <div class="dropdown-items">
+                                        <button id="edit" onclick="edit(this.id)">Edit</button>
+                                        <button id="del" onclick="del(this.id)">Delete</button>
+                                    </div>
+                            </nav>
+                        </div>
+                        <p class="comment-content full" id="comment-description" contenteditable="false">
+                            ${c.commentDesc}
+                        </p>
+
+                        <div class="comment-footer">
+                            Posted on ${c.commentDate}
+                        </div>
+                    </div>
+                </div>
+            
+            `
+
+            var commentSection = document.querySelector('#comment-section');
+            commentSection.insertAdjacentHTML("beforeend", commentHTML);
+
+            commentBox.value = '';
+        };
+
+        
+
+
+    </script>
+
+  </body>
 </html>
