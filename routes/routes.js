@@ -31,10 +31,8 @@ app.get('/home', timelineController.getTimeline);
 
 app.get('/:username', profileController.getProfile);
 
-app.get('/:username/:postID', postController.getPostPage);
+app.get('/:username/:postID', postController.getPost);
 app.post('/:username/:postID', postController.insertComment);
-
-app.get('/error', profileController.getError);
 
 // ROUTES END
 
