@@ -26,7 +26,6 @@ const postController = {
 
             var details = {
                 username: result.username,
-                route: "/home", // change for conditions
                 votes: result.votes,
                 title: result.title,
                 description: result.description,
@@ -35,7 +34,7 @@ const postController = {
                 icon: posterIcon,
                 comments: result.comments,
                 icon: posterIcon.icon,
-                route: "",
+                route: "", // change for conditions
                 loggedIn: loggedIn
             };
             // console.log('comments projection: ' + details.comments);
@@ -44,10 +43,9 @@ const postController = {
             // console.log('commentDesc projection: ' + details.commentDesc);
             
             if(loggedIn){
-                details.c_username= "oO0Eve0Oo";
-                details.c_displayName= "Eve";
-                details.c_numUserPosts= "1";
-                details.c_numUserComments = "0";
+                details.loggedUsername= "oO0Eve0Oo";
+                details.displayName= "Eve";
+                details.numPosts= "1";
                 details.route = "home";
             } 
 

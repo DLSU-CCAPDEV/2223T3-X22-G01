@@ -1,4 +1,4 @@
-<div class="profile-side glasshover"  onclick="location.href='/{{c_username}}'"> <!-- side bar -->
+<div class="profile-side glasshover"  onclick="location.href='/{{loggedUsername}}'"> <!-- side bar -->
 
 	<div class="side-header"> <!-- logo -->
 		<a href="/"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
@@ -6,15 +6,15 @@
 	</div>
 
 	<div class="side-content"> <!-- profile pic bg & profile text thing -->
-		<div class="side-message">Good morning, {{c_displayName}}! <br> You're doing just fine.</div>
-		<div class="user-info">{{c_numUserPosts}} posts | {{c_numUserComments}} comments</div>
+		<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine.</div>
+		<div class="user-info">{{numPosts}} posts </div>
 	</div>
 
 	<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
 		<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/'"></ion-icon>
 		
 		<div class="username-action">
-			{{c_username}}
+			{{loggedUsername}}
 		</div>
 
 		<ion-icon name="sunny-outline"></ion-icon>
