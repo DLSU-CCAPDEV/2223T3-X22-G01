@@ -11,38 +11,34 @@ const profileController = {
         var profile = 'username displayName bio icon banner';
         var posts = '_id title votes date comments username';
 
-        var user = await db.findOne(User, query, profile);
+        var userPromise = await db.findOne(User, query, profile);
+        console.log(`userPromise: `+ userPromise)
+        var postPromise = await db.findMany(Post, query, posts);
+        console.log(`postPromise: `+ postPromise)
 
-        var postRes = await db.findMany(Post, query, posts);
-        console.log(user)
-
-        for(var post of postRes){
+        for(var post of postPromise){
             var commentLength = post.comments.length;
-            // var posterIcon = 
-        };
+            console.log(`commentLength: ` + commentLength)
+        }
 
-        if(user != null || postRes != null) {
-            var dateProj = new Date(postRes.date).toDateString();
-            // var dateProj = dateUnformat.toDateString();
-
+        if(userPromise != null || postPromise != null) {
             var details = {
-                username: user.username,
-                banner: user.banner,
-                icon: user.icon,
-                displayName: user.displayName,
-                bio: user.bio,
+                username: userPromise.username,
+                displayName: userPromise.displayName,
+                banner: userPromise.banner,
+                icon: userPromise.icon,
+                bio: userPromise.bio,
 
-                posts: postRes,
-                icon: user.icon,
-                votes: postRes.votes,
-                postID: postRes._id,
-                title: postRes.title,
-                date: dateProj,
-                numComments: commentLength,
-                route: "/home" // if statement logged in (priority: sessions)
-            }
-            
+                posts: postPromise,
+                votes: postPromise.votes,
+                postID: postPromise._id,
+                title: postPromise.title,
+                date: new Date(postPromise.date).toDateString(),
+                numComments: commentLength
+            };
+
             res.render('profile-page', details);
+
         } else {
             var error = {
                 collectionType: "user",
@@ -50,6 +46,7 @@ const profileController = {
             }
             res.render('error', error);
         }
+
     }
 
 }
