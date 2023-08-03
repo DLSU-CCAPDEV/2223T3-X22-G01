@@ -11,27 +11,30 @@ const indexController = {
 
     getIndex: async function(req, res) {
         var postProjection = 'votes username _id title date comments';
-        var iconProjection = 'icon'
+        var iconProjection = 'username icon'
 
         var posts = await db.findMany(Post, {}, postProjection);
-        for(var post of posts){
-            var commentLength = post.comments.length;
-        };
-        var userIcon = await db.findMany(User, {username: posts.username}, iconProjection);
+        var userIcon = await db.findMany(User, {}, iconProjection);
+
+        var postObject = posts.map((eachPost) => {
+            var postIcon = userIcon.find((user) => user.username == eachPost.username);
+
+            return {
+                commentLength: eachPost.comments.length,
+                votes: eachPost.votes,
+                postID: eachPost._id,
+                username: eachPost.username,
+                title: eachPost.title,
+                date: new Date(eachPost.date).toDateString(),
+                icon: postIcon.icon
+            }
+        });
+
+        
 
         if(posts != null) { 
-
-            var dateUnformat = new Date(posts.date);
-            var dateProj = dateUnformat.toDateString();
-            
             var details = {
-                posts: posts,
-                votes: posts.votes,
-                title: posts.title,
-                username: posts.username,
-                date: dateProj,
-                numComments: commentLength,
-                icon: userIcon
+                posts: postObject,
             }
 
             res.render('index', details);

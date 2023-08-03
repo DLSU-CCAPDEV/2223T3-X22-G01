@@ -11,30 +11,40 @@ const postController = {
         var poster = {username: req.params.username};
 
         var projection = 'postID title username votes date description comments';
-        var userProjection = 'icon';
-        var commentProjection = 'username votes description date';
+        var userProjection = 'username icon';
 
         var result = await db.findOne(Post, postID, projection);
         var posterIcon = await db.findOne(User, poster, userProjection);
-
+        var userIcon = await db.findMany(User, {}, userProjection);
         //replace this with token stuff i guess
         var loggedIn = true;
       
         if(result != null || posterIcon != null) {
             var dateUnformat = new Date(result.date);
             var dateProj = dateUnformat.toDateString();
+            
+
+            var commentObject = result.comments.map((c) => {
+                var commenterIcon = userIcon.find((user) => user.username == c.username);
+                return {
+                    commenterUsername: c.username,
+                    commentVotes: c.votes,
+                    commentDate: new Date(c.date).toString(),
+                    commentDesc: c.description,
+                    commenterIcon: commenterIcon.icon
+                }
+
+            });
 
             var details = {
                 username: result.username,
                 votes: result.votes,
                 title: result.title,
                 description: result.description,
-                username: result.username,
                 date: dateProj,
-                icon: posterIcon,
-                comments: result.comments,
+                comments: commentObject,
                 icon: posterIcon.icon,
-                route: "", // change for conditions
+                route: "/", // change for conditions
                 loggedIn: loggedIn
             };
             // console.log('comments projection: ' + details.comments);
@@ -46,7 +56,7 @@ const postController = {
                 details.loggedUsername= "oO0Eve0Oo";
                 details.displayName= "Eve";
                 details.numPosts= "1";
-                details.route = "home";
+                details.route = "/home";
             } 
 
             res.render('post-page', details);

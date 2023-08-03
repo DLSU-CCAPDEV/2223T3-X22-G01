@@ -8,21 +8,31 @@ const timelineController = {
         //default user: Eve
         var loggedProj = 'username banner displayName';
         var postProjection = 'votes username _id title date comments';
-        var iconProjection = 'icon'
+        var iconProjection = 'username icon'
 
         var userLoggedIn = await db.findOne(User, {username: "oO0Eve0Oo"}, loggedProj);
         var loggedPostCt = await Post.countDocuments({username: userLoggedIn.username}).exec();
 
         var posts = await db.findMany(Post, {}, postProjection);
-        for(var post of posts){
-            var commentLength = post.comments.length;
-        };
+        var userIcon = await db.findMany(User, {}, iconProjection);
+
+        var postObject = posts.map((eachPost) => {
+            var postIcon = userIcon.find((user) => user.username == eachPost.username);
+            
+            return {
+                commentLength: eachPost.comments.length,
+                votes: eachPost.votes,
+                postID: eachPost._id,
+                username: eachPost.username,
+                title: eachPost.title,
+                date: new Date(eachPost.date).toDateString(),
+                icon: postIcon.icon
+            }
+        });
         
-        var userIcon = await db.findMany(User, {username: posts.username}, iconProjection);
+        
 
         if(posts != null || userLoggedIn != null) {
-            var dateUnformat = new Date(posts.date);
-            var dateProj = dateUnformat.toDateString();
 
             var details = {
                 loggedUsername: userLoggedIn.username,
@@ -30,14 +40,7 @@ const timelineController = {
                 numPosts: loggedPostCt,
                 banner: userLoggedIn.banner,
 
-                posts: posts,
-                votes: posts.votes,
-                postID: posts._id,
-                title: posts.title,
-                date: dateProj,
-                numComment: commentLength,
-                username: posts.username,
-                icon: userIcon
+                posts: postObject
             }
 
             res.render('timeline', details);

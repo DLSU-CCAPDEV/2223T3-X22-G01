@@ -20,15 +20,20 @@ const profileController = {
             var user = results[0];
             var post = results[1];
 
-            if(user != null || post != null) {
-                for(var eachPost of post) {
-                    var commentLength = eachPost.comments.length;
-                    var votes = eachPost.votes;
-                    var postID = eachPost._id;
-                    var username = eachPost.username;
-                    var title = eachPost.title;
-                    var date = new Date(eachPost.date).toDateString();
-                }
+            if(user != null && post != null) {
+                
+                var postObject = post.map((eachPost) => {
+                    return {
+                        commentLength: eachPost.comments.length,
+                        votes: eachPost.votes,
+                        postID: eachPost._id,
+                        username: eachPost.username,
+                        title: eachPost.title,
+                        date: new Date(eachPost.date).toDateString(),
+                        icon: user.icon
+                    }
+
+                });
 
                 var details = {
                     username: user.username,
@@ -37,17 +42,11 @@ const profileController = {
                     icon: user.icon,
                     banner: user.banner,
 
-                    posts: post,
-
-                    votes: votes,
-                    postID: postID,
-                    username: username,
-                    title: title,
-                    date: date,
-                    numComments: commentLength
+                    posts: postObject
 
                 }
-
+                //console.log(`user: `+user);
+                //console.log(`post: `+post);
                 res.render('profile-page', details);
             } else {
                 var error = {
@@ -57,10 +56,9 @@ const profileController = {
                 res.render('error', error);
             }
 
-            console.log(`username from User: `+user.username)
+            //console.log(`username from User: `+user.username)
 
-            console.log(`user: `+user)
-            console.log(`post: `+post)
+            
         });
 
         //               THIS WORKS ON ITS OWN
