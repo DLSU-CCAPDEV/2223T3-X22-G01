@@ -1,83 +1,78 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Salamin | Post by {{username}}</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
-</head>
-<body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/index.css">
+        {{!-- imports --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    {{#if loggedIn}}
-        {{> sidebar}}
-    {{/if}}
-
-    <div class="page">
-
-        {{> headernp}}
-
-        <div class="box green" id="post-section">
-            <div class="post-header">
-                <div class="vote-container">
-
-                    <ion-button >
-                        <ion-icon name="caret-up-outline"></ion-icon>
-                    </ion-button>
-                    
-                    <div>{{votes}}</div> 
-
-                    <ion-button>
-                        <ion-icon name="caret-down-outline"></ion-icon>
-                    </ion-button>
-                    
-                </div>
-
-                <h1 contenteditable="false" id="post-title">
-                    {{title}}
-                </h1>
-
-                <nav class="dropdown-container">
-                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
-
-                    <div class = "dropdown-items">
-                        <button id="p-edit-{{postID}}" onclick="editPost(this.id)">Edit</button>
-                        <button id="p-del-{{postID}}" onclick="delPost(this.id)">Delete</button>
-                    </div>
-			    </nav>
-            </div>
-
-            <div class="flex-column" id="post-description-container">
-                <p id="post-description" contenteditable="false">{{description}}</p>
-            </div>
-            <div class="post-footer">
-                
-                <div><h2>{{username}} | {{date}}</h2></div>
-                <a href="/{{username}}"><div style="background-image: url(../images/{{icon}})" class="post-pfp pfp-small glasshover"></div></a>
-                
-            </div>
-
-        </div>
+        <title>Salamin | Post by @{{username}}</title>
+    </head>
+    <body>
         {{#if loggedIn}}
-            <div class="box">
-                <form method="POST">
-                    <textarea placeholder="Write a comment..." name="commentBox" class="textarea"  role="textbox" id="comment-box" contenteditable></textarea>
-                    <button id="comment-button">Comment</button>
-
-                </form>
-                
-            </div>
+            {{> sidebar}}
         {{/if}}
 
-        <div class="box" id="comment-section">
-            {{#each comments}}
-                {{> comment}} {{!-- logged in boolean --}}
-            {{/each}}
+        {{!-- PAGE --}}
+        <div class="page">
+
+            {{> headernp}}
+
+            {{!-- POST --}}
+            <div class="box green" id="post-section">
+                <div class="post-header">
+                    <div class="vote-container">
+                        <ion-icon name="caret-up-outline" ></ion-icon>
+                        <div>{{votes}}</div> 
+                        <ion-icon name="caret-down-outline"></ion-icon>
+                    </div>
+
+                    <h1 contenteditable="false" id="post-title">
+                        {{title}}
+                    </h1>
+                </div>
+
+                <div class="flex-column" id="post-description-container">
+                    <p id="post-description" contenteditable="false">{{description}}</p>
+                </div>
+                <div class="post-footer">
+                    
+                    <div><h2>{{username}} | {{date}}</h2></div>
+                    <div style="background-image: url(../images/{{icon}})" class="post-pfp pfp-small"></div>
+                    
+                </div>
+            </div>
+            
+            {{!-- POST END --}}
+            
+            {{!-- COMMENT PROMPT, show only if logged in (priority: sessions) --}}
+            {{#if loggedIn}}
+              <div class="box">
+            
+                <form method="POST">
+                    <textarea placeholder="Write a comment..." name="commentBox" class="textarea"  role="textbox" id="comment-box" contenteditable></textarea>
+                    
+                    <button type="submit" id="comment-button">Comment</button>
+                </form>
+              </div>
+            {{/if}}
+            
+            {{!-- COMMENT PROMPT END --}}
+
+            {{!-- COMMENTS SECTION --}}
+            <div class="box" id="comment-section">
+                {{#each comments}}
+                    {{> comment}}
+                {{/each}}
+            </div>
+            {{!-- COMMENTS SECTION END --}}
         </div>
+        {{!-- PAGE END --}}
 
-    </div>
-
-
+    {{!-- ICON IMPORT --}}
+    
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {{!-- ICON IMPORT END --}}
 
     <script>
 	    //asynchronously add comment without needing to reload the page
@@ -148,5 +143,5 @@
 
     </script>
 
-</body>
+  </body>
 </html>

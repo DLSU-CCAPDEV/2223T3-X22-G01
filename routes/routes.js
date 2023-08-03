@@ -1,33 +1,33 @@
 
 const express = require('express');
 
-const postController = require('../controllers/postController.js');
+const indexController = require('../controllers/indexController.js');
+
+const loginController = require('../controllers/loginController.js');
+
+const signupController = require('../controllers/signupController.js');
 
 const timelineController = require('../controllers/timelineController.js');
 
-const profileController = require('../controllers/profileController.js');
+const postController = require('../controllers/postController.js');
 
-const successController = require('../controllers/successController.js');
+const profileController = require('../controllers/profileController.js');
 
 const app = express();
 
-app.get('/favicon.ico', timelineController.getFavicon);
+// ROUTES
 
-app.get('/', timelineController.getTimeline);
+app.get('/favicon.ico', indexController.getFavicon);
 
-//signup.hbs page
-app.get('/signup', timelineController.getSignUp);
+app.get('/', indexController.getIndex);
 
-//login.hbs page
-app.get('/login', timelineController.getLogin);
+app.get('/signup', signupController.getSignUp);
 
-app.post('/signup', timelineController.postSignUp);
+app.post('/signup', signupController.postSignUp);
 
-app.post('/login', timelineController.postLogin);
+app.get('/login', loginController.getLogin);
 
-app.get('/home', successController.getSuccess);
-
-app.post('/home', timelineController.newPost);
+app.get('/home', timelineController.getTimeline);
 
 app.get('/:username', profileController.getProfile);
 
@@ -36,40 +36,6 @@ app.post('/:username/:postID', postController.insertComment);
 
 app.get('/error', profileController.getError);
 
-// app.get('/login', timelineController.getLogin);
-
-
-/*
-    execute function getSignUp()
-    defined in object `indexController` in `../controllers/indexController.js`
-    when a client sends an HTTP GET request for `/signup`
-*/
-// app.get('/signup', timelineController.getSignUp);
-
-/*
-    execute function postSignUp()
-    defined in object `indexController` in `../controllers/indexController.js`
-    when a client sends an HTTP POST request for `/signup`
-*/
-
-
-/*
-    execute function getSuccess()
-    defined in object `successController` in `../controllers/successController.js`
-    when a client sends an HTTP GET request for `/success`
-*/
-
-
-/*
-    execute function getUsername()
-    defined in object `timelineController` in `../controllers/timelineController.js`
-    when a client sends an HTTP GET request for `/getCheckUsername`
-*/
-// app.get('/getUsername', timelineController.getCheckUsername);
-
-
-
-
-
+// ROUTES END
 
 module.exports = app;

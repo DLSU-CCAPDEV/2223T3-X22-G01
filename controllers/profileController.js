@@ -1,67 +1,170 @@
-
-
 const db = require('../models/db.js');
+
 const User = require('../models/UserModel.js');
 const Post = require('../models/PostModel.js');
-const moment = require(`moment`);
 
 const profileController = {
-    getProfile: async function (req, res) {
-
     
+    getProfile: async function (req ,res) {
         var query = {username: req.params.username};
 
-        // fields to be returned
-        var projection = 'username displayName bio icon banner';
-        var postProjection = 'id title votes date comments';
+        var profile = 'username displayName bio icon banner';
+        var posts = '_id title votes date comments username';
 
-        var result = await db.findOne(User, query, projection);
+        var userPromise = db.findOne(User, query, profile);
+        var postPromise = db.findMany(Post, query, posts);
 
-        var postArray = await db.collectionToArray("posts", query);
-        console.log(query);
-        console.log(postArray);
+        var promise = Promise.all([userPromise, postPromise]);
 
-        var postProj = postArray.map(postArray => {
-            var dateUnformat = new Date(postArray.date);
-            var dateProj = dateUnformat.toDateString();
-            return {
-                postID: postArray._id,
-                title: postArray.title,
-                votes: postArray.votes,
-                date: dateProj,
-                numComments: postArray.comments.length,
-                username: postArray.username,
-                icon: result.icon
+        promise.then((results) => {
+            var user = results[0];
+            var post = results[1];
+
+            if(user != null || post != null) {
+                for(var eachPost of post) {
+                    var commentLength = eachPost.comments.length;
+                    var votes = eachPost.votes;
+                    var postID = eachPost._id;
+                    var username = eachPost.username;
+                    var title = eachPost.title;
+                    var date = new Date(eachPost.date).toDateString();
+                }
+
+                var details = {
+                    username: user.username,
+                    displayName: user.displayName,
+                    bio: user.bio,
+                    icon: user.icon,
+                    banner: user.banner,
+
+                    posts: post,
+
+                    votes: votes,
+                    postID: postID,
+                    username: username,
+                    title: title,
+                    date: date,
+                    numComments: commentLength
+
+                }
+
+                res.render('profile-page', details);
+            } else {
+                var error = {
+                    collectionType: "user",
+                    route: "/home"
+                }
+                res.render('error', error);
             }
+
+            console.log(`username from User: `+user.username)
+
+            console.log(`user: `+user)
+            console.log(`post: `+post)
         });
 
-        console.log(postArray.username);
-        
-        if(result != null) { 
-            
-            var details = {
+        //               THIS WORKS ON ITS OWN
+        // var userDetails = await db.findOne(User, query, profile).then((user) => {
+        //     if(user != null) {
                 
-                username: result.username,
-                displayName: result.displayName,
-                bio: result.bio,
-                icon: result.icon,
-                banner: result.banner,
-                posts: postProj,
-                route: "home"
-            };
 
-            res.render('profile-page', details);
-        }
+        //         var details = {
+        //             username: user.username,
+        //             displayName: user.displayName,
+        //             bio: user.bio,
+        //             icon: user.icon,
+        //             banner: user.banner
+        //         }
+        //         res.render('profile-page', details);
+        //         // return details;
+        //     } else {
+        //         // return null;
+        //         var error = {
+        //             collectionType: "user",
+        //             route: "/home"
+        //         }
+        //         res.render('error', error);
+        //     }
+            
+        // });
 
-        else {
-            res.render('error', {collectionType: "user"});
-        }
-        
-    },
+        // var postDetails = await db.findMany(Post, query, posts).then((post) => {
+        //     for(var postCt of post) {
+        //         var commentLength = postCt.comments.length;
+        //     }
+        //     if(post != null) {
+        //         var details = {
+        //             votes: post.votes,
+        //             postID: post._id,
+        //             username: post.username,
+        //             title: post.title,
+        //             date: new Date(post.date).toDateString(),
+        //             numComments: commentLength
+        //         }
+        //         res.render('profile-page', details);
+        //     } else {
+        //         // return null;
+        //         var error = {
+        //             collectionType: "user",
+        //             route: "/home"
+        //         }
+        //         res.render('error', error);
+        //     }
+        // });
 
-    getError: async function (req, res) {
-        res.render('error', {collectionType: "user"});
+        // console.log(`user details: ` + userDetails)
+        // console.log(`post details: ` + postDetails)
+
+        // if(userDetails != null || postDetails != null) {
+        //     res.render('profile-page', {userDetails, postDetails});
+        // } else {
+        //     var error = {
+        //         collectionType: "user",
+        //         route: "/home"
+        //     }
+        //     res.render('error', error);
+        // }
+
+
+
+        // var userPromise = await db.findOne(User, query, profile);
+        // console.log(`userPromise: `+ userPromise)
+        // var postPromise = await db.findMany(Post, query, posts);
+        // console.log(`postPromise: `+ postPromise)
+
+        // for(var post of postPromise){
+        //     var commentLength = post.comments.length;
+        //     console.log(`commentLength: ` + commentLength)
+        // }
+
+        // if(userPromise != null || postPromise != null) {
+        //     var details = {
+        //         username: userPromise.username,
+        //         displayName: userPromise.displayName,
+        //         banner: userPromise.banner,
+        //         icon: userPromise.icon,
+        //         bio: userPromise.bio,
+
+        //         posts: postPromise,
+        //         votes: postPromise.votes,
+        //         postID: postPromise._id,
+        //         title: postPromise.title,
+        //         date: new Date(postPromise.date).toDateString(),
+        //         numComments: commentLength
+        //     };
+
+        //     res.render('profile-page', details);
+
+        // } else {
+        //     var error = {
+        //         collectionType: "user",
+        //         route: "/home"
+        //     }
+        //     res.render('error', error);
+        // }
+
     }
+
 }
 
 module.exports = profileController;
