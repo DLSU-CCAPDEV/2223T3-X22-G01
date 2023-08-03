@@ -10,7 +10,7 @@
         {{!-- imports --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="/js/signup.js"></script>
-        <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
+        <script src="/js/validator.min.js" type="text/javascript"></script>
 
         <!-- Unicons -->
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
@@ -31,7 +31,7 @@
 
                     {{!-- DISPLAY NAME --}}
                     <div class="input_box">
-                        <input type="text" name="name" id="name" placeholder="Enter your name" required />
+                        <input type="text" name="name" id="name" placeholder="Name" required />
                         <i class="uil uil-user"></i>
                         <p id="nameError" class="error">{{nameError}}</p>
                     </div>
@@ -39,7 +39,7 @@
 
                     {{!-- USERNAME --}}
                     <div class="input_box">
-                        <input type="text" name="username" id="username" placeholder="Enter your username" required />
+                        <input type="text" name="username" id="username" placeholder="Username" required />
                         <i class="uil uil-at"></i>
                         <p id="usernameError" class="error">{{usernameError}}</p>
                     </div>
@@ -47,7 +47,7 @@
                     
                     {{!-- PASSWORD --}}
                     <div class="input_box">
-                        <input type="password" name="password" id="password" placeholder="Create your password" required />
+                        <input type="password" name="password" id="password" placeholder="Enter Password" required />
                         <i class="uil uil-lock password"></i>
                         <i class="uil uil-eye-slash pw_hide"></i>
                         <p id="passwordError" class="error">{{passwordError}}</p>
@@ -56,7 +56,7 @@
 
                     {{!-- CONFIRM PASSWORD --}}
                     <div class="input_box">
-                        <input type="password" name="password2" id="password2" placeholder="Confirm your password" required />
+                        <input type="password" name="password2" id="password2" placeholder="Confirm Password" required />
                         <i class="uil uil-lock password"></i>
                         <i class="uil uil-eye-slash pw_hide"></i>
                         <p id="password2Error" class="error">{{password2Error}}</p>
@@ -64,8 +64,7 @@
                     {{!-- CONFIRM PASSWORD END --}}
                     
                     {{!-- SIGNUP BUTTON --}}
-                    <button type="submit" class="button" id="submit" style="color: white; text-decoration: none;">Sign-up Now</button>
-                    {{!-- SIGNUP BUTTON END --}}
+                    <input type="submit" class="button" id="submit" style="color: white; text-decoration: none;" value="Sign-up Now">
 
                     {{!-- REDIRECT TO LOGIN --}}
                     <div class="login_sign-up">Already have an account?<a href="/login" id="sign-up"> Log-in</a></div>
