@@ -37,10 +37,10 @@
                             <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
             
                             <div class = "dropdown-items">
-                                <button onclick="window.location.href = '/index?sortBy=recent';">Recent</button>
-                                <button onclick="window.location.href = '/index?sortBy=old';">Old</button>
-                                <button onclick="window.location.href = '/index?sortBy=popular';">Popular</button>
-                                <button onclick="window.location.href = '/index?sortBy=unpopular';">Unpopuar</button>
+                                <button onclick="window.location.href = '/?sortBy=recent';">Recent</button>
+                                <button onclick="window.location.href = '/?sortBy=old';">Old</button>
+                                <button onclick="window.location.href = '/?sortBy=popular';">Popular</button>
+                                <button onclick="window.location.href = '/?sortBy=unpopular';">Unpopuar</button>
                             </div>
                         </nav>
                     
@@ -49,12 +49,7 @@
                         <a href="/login"><button class="nav_btn" id="form-open">Login</button></a>
                 </header>
     
-                <div class="box">
-                    <input type="text" placeholder="Title" class="post-title" id="post-title">
-                    <span class="textarea" role="textbox" id="post-box" contenteditable></span>
-                    
-                    <button id="form-open-post" >Post</button>
-                </div>
+            
         
                 <div class="page-content" id="page-content"> <!-- timeline -->
                     {{#each posts}}

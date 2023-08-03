@@ -7,32 +7,9 @@
 </head>
 <body>
 	
-	<div class="profile-side glasshover"  onclick="event.stopPropagation(); window.location.href='/{{username}}" style="background-image: url(../images/{{banner}})"> <!-- side bar -->
+	{{> sidebar}}
 
-		<div class="side-header"> <!-- logo -->
-			<a href="/home"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
-		</div>
-
-		<div class="side-content"> <!-- profile pic bg & profile text thing -->
-			<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine. </div>
-			{{!-- Good morning, displayName!
-					You're doing just fine.  --}}
-			<div class="user-info">{{numPosts}} posts | {{numComments}} comments</div>
-		</div>
-
-		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/'"></ion-icon>
-
-			<div class="username-action">
-				<a href="/{{username}}">{{username}}</a>
-			</div>
-
-			<ion-icon name="sunny-outline"></ion-icon>
-			
-		</div>
-	</div>
-
-	<div class="post-side">
+	<div class="page">
 
 		<div class="page-header"> <!-- search -->
 			<div class="user-pfp glasshover"style="background-image: url(../images/{{icon}})" onclick="location.href='/{{username}}'"></div>
@@ -78,6 +55,8 @@
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
 	
 </body>
 </html>

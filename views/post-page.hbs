@@ -7,31 +7,11 @@
 </head>
 <body>
 
-    <div class="profile-side glasshover"  onclick="location.href='/profile-page?userID=4'"> <!-- side bar -->
+    {{#if loggedIn}}
+        {{> sidebar}}
+    {{/if}}
 
-		<div class="side-header"> <!-- logo -->
-			<a href="/"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
-            
-		</div>
-
-		<div class="side-content"> <!-- profile pic bg & profile text thing -->
-			<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine.</div>
-			<div class="user-info">{{numUserPosts}} posts | {{numUserComments}} comments</div>
-		</div>
-
-		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/index'"></ion-icon>
-			
-			<div class="username-action">
-				{{username}}
-			</div>
-
-			<ion-icon name="sunny-outline"></ion-icon>
-			
-		</div>
-	</div>
-
-    <div class="post-side">
+    <div class="page">
 
         {{> headernp}}
 
@@ -66,7 +46,7 @@
             </div>
 
             <div class="flex-column" id="post-description-container">
-                <p id="post-description" contenteditable="false">${p.description}</p>
+                <p id="post-description" contenteditable="false">{{description}}</p>
             </div>
             <div class="post-footer">
                 
@@ -76,12 +56,16 @@
             </div>
 
         </div>
+        {{#if loggedIn}}
+            <div class="box">
+                <form method="POST">
+                    <textarea placeholder="Write a comment..." name="commentBox" class="textarea"  role="textbox" id="comment-box" contenteditable></textarea>
+                    <button id="comment-button">Comment</button>
 
-        <div class="box">
-            <span class="textarea" role="textbox" id="comment-box" contenteditable></span>
-            
-            <button id="comment-button">Comment</button>
-        </div>
+                </form>
+                
+            </div>
+        {{/if}}
 
         <div class="box" id="comment-section">
             {{#each comments}}
@@ -91,10 +75,78 @@
 
     </div>
 
-    
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script>
+	    //asynchronously add comment without needing to reload the page
+        var commentBox = document.querySelector('#comment-box');
+        var commentButton = document.querySelector('#comment-button');
+        
+        commentButton.onclick = function(){
+            if (commentBox.value.replace(/\s+/g, '') == '') return;
+
+            var c = {
+                commenterUsername: "oO0Eve0Oo",
+                commentDate: Date.now(),
+                commentVotes: 0,
+                commenterIcon: "pfp_eve.jpg",
+                commentDesc: commentBox.value
+            }
+
+            var commentHTML = `
+                <div class="comment">
+                    <div class="comment-inner">
+                        <a href="/${c.commenterUsername}"><div style="background-image: url(../images/${c.commenterIcon})" class="post-pfp pfp-small glasshover"></div></a>
+                        <div class="vote-container">
+
+                            <ion-button>
+                                <ion-icon name="caret-up-outline"></ion-icon>
+                            </ion-button>
+                                    
+                            <div>${c.commentVotes}</div>
+
+                            <ion-button>
+                                <ion-icon name="caret-down-outline"></ion-icon>
+                            </ion-button>
+                            
+                        </div>
+                    </div>
+                    <div class="comment-inner full">
+                        <div class="comment-header">
+                            <span class="commenter-username">${c.commenterUsername}</span>
+                            <nav class="dropdown-container">
+                                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                                    <div class="dropdown-items">
+                                        <button id="edit" onclick="edit(this.id)">Edit</button>
+                                        <button id="del" onclick="del(this.id)">Delete</button>
+                                    </div>
+                            </nav>
+                        </div>
+                        <p class="comment-content full" id="comment-description" contenteditable="false">
+                            ${c.commentDesc}
+                        </p>
+
+                        <div class="comment-footer">
+                            Posted on ${c.commentDate}
+                        </div>
+                    </div>
+                </div>
+            
+            `
+
+            var commentSection = document.querySelector('#comment-section');
+            commentSection.insertAdjacentHTML("beforeend", commentHTML);
+
+            commentBox.value = '';
+        };
+
+        
+
+
+    </script>
 
 </body>
 </html>
