@@ -11,10 +11,13 @@ const timelineController = {
         var iconProjection = 'icon'
 
         var userLoggedIn = await db.findOne(User, {username: "oO0Eve0Oo"}, loggedProj);
-        var loggedPostCt = db.countDocuments(Post, {username: userLoggedIn.username});
+        var loggedPostCt = await Post.countDocuments({username: userLoggedIn.username}).exec();
 
         var posts = await db.findMany(Post, {}, postProjection);
-        var commentLength = await Post.find().populate({ path: 'comment_length', count: true }).exec();
+        for(var post of posts){
+            var commentLength = post.comments.length;
+        };
+        
         var userIcon = await db.findMany(User, {username: posts.username}, iconProjection);
 
         if(posts != null || userLoggedIn != null) {
@@ -27,6 +30,7 @@ const timelineController = {
                 numPosts: loggedPostCt,
                 banner: userLoggedIn.banner,
 
+                posts: posts,
                 votes: posts.votes,
                 postID: posts._id,
                 title: posts.title,

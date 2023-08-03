@@ -14,7 +14,7 @@ const postController = {
         var userProjection = 'icon';
         var commentProjection = 'username votes description date';
 
-        var result = await db.findOne(Post, query, projection);
+        var result = await db.findOne(Post, postID, projection);
         var posterIcon = await db.findOne(User, poster, userProjection);
 
         

@@ -65,9 +65,9 @@ const database = {
         return await model.find(query, projection);
     },
 
-    countDocuments: async function(model, query) {
-        return await model.where(query).countDocuments();
-    },
+    // countDocuments: async function(collection, query) {
+    //     return await salamin.collection(collection).countDocuments(query);
+    // },
 
     /*
         updates the value defined in the object `update`

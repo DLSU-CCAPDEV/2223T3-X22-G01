@@ -64,14 +64,14 @@ var PostSchema = new mongoose.Schema({
     comments: [ CommentSchema ]
 });
 
-PostSchema.virtual('comment_length', {
-    ref: 'Comment',
-    localField: 'comments',
-    foreignField: '_id',
-    count: true
-});
+// PostSchema.virtual('comment_length', {
+//     ref: 'Comment',
+//     localField: 'comments',
+//     foreignField: '_id',
+//     count: true
+// });
 
-PostSchema.set('toObject', {virtuals: true});
-PostSchema.set('toJSON', {virtuals: true});
+// PostSchema.set('toObject', {virtuals: true});
+// PostSchema.set('toJSON', {virtuals: true});
 
 module.exports = mongoose.model('Post', PostSchema);

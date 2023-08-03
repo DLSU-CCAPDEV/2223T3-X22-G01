@@ -9,16 +9,21 @@ const profileController = {
         var query = {username: req.params.username};
 
         var profile = 'username displayName bio icon banner';
-        var posts = '_id title votes date comments';
+        var posts = '_id title votes date comments username';
 
         var user = await db.findOne(User, query, profile);
 
         var postRes = await db.findMany(Post, query, posts);
-        var commentLength = await Post.find().populate({ path: 'comment_length', count: true }).exec();
+        console.log(user)
+
+        for(var post of postRes){
+            var commentLength = post.comments.length;
+            // var posterIcon = 
+        };
 
         if(user != null || postRes != null) {
-            var dateUnformat = new Date(postRes.date);
-            var dateProj = dateUnformat.toDateString();
+            var dateProj = new Date(postRes.date).toDateString();
+            // var dateProj = dateUnformat.toDateString();
 
             var details = {
                 username: user.username,
@@ -27,6 +32,8 @@ const profileController = {
                 displayName: user.displayName,
                 bio: user.bio,
 
+                posts: postRes,
+                icon: user.icon,
                 votes: postRes.votes,
                 postID: postRes._id,
                 title: postRes.title,

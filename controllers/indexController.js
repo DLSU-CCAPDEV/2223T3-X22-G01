@@ -14,7 +14,9 @@ const indexController = {
         var iconProjection = 'icon'
 
         var posts = await db.findMany(Post, {}, postProjection);
-        var commentLength = await Post.find().populate({ path: 'comment_length', count: true }).exec();
+        for(var post of posts){
+            var commentLength = post.comments.length;
+        };
         var userIcon = await db.findMany(User, {username: posts.username}, iconProjection);
 
         if(posts != null) { 
