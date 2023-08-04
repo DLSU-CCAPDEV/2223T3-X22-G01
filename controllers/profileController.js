@@ -30,7 +30,8 @@ const profileController = {
                         username: eachPost.username,
                         title: eachPost.title,
                         date: new Date(eachPost.date).toDateString(),
-                        icon: user.icon
+                        icon: user.icon,
+                        route: "/home"
                     }
 
                 });
