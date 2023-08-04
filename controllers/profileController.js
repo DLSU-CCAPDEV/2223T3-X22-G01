@@ -30,8 +30,7 @@ const profileController = {
                         username: eachPost.username,
                         title: eachPost.title,
                         date: new Date(eachPost.date).toDateString(),
-                        icon: user.icon,
-                        route: "/home"
+                        icon: user.icon
                     }
 
                 });
@@ -42,6 +41,7 @@ const profileController = {
                     bio: user.bio,
                     icon: user.icon,
                     banner: user.banner,
+                    route: "/home",
 
                     posts: postObject
 
