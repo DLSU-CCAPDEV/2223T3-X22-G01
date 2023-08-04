@@ -49,7 +49,6 @@ const signupController = {
             */
             var name = req.body.name;
             var username = req.body.username;
-            var password = req.body.password;
             var password2 = req.body.password2;
 
             var user = {
@@ -57,8 +56,8 @@ const signupController = {
                 username: username,
                 bio: "Hi, ka-Adult!",
                 password: password2,
-                icon: "pfp_" + name + ".jpg",
-                banner: "banner_" + name + ".jpg"
+                icon: "pfp_" + username + ".jpg",
+                banner: "banner_" + username + ".jpg"
             }
 
             /*
