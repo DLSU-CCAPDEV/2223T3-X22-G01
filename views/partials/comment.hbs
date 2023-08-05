@@ -1,41 +1,43 @@
-<div class="comment">
-    <div class="comment-inner">
-        <a href="/{{commenterUsername}}"><div style="background-image: url(../images/{{commenterIcon}})" class="post-pfp pfp-small glasshover"></div></a>
-        <div class="vote-container">
+{{#if commentIsNotDeleted}}
+    <div class="comment" id="comment-{{commentID}}">
+        <div class="comment-inner">
+            <a href="/{{commenterUsername}}"><div style="background-image: url(../images/{{commenterIcon}})" class="post-pfp pfp-small glasshover"></div></a>
+            <div class="vote-container">
 
-            <ion-button>
-                <ion-icon name="caret-up-outline"></ion-icon>
-            </ion-button>
-                    
-            <div>{{commentVotes}}</div>
+                <ion-button id="up-{{commentID}}" onclick="upvoteComment(this.id)">
+                    <ion-icon name="caret-up-outline"></ion-icon>
+                </ion-button>
+                        
+                <div id="votes-{{commentID}}">{{commentVotes}}</div>
 
-            <ion-button>
-                <ion-icon name="caret-down-outline"></ion-icon>
-            </ion-button>
-            
+                <ion-button id="down-{{commentID}}" onclick="downvoteComment(this.id)">
+                    <ion-icon name="caret-down-outline"></ion-icon>
+                </ion-button>
+                
 
+            </div>
+        </div>
+        <div class="comment-inner full">
+            <div class="comment-header">
+                <span class="commenter-username">{{commenterUsername}}</span>
+                <nav class="dropdown-container">
+                        <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                        {{!-- for loop? array 0 to n-1 
+                                if logged in --}}
+                        <div class="dropdown-items">
+                            <button id="editComment-{{commentID}}" onclick="editComment(this.id)">Edit</button>
+                            <button id="deleteComment-{{commentID}}" onclick="deleteComment(this.id)">Delete</button>
+                        </div>
+                </nav>
+            </div>
+            <p class="comment-content full" contenteditable="false">
+                {{commentDesc}}
+            </p>
+
+            <div class="comment-footer-{{commentID}}">
+                Posted on {{commentDate}}
+            </div>
         </div>
     </div>
-    <div class="comment-inner full">
-        <div class="comment-header">
-            <span class="commenter-username">{{commenterUsername}}</span>
-            <nav class="dropdown-container">
-                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
-
-                    {{!-- for loop? array 0 to n-1 
-                            if logged in --}}
-                    <div class="dropdown-items">
-                        <button id="editComment">Edit</button>
-                        <button id="deleteComment">Delete</button>
-                    </div>
-            </nav>
-        </div>
-        <p class="comment-content full" contenteditable="false">
-            {{commentDesc}}
-        </p>
-
-        <div class="comment-footer">
-            Posted on {{commentDate}}
-        </div>
-    </div>
-</div>
+{{/if}}

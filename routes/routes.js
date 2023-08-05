@@ -32,7 +32,8 @@ app.get('/home', timelineController.getTimeline);
 app.get('/:username', profileController.getProfile);
 
 app.get('/:username/:postID', postController.getPost);
-app.post('/:username/:postID', postController.insertComment);
+app.post('/addComment', postController.insertComment);
+app.post('/deleteComment', postController.deleteComment);
 
 // ROUTES END
 

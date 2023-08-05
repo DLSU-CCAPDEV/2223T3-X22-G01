@@ -23,15 +23,18 @@ const postController = {
             var dateUnformat = new Date(result.date);
             var dateProj = dateUnformat.toDateString();
             
-
+            var commentCount = 0;
             var commentObject = result.comments.map((c) => {
+                commentCount++;
                 var commenterIcon = userIcon.find((user) => user.username == c.username);
                 return {
+                    commentID: commentCount,
                     commenterUsername: c.username,
                     commentVotes: c.votes,
-                    commentDate: new Date(c.date).toString(),
+                    commentDate: new Date(c.date).toDateString(),
                     commentDesc: c.description,
-                    commenterIcon: commenterIcon.icon
+                    commenterIcon: commenterIcon.icon,
+                    commentIsNotDeleted: !c.deleted
                 }
 
             });
@@ -72,11 +75,11 @@ const postController = {
     },
 
     insertComment: async function (req, res) {
-        var query = {_id: req.params.postID};
-        var projection = 'postID title username votes date description comments';
-        var result = await db.findOne(Post, query, projection);
-
-        var commentText = req.body.commentBox;
+        var postProjection = 'postID title username votes date description comments';
+        var query = {_id: req.body.postID};
+        var post = await db.findOne(Post, query, postProjection);
+        
+        var commentText = req.body.commentDesc.trim();
 
         console.log('comment: ' + commentText);
 
@@ -84,8 +87,8 @@ const postController = {
 
         if (!isEmpty){
             var comment = {
-                username: "oO0Eve0Oo",
-                date: Date.now(),
+                username: req.body.commenterUsername,
+                date: req.body.commentDate,
                 votes: 0,
                 clickvote: false,
                 dirvotes: false,
@@ -93,14 +96,28 @@ const postController = {
                 description: commentText
             }
 
-            result.comments.push(comment);
+            post.comments.push(comment);
             
-            var response = await db.updateOne(Post, query, result)
+            var result = await db.updateOne(Post, query, post);
         } else {
             console.log('your comment is empty');
         }
 
+    },
+
+    deleteComment: async function (req, res) {
+        var postProjection = 'postID title username votes date description comments';
+        var query = {_id: req.body.postID};
+        var post = await db.findOne(Post, query, postProjection);
+        console.log("comment by "+ post.comments[req.body.commentID-1].username + " was soft deleted.");
+        
+        post.comments[req.body.commentID-1].deleted = true;
+
+        var result = await db.updateOne(Post, query, post);
+        
+
     }
+
 
 }
 
