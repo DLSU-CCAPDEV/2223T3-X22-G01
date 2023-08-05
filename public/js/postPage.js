@@ -71,3 +71,10 @@ function deleteComment(id){
     $.post("/deleteComment",{commentID: id_num, postID: pID});
 
 }
+
+const deleteButton = document.querySelector('#p-del');
+
+deleteButton.onclick = function deletePost(){
+    $.post("/deletePost",{postID: pID});
+    location.href = '/home';
+}

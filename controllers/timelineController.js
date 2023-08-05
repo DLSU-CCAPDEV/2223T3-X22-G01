@@ -7,7 +7,7 @@ const timelineController = {
     getTimeline: async function (req, res) {
         //default user: Eve
         var loggedProj = 'username banner displayName';
-        var postProjection = 'votes username _id title date comments';
+        var postProjection = 'votes username _id title date comments deleted';
         var iconProjection = 'username icon'
 
         var userLoggedIn = await db.findOne(User, {username: "oO0Eve0Oo"}, loggedProj);
@@ -26,7 +26,8 @@ const timelineController = {
                 username: eachPost.username,
                 title: eachPost.title,
                 date: new Date(eachPost.date).toDateString(),
-                icon: postIcon.icon
+                icon: postIcon.icon,
+                notDeleted: !eachPost.deleted
             }
         });
         

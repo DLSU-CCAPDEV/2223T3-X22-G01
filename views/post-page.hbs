@@ -29,6 +29,16 @@
                     <h1 contenteditable="false" id="post-title">
                         {{title}}
                     </h1>
+                    {{#if loggedIn}}
+                        <nav class="dropdown-container">
+                            <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                            <div class = "dropdown-items">
+                                <button id="p-edit">Edit</button>
+                                <button id="p-del" >Delete</button>
+                            </div>
+                        </nav>
+                    {{/if}}
                 </div>
 
                 <div class="flex-column" id="post-description-container">

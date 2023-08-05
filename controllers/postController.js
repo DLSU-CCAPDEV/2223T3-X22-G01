@@ -5,12 +5,11 @@ const Post = require('../models/PostModel.js');
 
 const postController = {
 
-    // TODO: comments
     getPost: async function(req, res) {
         var postID = {_id: req.params.postID};
         var poster = {username: req.params.username};
 
-        var projection = 'postID title username votes date description comments';
+        var projection = 'postID title username votes date description comments deleted';
         var userProjection = 'username icon';
 
         var result = await db.findOne(Post, postID, projection);
@@ -19,7 +18,7 @@ const postController = {
         //replace this with token stuff i guess
         var loggedIn = true;
       
-        if(result != null || posterIcon != null) {
+        if(result != null && posterIcon != null && !result.deleted) {
             var dateUnformat = new Date(result.date);
             var dateProj = dateUnformat.toDateString();
             
@@ -70,52 +69,53 @@ const postController = {
             }
             res.render('error', error);
         }
-
-        
     },
 
-    insertComment: async function (req, res) {
-        var postProjection = 'postID title username votes date description comments';
-        var query = {_id: req.body.postID};
-        var post = await db.findOne(Post, query, postProjection);
+    //TODO:
+    //add post
+    //delete post
+    //edit post
+
+    //bonus: markdown
+
+    insertPost: async function(req, res) {
+        var title = req.body.title.trim();
+        var description = req.body.description.trim();
         
-        var commentText = req.body.commentDesc.trim();
+        var emptyTitle = title == '';
+        var emptyDescription = description == '';
 
-        console.log('comment: ' + commentText);
-
-        var isEmpty = commentText.replace(/\s+/g, '') == '';
-
-        if (!isEmpty){
-            var comment = {
-                username: req.body.commenterUsername,
-                date: req.body.commentDate,
+        if (!emptyTitle && !emptyDescription){
+            var post = {
+                title: title,
+                username: req.body.username,
                 votes: 0,
-                clickvote: false,
-                dirvotes: false,
+                date: req.body.date,
                 deleted: false,
-                description: commentText
+                description: description
             }
 
-            post.comments.push(comment);
-            
-            var result = await db.updateOne(Post, query, post);
+            var result = await db.insertOne(Post, post);
+            console.log("A new post titled, "+title+", was created.");
         } else {
-            console.log('your comment is empty');
+            console.log("incomplete post data.");
         }
-
+        
+        
     },
-
-    deleteComment: async function (req, res) {
+    deletePost: async function(req, res) {
         var postProjection = 'postID title username votes date description comments';
         var query = {_id: req.body.postID};
         var post = await db.findOne(Post, query, postProjection);
-        console.log("comment by "+ post.comments[req.body.commentID-1].username + " was soft deleted.");
-        
-        post.comments[req.body.commentID-1].deleted = true;
 
+        post.deleted = true;
+        
         var result = await db.updateOne(Post, query, post);
-        
+        console.log("post, "+ req.body.postID+" has been soft deleted.");
+    },
 
+    editPost: async function(req, res) {
+        
     }
 
 

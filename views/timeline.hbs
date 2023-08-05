@@ -44,12 +44,12 @@
 
             {{!-- POST PROMPT --}}
             <div class="box">
-                <form method="POST">
-                    <input type="text" placeholder="Title" class="post-title" id="post-title">
-                    <textarea placeholder="What's on your mind?" name="postBox" class="textarea"  role="textbox" id="post-box" contenteditable></textarea>
-                    
-                    <button type="submit" id="post-button">Post</button>
-                </form>
+                
+                <input type="text" placeholder="Title" class="post-title" id="post-title">
+                <span class="textarea" role="textbox" id="post-box" contenteditable></span>
+                
+                <button type="submit" id="post-button">Post</button>
+                
             </div>
             {{!-- POST PROMPT END --}}
 
@@ -68,6 +68,38 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     {{!-- ICON IMPORT END --}}
+
+
+    <script>
+        //move to own file later
+
+        const postButton = document.querySelector("#post-button");
+        const title = document.querySelector('#post-title');
+        const description = document.querySelector('#post-box');
+
+        postButton.onclick = function(){
+            var titleText = title.value.trim();
+            var descText = description.innerHTML.trim();
+
+            var emptyTitle = titleText == '';
+            var emptyDescription = descText == '';
+
+            if (!emptyTitle && !emptyDescription){
+                p = {
+                    title: title.value,
+                    description: description.innerHTML,
+                    date: Date.now(),
+                    username: "oO0Eve0Oo"
+                };
+
+                $.post("/addPost",p);
+
+                title.value = '';
+                description.innerHTML = '';
+            }
+        };
+
+    </script>
 
     </body>
 </html>

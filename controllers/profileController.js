@@ -9,7 +9,7 @@ const profileController = {
         var query = {username: req.params.username};
 
         var profile = 'username displayName bio icon banner';
-        var posts = '_id title votes date comments username';
+        var posts = '_id title votes date comments username deleted';
 
         var userPromise = db.findOne(User, query, profile);
         var postPromise = db.findMany(Post, query, posts);
@@ -30,7 +30,8 @@ const profileController = {
                         username: eachPost.username,
                         title: eachPost.title,
                         date: new Date(eachPost.date).toDateString(),
-                        icon: user.icon
+                        icon: user.icon,
+                        notDeleted: !eachPost.deleted
                     }
 
                 });

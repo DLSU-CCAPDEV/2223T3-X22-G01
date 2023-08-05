@@ -10,7 +10,7 @@ const indexController = {
     },
 
     getIndex: async function(req, res) {
-        var postProjection = 'votes username _id title date comments';
+        var postProjection = 'votes username _id title date comments deleted';
         var iconProjection = 'username icon'
 
         var posts = await db.findMany(Post, {}, postProjection);
@@ -26,7 +26,8 @@ const indexController = {
                 username: eachPost.username,
                 title: eachPost.title,
                 date: new Date(eachPost.date).toDateString(),
-                icon: postIcon.icon
+                icon: postIcon.icon,
+                notDeleted: !eachPost.deleted
             }
         });
 
