@@ -5,7 +5,8 @@
 
         {{!-- imports --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script type="text/javascript" src="../js/purify.min.js"></script>
         <title>Salamin | @{{username}}</title>
     </head>
     <body>
@@ -35,14 +36,14 @@
             </div>
              {{!-- USER DETAILS END --}}
 
-             {{!-- POST PROMPT --}}
+            {{!-- POST PROMPT --}}
             <div class="box">
-                <form method="POST">
-                    <input type="text" placeholder="Title" class="post-title" id="post-title">
-                    <textarea placeholder="What's on your mind?" name="postBox" class="textarea"  role="textbox" id="post-box" contenteditable></textarea>
-                    
-                    <button type="submit" id="post-button">Post</button>
-                </form>
+                
+                <input type="text" placeholder="Title" class="post-title" id="post-title">
+                <span class="textarea" role="textbox" id="post-box" contenteditable></span>
+                
+                <button type="submit" id="post-button">Post</button>
+                
             </div>
             {{!-- POST PROMPT END --}}
 
@@ -63,6 +64,6 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     {{!-- ICON IMPORT END --}}
-
+    <script src="../js/profile-page.js"></script>
     </body>
 </html>

@@ -55,18 +55,7 @@
 
                 </header>
                 {{!-- HEADER END --}}
-
-                {{!-- POST PROMPT --}}
-                <div class="box">
-                    <form method="POST">
-                        <input type="text" placeholder="Title" class="post-title" id="post-title">
-                        <textarea placeholder="What's on your mind?" name="postBox" class="textarea"  role="textbox" id="post-box" contenteditable></textarea>
-                        
-                        <a href="/login"><button type="submit">Post</button></a>
-                    </form>
-                </div>
-                {{!-- POST PROMPT END --}}
-
+                
                 {{!-- POST PREVIEWS --}}
                 <div class="page-content" id="page-content"> <!-- timeline -->
                     {{#each posts}}

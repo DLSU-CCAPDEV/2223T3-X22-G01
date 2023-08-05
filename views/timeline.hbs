@@ -5,7 +5,8 @@
 
         {{!-- import --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script type="text/javascript" src="../js/purify.min.js"></script>
         <title>Salamin | Home</title>
     </head>
     <body>
@@ -70,36 +71,7 @@
     {{!-- ICON IMPORT END --}}
 
 
-    <script>
-        //move to own file later
-
-        const postButton = document.querySelector("#post-button");
-        const title = document.querySelector('#post-title');
-        const description = document.querySelector('#post-box');
-
-        postButton.onclick = function(){
-            var titleText = title.value.trim();
-            var descText = description.innerHTML.trim();
-
-            var emptyTitle = titleText == '';
-            var emptyDescription = descText == '';
-
-            if (!emptyTitle && !emptyDescription){
-                p = {
-                    title: title.value,
-                    description: description.innerHTML,
-                    date: Date.now(),
-                    username: "oO0Eve0Oo"
-                };
-
-                $.post("/addPost",p);
-
-                title.value = '';
-                description.innerHTML = '';
-            }
-        };
-
-    </script>
+    <script src="../js/timeline.js"></script>
 
     </body>
 </html>

@@ -1,16 +1,25 @@
 const commentBox = document.querySelector('#comment-box');
 const commentButton = document.querySelector('#comment-button');
 const pID = window.location.href.split('/')[4];
+
+const postDesc = document.querySelector('#post-description');
+
+let parsedDesc = DOMPurify.sanitize(marked.parse(postDesc.innerHTML));
+postDesc.innerHTML = parsedDesc;
+
+
 //addComment
 commentButton.onclick = function(){
-    if (commentBox.innerHTML.replace(/\s+/g, '') == '') return;
+    var commentText = commentBox.innerText.trim();
+
+    if (commentText == '') return;
     
     var c = {
         commenterUsername: "oO0Eve0Oo",
         commentDate: Date.now(),
         commentVotes: 0,
         commenterIcon: "pfp_eve.jpg",
-        commentDesc: commentBox.innerHTML.trim(),
+        commentDesc: commentText,
         postID: pID
     }
 
