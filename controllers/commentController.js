@@ -40,9 +40,11 @@ const commentController = {
         var postProjection = 'postID title username votes date description comments';
         var query = {_id: req.body.postID};
         var post = await db.findOne(Post, query, postProjection);
-        console.log("comment by "+ post.comments[req.body.commentID-1].username + " was soft deleted.");
+
+        var comment = post.comments.find(e => e._id == req.body.commentID);
+        console.log("comment by "+ comment.username + " was soft deleted.");
         
-        post.comments[req.body.commentID-1].deleted = true;
+        comment.deleted = true;
 
         var result = await db.updateOne(Post, query, post);
     },
@@ -55,11 +57,77 @@ const commentController = {
     },
 
     upvoteComment: async function(req, res) {
+        var postProjection = 'postID title username votes date description comments';
+        var query = {_id: req.body.postID};
+        var post = await db.findOne(Post, query, postProjection);
+
+        var comment = post.comments.find(e => e._id == req.body.commentID).votes;
         
+        var user = "oO0Eve0Oo";
+
+        var voterIndex = comment.findIndex(e => e.username == user);
+        if (voterIndex > -1){
+            userVote = comment[voterIndex];
+
+            if (userVote.voteDir && !userVote.deleted){
+                userVote.deleted = true;
+                console.log("upvote by " + user + "was removed");
+            } else {
+                userVote.voteDir = true;
+                userVote.deleted = false;
+                console.log("vote by " + user + "was changed to upvote");
+            }
+            
+        }else{
+            newVote = {
+                username: user,
+                voteDir: true,
+                deleted: false
+            }
+
+            comment.push(newVote);
+
+            console.log("upvote by " + user + "has been added");
+        }
+
+        var result = await db.updateOne(Post, query, post);
     },
 
     downvoteComment: async function(req, res) {
+        var postProjection = 'postID title username votes date description comments';
+        var query = {_id: req.body.postID};
+        var post = await db.findOne(Post, query, postProjection);
+
+        var comment = post.comments.find(e => e._id == req.body.commentID).votes;
         
+        var user = "oO0Eve0Oo";
+
+        var voterIndex = comment.findIndex(e => e.username == user);
+        if (voterIndex > -1){
+            userVote = comment[voterIndex];
+
+            if (!userVote.voteDir && !userVote.deleted){
+                userVote.deleted = true;
+                console.log("downvote by " + user + "was removed");
+            } else {
+                userVote.voteDir = false;
+                userVote.deleted = false;
+                console.log("vote by " + user + "was changed to downvote");
+            }
+            
+        }else{
+            newVote = {
+                username: user,
+                voteDir: false,
+                deleted: false
+            }
+
+            comment.push(newVote);
+
+            console.log("downvote by " + user + "has been added");
+        }
+
+        var result = await db.updateOne(Post, query, post);
     }
 }
 

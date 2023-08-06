@@ -22,9 +22,7 @@ const postController = {
             var dateUnformat = new Date(result.date);
             var dateProj = dateUnformat.toDateString();
             
-            var commentCount = 0;
             var commentObject = result.comments.map((c) => {
-                commentCount++;
                 var commenterIcon = userIcon.find((user) => user.username == c.username);
 
                 var voteCount = 0;
@@ -41,7 +39,7 @@ const postController = {
                 });
 
                 return {
-                    commentID: commentCount,
+                    commentID: c._id,
                     commenterUsername: c.username,
                     commentVotes: voteCount,
                     commentUpvoted: userUpvote,
@@ -198,7 +196,7 @@ const postController = {
             } else {
                 userVote.voteDir = false;
                 userVote.deleted = false;
-                console.log("downvote by " + user + "was changed to upvote");
+                console.log("vote by " + user + "was changed to downvote");
             }
             
         }else{

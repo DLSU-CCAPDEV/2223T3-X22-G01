@@ -137,3 +137,69 @@ function downvotePost(){
 
     $.post("/downvotePost",{postID: pID});
 }
+
+function upvoteComment(id){
+    var id_num = id.replace(/^\D+/g, '');
+
+    var upvoteButton = document.querySelector('#up-'+id_num);
+    var downvoteButton = document.querySelector('#down-'+id_num);
+    var voteText = document.querySelector('#votes-'+id_num);
+
+    var isUpvoted = upvoteButton.style.color == "var(--HLsecondary)";
+    var isDownvoted = downvoteButton.style.color == "var(--HLsecondary)";
+
+    var state = 2*isUpvoted + isDownvoted;
+    var voteCount = Number(voteText.innerText);
+    //alert(state);
+
+    switch(state){
+        case 2: //was upvoted
+            upvoteButton.style.color = "var(--secondary)";
+            voteCount--; 
+            break;
+        case 1: //was downvoted
+            downvoteButton.style.color = "var(--secondary)";
+            voteCount++; 
+        case 0: //no action
+            upvoteButton.style.color = "var(--HLsecondary)";
+            voteCount++; 
+    }
+
+    voteText.innerText = voteCount;
+
+    $.post("/upvoteComment",{postID: pID, commentID: id_num});
+}
+
+function downvoteComment(id){
+
+    var id_num = id.replace(/^\D+/g, '');
+
+    var upvoteButton = document.querySelector('#up-'+id_num);
+    var downvoteButton = document.querySelector('#down-'+id_num);
+    var voteText = document.querySelector('#votes-'+id_num);
+
+
+    var isUpvoted = upvoteButton.style.color == "var(--HLsecondary)";
+    var isDownvoted = downvoteButton.style.color == "var(--HLsecondary)";
+
+    var state = 2*isUpvoted + isDownvoted;
+    var voteCount = Number(voteText.innerText);
+    //alert(state);
+
+    switch(state){
+        case 1: //was downvoted
+            downvoteButton.style.color = "var(--secondary)";
+            voteCount++; 
+            break;
+        case 2: //was upvoted
+            upvoteButton.style.color = "var(--secondary)";
+            voteCount--; 
+        case 0: //no action
+            downvoteButton.style.color = "var(--HLsecondary)";
+            voteCount--; 
+    }
+
+    voteText.innerText = voteCount;
+
+    $.post("/downvoteComment",{postID: pID, commentID: id_num});
+}
