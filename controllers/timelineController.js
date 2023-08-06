@@ -6,6 +6,13 @@ const Post = require('../models/PostModel.js');
 const timelineController = {
     getTimeline: async function (req, res) {
         //default user: oO0Eve0Oo
+
+        var loggedDetails = {};
+
+        if(req.session.username) {
+            //display sidebar : 
+        } 
+
         var loggedProj = 'username banner displayName';
         var postProjection = 'votes username _id title date comments deleted';
         var iconProjection = 'username icon'
