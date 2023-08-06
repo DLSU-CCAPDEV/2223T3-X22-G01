@@ -1,10 +1,32 @@
-<div class="post"> <!-- posts proper -->
+{{#if notDeleted}}
+<div class="post">
     <div class="post-content glasshover">
         
         <div class="vote-container vote-width">
-            <ion-icon name="caret-up-outline"></ion-icon>
-            <div>{{votes}}</div>
-            <ion-icon name="caret-down-outline"></ion-icon>
+            <ion-icon name="caret-up-outline" id="up-{{postID}}" 
+            
+                {{#if loggedIn}}
+                onclick="upvotePost(this.id)" 
+                {{else}}
+                onclick="loginPrompt()" 
+                {{/if}}
+
+                {{#if userUpvote}}
+                style="color: var(--HLsecondary);"
+                {{/if}}
+            ></ion-icon>
+            <div id="votes-{{postID}}">{{votes}}</div>
+            <ion-icon name="caret-down-outline" id="down-{{postID}}" 
+                {{#if loggedIn}}
+                onclick="downvotePost(this.id)"
+                {{else}}
+                onclick="loginPrompt()" 
+                {{/if}}
+                
+                {{#if userDownvote}}
+                style="color: var(--HLsecondary);"
+                {{/if}}
+            ></ion-icon>
         </div>
 
         <a href="/{{username}}/{{postID}}">
@@ -19,6 +41,7 @@
     </div>
     
     
-    <div style="background-image: url(../images/{{icon}})" class="post-pfp"></div>
+    <a href="/{{username}}"><div style="background-image: url(../images/{{icon}})" class="post-pfp glasshover"></div></a>
 
 </div>
+{{/if}}

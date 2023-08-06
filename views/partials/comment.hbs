@@ -1,41 +1,57 @@
-<div class="comment">
-                <div class="comment-inner">
-                    <a href="/{{commenterUsername}}"><div style="background-image: url(../images/{{commenterIcon}})" class="post-pfp pfp-small glasshover"></div></a>
-                    <div class="vote-container">
-
-                        <ion-button>
-                            <ion-icon name="caret-up-outline"></ion-icon>
-                        </ion-button>
-                                
-                        <div>{{commentVotes}}</div>
-
-                        <ion-button>
-                            <ion-icon name="caret-down-outline"></ion-icon>
-                        </ion-button>
-                        
-
-                    </div>
-                </div>
-                <div class="comment-inner full">
-                    <div class="comment-header">
-                        <span class="commenter-username">{{commenterUsername}}</span>
-                        <nav class="dropdown-container">
-                                <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
-
-                                {{!-- for loop? array 0 to n-1 
-                                      if logged in --}}
-                                <div class="dropdown-items">
-                                    <button id="edit-${c.id}" onclick="edit(this.id)">Edit</button>
-                                    <button id="del-${c.id}" onclick="del(this.id)">Delete</button>
-                                </div>
-                        </nav>
-                    </div>
-                    <p class="comment-content full" id="comment-description-${c.id}" contenteditable="false">
-                        {{commentDesc}}
-                    </p>
-
-                    <div class="comment-footer">
-                        Posted on {{commentDate}}
-                    </div>
-                </div>
+{{#if commentIsNotDeleted}}
+    <div class="comment" id="comment-{{commentID}}">
+        <div class="comment-inner">
+            <a href="/{{commenterUsername}}"><div style="background-image: url(../images/{{commenterIcon}})" class="post-pfp pfp-small glasshover"></div></a>
+           
+            <div class="vote-container">
+                <ion-icon name="caret-up-outline" id="up-{{commentID}}" 
+                    {{#if loggedIn}}
+                    onclick="upvoteComment(this.id)" 
+                    {{else}}
+                    onclick="loginPrompt()" 
+                    {{/if}}
+                    {{#if commentUpvoted}}
+                    style="color: var(--HLsecondary);"
+                    {{/if}}
+                ></ion-icon>
+                <div id="votes-{{commentID}}">{{commentVotes}}</div>
+                <ion-icon name="caret-down-outline" id="down-{{commentID}}" 
+                    
+                    {{#if loggedIn}}
+                    onclick="downvoteComment(this.id)"
+                    {{else}}
+                    onclick="loginPrompt()" 
+                    {{/if}}
+                    {{#if commentDownvoted}}
+                    style="color: var(--HLsecondary);"
+                    {{/if}}
+                ></ion-icon>
             </div>
+        </div>
+        <div class="comment-inner full">
+            <div class="comment-header">
+                <span class="commenter-username">{{commenterUsername}}</span>
+                
+                {{#if commentAuthor}}
+                <nav class="dropdown-container">
+                        <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
+
+                        {{!-- for loop? array 0 to n-1 
+                                if logged in --}}
+                        <div class="dropdown-items">
+                            <button id="editComment-{{commentID}}" onclick="editComment(this.id)">Edit</button>
+                            <button id="deleteComment-{{commentID}}" onclick="deleteComment(this.id)">Delete</button>
+                        </div>
+                </nav>
+                {{/if}}
+            </div>
+            <p class="comment-content full" contenteditable="false" id="comment-description-{{commentID}}">
+                {{{commentDesc}}}
+            </p>
+
+            <div class="comment-footer" id="comment-footer-{{commentID}}">
+                Posted on {{commentDate}}
+            </div>
+        </div>
+    </div>
+{{/if}}

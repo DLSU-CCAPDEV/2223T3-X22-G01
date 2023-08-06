@@ -1,7 +1,6 @@
 {
-  "name": "mco2",
+  "name": "mco3",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,19 +10,24 @@
   "license": "ISC",
   "dependencies": {
     "-": "^0.0.1",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "connect-mongo": "^5.0.0",
+    "dompurify": "^3.0.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "express-validator": "^7.0.1",
     "g": "^2.0.1",
     "hbs": "^4.2.0",
+    "marked": "^6.0.0",
     "moment": "^2.29.4",
     "mongod": "^2.0.0",
     "mongodb": "^5.7.0",
-    "mongoimport": "^1.0.6",
     "mongoose": "^7.3.4",
-    "mongosh": "^1.10.1",
     "path": "^0.12.7",
     "supervisor": "^0.12.0",
     "validator": "^13.9.0"
-  }
+  },
+  "description": "SALAMIN is an online forum about seeking finance and adulthood advice"
 }

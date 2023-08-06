@@ -1,100 +1,130 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Salamin | Post by {{username}}</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
-</head>
-<body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/index.css">
+        {{!-- imports --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="../js/marked.min.js"></script>
+        <script src="../js/purify.min.js"></script>
 
-    <div class="profile-side glasshover"  onclick="location.href='/profile-page?userID=4'"> <!-- side bar -->
+        
 
-		<div class="side-header"> <!-- logo -->
-			<a href="/"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
-            
-		</div>
+        <title>Salamin | Post by @{{username}}</title>
+    </head>
+    <body>
+        {{> sidebar}}
 
-		<div class="side-content"> <!-- profile pic bg & profile text thing -->
-			<div class="side-message">Good morning, {{displayName}}! <br> You're doing just fine.</div>
-			<div class="user-info">{{numUserPosts}} posts | {{numUserComments}} comments</div>
-		</div>
+        {{!-- PAGE --}}
+        <div class="page">
 
-		<div class="side-footer"> <!-- action sprites (logout, username, settings) -->
-			<ion-icon name="log-out-outline" onclick="event.stopPropagation(); window.location.href='/index'"></ion-icon>
-			
-			<div class="username-action">
-				{{username}}
-			</div>
+            {{> headernp}}
 
-			<ion-icon name="sunny-outline"></ion-icon>
-			
-		</div>
-	</div>
+            {{!-- POST --}}
+            <div class="box green" id="post-section">
+                <div class="post-header">
 
-    <div class="post-side">
+                    <div class="vote-container">
+                        <ion-icon name="caret-up-outline" 
+                            {{#if loggedIn}}
+                            onclick="upvotePost()" 
+                            {{else}}
+                            onclick="loginPrompt()"
+                            {{/if}}
 
-        {{> headernp}}
+                            id="up"
+                            {{#if userUpvote}}
+                            style="color: var(--HLsecondary);"
+                            {{/if}}
+                        ></ion-icon>
+                        <div id="votes">{{votes}}</div>
+                        <ion-icon name="caret-down-outline" id="down"
+                            
+                            {{#if loggedIn}}
+                            onclick="downvotePost()"
+                            {{else}}
+                            onclick="loginPrompt()"
+                            {{/if}}
+                            
+                            {{#if userDownvote}}
+                            style="color: var(--HLsecondary);"
+                            {{/if}}
+                        ></ion-icon>
+                    </div>
 
-        <div class="box green" id="post-section">
-            <div class="post-header">
-                <div class="vote-container">
+                    <h1 contenteditable="false" id="post-title">
+                        {{title}}
+                    </h1>
+                    {{#if loggedIn}}
+                        {{#if postAuthor}}
+                        <nav class="dropdown-container">
+                            <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
 
-                    <ion-button >
-                        <ion-icon name="caret-up-outline"></ion-icon>
-                    </ion-button>
-                    
-                    <div>{{votes}}</div> 
-
-                    <ion-button>
-                        <ion-icon name="caret-down-outline"></ion-icon>
-                    </ion-button>
-                    
+                            <div class = "dropdown-items">
+                                <button id="p-edit">Edit</button>
+                                <button id="p-del" >Delete</button>
+                            </div>
+                        </nav>
+                        {{/if}}
+                    {{/if}}
                 </div>
 
-                <h1 contenteditable="false" id="post-title">
-                    {{title}}
-                </h1>
-
-                <nav class="dropdown-container">
-                    <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
-
-                    <div class = "dropdown-items">
-                        <button id="p-edit-{{postID}}" onclick="editPost(this.id)">Edit</button>
-                        <button id="p-del-{{postID}}" onclick="delPost(this.id)">Delete</button>
-                    </div>
-			    </nav>
+                <div class="flex-column" id="post-description-container">
+                    <p id="post-description" contenteditable="false">{{description}}</p>
+                </div>
+                <div class="post-footer">
+                    
+                    <div><h2>{{username}} | {{date}}</h2></div>
+                    <a href="/{{username}}"><div style="background-image: url(../images/{{icon}})" class="post-pfp pfp-small"></div></a>
+                </div>
             </div>
-
-            <div class="flex-column" id="post-description-container">
-                <p id="post-description" contenteditable="false">${p.description}</p>
-            </div>
-            <div class="post-footer">
-                
-                <div><h2>{{username}} | {{date}}</h2></div>
-                <a href="/{{username}}"><div style="background-image: url(../images/{{icon}})" class="post-pfp pfp-small glasshover"></div></a>
-                
-            </div>
-
-        </div>
-
-        <div class="box">
-            <span class="textarea" role="textbox" id="comment-box" contenteditable></span>
             
-            <button id="comment-button">Comment</button>
+            {{!-- POST END --}}
+            
+            {{!-- COMMENT PROMPT, show only if logged in (priority: sessions) --}}
+            
+              <div class="box">
+                
+                <span class="textarea" role="textbox" id="comment-box" contenteditable></span>
+                <button type="submit" id="comment-button"
+                {{#if loggedIn}}
+                onclick="insertComment()"
+                {{else}}
+                onclick="loginPrompt()"
+                {{/if}}
+                >Comment</button>
+                
+              </div>
+            
+            
+            {{!-- COMMENT PROMPT END --}}
+
+            {{!-- COMMENTS SECTION --}}
+            <div class="box" id="comment-section">
+                {{#each comments}}
+                    {{> comment}}
+                {{/each}}
+            </div>
+            {{!-- COMMENTS SECTION END --}}
         </div>
+        {{!-- PAGE END --}}
 
-        <div class="box" id="comment-section">
-            {{#each comments}}
-                {{> comment}} {{!-- logged in boolean --}}
-            {{/each}}
-        </div>
-
-    </div>
-
+    {{!-- ICON IMPORT --}}
     
-
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {{!-- ICON IMPORT END --}}
+    {{#if loggedIn}}
+    <script>
+        var sessionData = {
+            username: "{{loggedUsername}}",
+            icon: "{{profileIcon}}" 
+        }
+    </script>    
+    {{/if}}
 
-</body>
+    
+    <script src="../js/post-page.js"></script>
+    
+    
+  </body>
 </html>

@@ -1,276 +1,148 @@
 const db = require('../models/db.js');
+
 const User = require('../models/UserModel.js');
 const Post = require('../models/PostModel.js');
 
-const { validationResult } = require('express-validator');
-
 const timelineController = {
-
-    getFavicon: function (req, res) {
+    getFavicon: function(req, res) {
         res.status(204);
     },
 
-    getLogin: function (req, res) {
-        res.render('login');
-    },
-
-    postLogin: async function(req,res){
-        var username = req.body.username;
-        var password = req.body.password;
-        var projection = 'username displayName bio icon banner password';
-
-        var query = {username: username, password: password};
-
-        var response = await db.findOne(User, query, projection);
-
-        var postArray = await db.collectionToArray("posts");
-        var userArray = await db.collectionToArray("users");
-
-        var queryLoggedIn = {username: "oO0Eve0Oo"};
-        var postsByLoggedIn = await db.collectionToArray("posts", queryLoggedIn);
-        var postCount = postsByLoggedIn.length;
-
-        //projection
-        var postProj = postArray.map(postArray => {
-            var UserToMatch = postArray.username;
-            var icon = userArray.find(({username}) => username == UserToMatch).icon;
-            console.log(icon);
-            
-            var dateUnformat = new Date(postArray.date);
-            var dateProj = dateUnformat.toDateString();
-            return {
-                postID: postArray._id,
-                title: postArray.title,
-                votes: postArray.votes,
-                date: dateProj,
-                numComments: postArray.comments.length,
-                username: postArray.username,
-                icon: icon,
-                route: "/home"
-            }
-        });
-
-        /*
-            var postProj = postArray.map(postArray => {
-                var UserToMatch = postArray.username;
-                var icon = userArray.find(({username}) => username == UserToMatch).icon;
-
-                var dateUnformat = new Date(postArray.date);
-                var dateProj = dateUnformat.toDateString();
-                
-                return {
-                    postID: postArray._id,
-                    title: postArray.title,
-                    votes: postArray.votes,
-                    date: dateProj,
-                    numComments: postArray.comments.length,
-                    username: postArray.username,
-                    icon: icon
-                }
-                
-            });
-        */
-        
-        if(response != null){
-            var details = {
-                //default user: oO0Eve0Oo
-                username: "oO0Eve0Oo",
-                banner: "banner_eve.jpg",
-                displayName: "Eve",
-                numPosts: postCount,
-
-                posts: postProj,
-
-                // icon: posterIcon.icon,
-                
-            };
-            res.redirect('/home', details);
-        }
-
-        else{
-            res.render('error');
-        }
-    },
-
-
-    /*
-        executed when the client sends an HTTP GET request `/signup`
-        as defined in `../routes/routes.js`
-    */
-    getSignUp: function (req, res) {
-        res.render('signup');
-    },
-
-    /*
-        executed when the client sends an HTTP POST request `/signup`
-        as defined in `../routes/routes.js`
-    */
-    postSignUp: async function(req,res){
-        var errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-
-            errors = errors.errors;
-
-            var details = {};
-            for(i = 0; i < errors.length; i++)
-                details[errors[i].path + 'Error'] = errors[i].msg;
-
-            res.render('signup', details);
-        }
-
-        var name = req.body.name;
-        var username = req.body.username;
-        var password = req.body.password;
-
-        var user = {
-            displayName: name,
-            username: username,
-            bio: "Hi, ka-Adult!",
-            icon: "pfp_" + name + ".jpg",
-            banner: "banner_" + name + ".jpg",
-            password: password
-        }
-
-        var response = await db.insertOne(User, user);
-
-        if(response != null){
-            res.redirect('/home');
-        }
-        else{
-            res.render('error', {route: "/signup", collectionType: "page"});
-        }
-    },
-
-    getCheckUsername: async function (req, res) {
-
-        var username = req.query.username;
-
-        var result = await db.findOne(User, {username: username}, 'username');
-        res.send(result);
-    },
-
     getTimeline: async function (req, res) {
+        //default user: oO0Eve0Oo
+        var loggedIn = req.session.username != null;
 
-        var projection = 'icon';
-        var postProjection = 'id title votes date comments';
+        var loggedProj = 'username icon banner displayName';
+        var postProjection = 'votes username _id title date comments deleted';
+        var iconProjection = 'username icon'
 
+        var search = req.query.search;
+        var sortBy = req.query.sortBy;
+
+        if(!search) search = '';
+
+        if (loggedIn) {
+            var userLoggedIn = await db.findOne(User, {username: req.session.username}, loggedProj);
+            var loggedPostCt = await Post.countDocuments({username: userLoggedIn.username}).exec();
+            if (!userLoggedIn) loggedIn = false;
+        }
+
+        var posts = await db.findMany(Post, {"description" : {$regex : search}}, postProjection);
         
-        var postArray = await db.collectionToArray("posts");
-        var userArray = await db.collectionToArray("users");
+        //sort posts
+        if (sortBy){
+            var post2 = posts;
+            switch(sortBy) {
+                case 'popular':
+                    post2.sort((a, b) => {
+                        var aVote = 0;
+                        var bVote = 0;
 
-        //projection
-        var postProj = postArray.map(postArray => {
-            var UserToMatch = postArray.username;
-            var icon = userArray.find(({username}) => username == UserToMatch).icon;
+                        a.votes.forEach((element) => {
+                            if (!element.deleted) aVote += element.voteDir ? 1 : -1;
+                        });
+                        b.votes.forEach((element) => {
+                            if (!element.deleted) bVote += element.voteDir ? 1 : -1;
+                        });
 
-            var dateUnformat = new Date(postArray.date);
-            var dateProj = dateUnformat.toDateString();
-            console.log(icon);
-            return {
-                postID: postArray._id,
-                title: postArray.title,
-                votes: postArray.votes,
-                date: dateProj,
-                numComments: postArray.comments.length,
-                username: postArray.username,
-                icon: icon
+
+                        return bVote - aVote;
+                    });
+                    break;
+                case 'recent':
+                    post2.sort((a, b) => {
+                        return b.date - a.date;
+                    });
+                    break;
+                case 'unpopular':
+                    post2.sort((a, b) => {
+                        var aVote = 0;
+                        var bVote = 0;
+
+                        a.votes.forEach((element) => {
+                            if (!element.deleted) aVote += element.voteDir ? 1 : -1;
+                        });
+                        b.votes.forEach((element) => {
+                            if (!element.deleted) bVote += element.voteDir ? 1 : -1;
+                        });
+
+
+                        return aVote - bVote;
+                    });
+                    break;
+                case 'old':
+                    post2.sort((a, b) => {
+                        return a.date - b.date;
+                    });
+                    break;
+                
+                default:
+                    //sort by id
+                    post2.sort((a, b) => {
+                        return a.id - b.id;
+                    });
             }
+            posts = post2;
+        }
+
+
+        var userIcon = await db.findMany(User, {}, iconProjection);
+
+        var postObject = posts.map((eachPost) => {
+            var postIcon = userIcon.find((user) => user.username == eachPost.username);
             
+            var voteCount = 0;
+            var userUpvote = false;
+            var userDownvote = false;
+
+            eachPost.votes.forEach((element) => {
+                if (!element.deleted) voteCount += element.voteDir ? 1 : -1;
+                if(loggedIn){
+                    if (element.username == userLoggedIn.username) {
+                        userUpvote = element.voteDir && !element.deleted;
+                        userDownvote = !element.voteDir && !element.deleted;
+                    }
+                }
+            });
+
+            return {
+                numComments: eachPost.comments.length,
+                votes: voteCount,
+                postID: eachPost._id,
+                username: eachPost.username,
+                userUpvote: userUpvote,
+                userDownvote: userDownvote,
+                
+                title: eachPost.title,
+                date: new Date(eachPost.date).toDateString(),
+                icon: postIcon.icon,
+                notDeleted: !eachPost.deleted,
+                loggedIn: loggedIn
+            }
         });
+        
+        var details = {
+            loggedIn: false,
+            posts: postObject,
+            search: search
+        };
 
-        if(userArray != null || postArray != null){
-            var details = {
-                posts: postProj,
+        if(loggedIn) {
 
-                // icon: posterIcon.icon,
-                route: userArray.username
-            };
+            details = {
+                loggedIn: true,
+                loggedUsername: userLoggedIn.username,
+                displayName: userLoggedIn.displayName,
+                profileIcon: userLoggedIn.icon,
+                numPosts: loggedPostCt,
+                banner: userLoggedIn.banner,
+                posts: postObject,
+                search: search
+            }
+        }  
 
-            res.render('index', details);
-        }
+        res.render('timeline', details);
 
-        else{
-            res.render('error', {collectionType: "page"});
-        }
-
-        // // switch (params.sortBy) {
-        // //     case 'popular':
-        // //         post2.sort((a, b) => {
-        // //             return b.votes - a.votes;
-        // //         });
-        // //         break;
-        // //     case 'recent':
-        // //         post2.sort((a, b) => {
-        // //             return new Date(b.date) - new Date(a.date);
-        // //         });
-        // //         break;
-        // //     case 'unpopular':
-        // //         post2.sort((a, b) => {
-        // //             return a.votes - b.votes;
-        // //         });
-        // //         break;
-        // //     case 'old':
-        // //         post2.sort((a, b) => {
-        // //             return new Date(a.date) - new Date(b.date);
-        // //         });
-        // //         break;
-        // //     default:
-        // //         post2.sort((a, b) => {
-        // //             return a.id - b.id;
-        // //         });
-        // // }
-
-    },
-
-    // getSearch: async function(req,res){
-    //     var query = req.query.filter;
-
-    // },
-
-    // voteUpdate: async function(req,res){
-
-    // },
-
-    newPost: async function(req, res){
-        var title = req.body.postTitle;
-        var postText = req.body.postBox;
-
-        console.log('title: ' + title);
-        console.log('postText: ' + postText);
-
-        var post = {
-            title: title,
-            username: "oO0Eve0Oo",
-            votes: "0",
-            date: Date.now(),
-            deleted: false,
-            clickvote: false,
-            dirvotes: false,
-            description: postText,
-            comments: [
-                // username,
-                // date,
-                // votes,
-                // clickvote,
-                // dirvotes,
-                // deleted,
-                // description
-            ]
-        }
-
-        var response = await db.insertOne(Post, post);
-
-        if(response != null){
-            res.redirect('/home');
-        }
-        else{
-            res.render('error');
-        }
-    },
-
-    getError: async function (req,res){
-        res.render('error', {collectiontype: "user"});
     }
 }
 

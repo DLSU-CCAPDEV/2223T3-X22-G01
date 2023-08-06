@@ -133,3 +133,51 @@ function downvotePost(id){
 function loginPrompt() {
     location.href = '/login';
 }
+
+function editProfile(){
+    document.getElementById('display-name').contentEditable = "true";
+    document.getElementById('user-bio').contentEditable = "true";
+    var button = document.getElementById('edit-profile');
+    
+    var pfp = document.getElementById('profile-photo');
+    var editpfp = `
+        
+        <div id="image-upload">
+            <label for="file-input">
+                <ion-icon name="image-outline"></ion-icon>
+            </label>
+
+            <input id="file-input" type='file' onchange='loadImg(event)'>
+        </div>
+    `
+
+    pfp.insertAdjacentHTML('afterend',editpfp);
+
+    button.innerHTML="Save Profile";
+    button.setAttribute('onclick','saveProfile()')
+
+}
+
+function loadImg(event) {
+    var newIcon = document.getElementById('profile-photo');
+    newIcon.style.backgroundImage = "url('"+URL.createObjectURL(event.target.files[0])+"')";
+}
+
+function saveProfile(){
+    var name = document.getElementById('display-name');
+    var username = document.getElementById('username');
+    var bio = document.getElementById('user-bio');
+    var button = document.getElementById('edit-profile');
+
+    document.getElementById('image-upload').remove();
+
+    name.contentEditable = "false";
+    bio.contentEditable = "false";
+
+    $.post("/editProfile",{username: username.innerText.substring(1),displayName: name.innerText, bio: bio.innerText});
+
+    button.innerHTML="Edit Profile";
+    button.setAttribute('onclick','editProfile()')
+
+}
+

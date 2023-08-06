@@ -1,54 +1,87 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Salamin | @{{username}}</title>
-	<link rel="stylesheet" type="text/css" href="/css/index.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
-<body>
-	
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/index.css">
 
-	<div class="page">
-		{{> headernp}}
+        {{!-- imports --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script type="text/javascript" src="../js/purify.min.js"></script>
+        <title>Salamin | @{{username}}</title>
+    </head>
+    <body>
 
-        <div class="box green noPadding" id="profile-section">
+        {{!-- PAGE --}}
+        <div class="page">
+
+            {{> headernp}}
+
+             {{!-- USER DETAILS --}}
+            <div class="box green noPadding" id="profile-section">
             
-			<div class="user-banner" style="background-image: url('/images/{{banner}}')"></div>
-			<div class="profile-info-header">
-				<div style="background-image: url('/images/{{icon}}')" class="post-pfp glasshover" id="profile-photo"></div>
-				<div class="profile-info-body">
-					<h1 id="display-name" contenteditable="false">{{displayName}}</h1>
-					<h2 id="username" contenteditable="false">@{{username}}</h2>
-					<div class="user-bio" id="user-bio" contenteditable="false"> {{bio}} </div>
-				</div>
+			    <div class="user-banner" style="background-image: url('/images/{{banner}}')"></div>
+                <div class="profile-info-header">
+                    <div style="background-image: url('/images/{{icon}}')" class="post-pfp glasshover" id="profile-photo"></div>
+                    <div class="profile-info-body">
+                        <h1 id="display-name" contenteditable="false">{{displayName}}</h1>
+                        <h2 id="username" contenteditable="false">@{{username}}</h2>
+                        <div class="user-bio" id="user-bio" contenteditable="false"> {{bio}} </div>
+                    </div>
 
-				<button id="edit-profile" onclick="editProfile()">
-					Edit profile
-				</button>
-			</div>
+                    {{#if isAuthor}}
+                        <button id="edit-profile" onclick="editProfile()">
+                            Edit profile
+                        </button>
+                    {{/if}}
+                </div>
+
+            </div>
+             {{!-- USER DETAILS END --}}
+
+            {{!-- POST PROMPT --}}
+            <div class="box">
+                
+                <input type="text" placeholder="Title" class="post-title" id="post-title">
+                <span class="textarea" role="textbox" id="post-box" contenteditable></span>
+                
+                <button type="submit" id="post-button"
+                
+                {{#if loggedIn}}
+                    onclick="insertPost();"
+                {{else}}
+                    onclick="loginPrompt();"
+                {{/if}}
+                >Post</button>
+                
+            </div>
+            {{!-- POST PROMPT END --}}
+
+            {{!-- POSTS BY USER --}}
+            <div class="page-content" id="page-content">
+                {{#if username}}
+                    {{#each posts}}
+                        {{> postprev}}
+                    {{/each}}
+                {{/if}}
+            </div>
+            {{!-- POSTS BY USER END --}}
 
         </div>
+        {{!-- PAGE END --}}
 
-		<div class="box">
-			<input type="text" placeholder="Title" class="post-title" id="post-title">
-            <span class="textarea" role="textbox" id="post-box" contenteditable></span>
-            
-            <button id="post-button">Post</button>
-        </div>
+    {{!-- ICON IMPORT --}}
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {{!-- ICON IMPORT END --}}
 
-		<div class="page-content" id="page-content"> <!-- timeline -->
-			{{#if username}}
-				{{#each posts}}
-					{{> postprev}}
-				{{/each}}
-			{{/if}}
-		</div>
-
-	</div>
-
-
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-	
-</body>
+    {{#if loggedIn}}
+    <script>
+        var sessionData = {
+            username: "{{loggedUsername}}",
+            icon: "{{profileIcon}}" 
+        }
+    </script>    
+    {{/if}}
+    <script src="../js/profile-page.js"></script>
+    </body>
 </html>

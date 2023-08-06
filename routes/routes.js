@@ -1,74 +1,60 @@
 
 const express = require('express');
 
-const postController = require('../controllers/postController.js');
+const loginController = require('../controllers/loginController.js');
+
+const signupController = require('../controllers/signupController.js');
 
 const timelineController = require('../controllers/timelineController.js');
 
+const postController = require('../controllers/postController.js');
+
 const profileController = require('../controllers/profileController.js');
 
-const successController = require('../controllers/successController.js');
+const commentController = require('../controllers/commentController.js');
+
+const logoutController = require('../controllers/logoutController.js');
 
 const app = express();
+
+// ROUTES
 
 app.get('/favicon.ico', timelineController.getFavicon);
 
 app.get('/', timelineController.getTimeline);
 
-//signup.hbs page
-app.get('/signup', timelineController.getSignUp);
+app.get('/signup', signupController.getSignUp);
 
-//login.hbs page
-app.get('/login', timelineController.getLogin);
+app.post('/signup', signupController.postSignUp);
 
-app.post('/signup', timelineController.postSignUp);
+app.get('/login', loginController.getLogin);
 
-app.post('/login', timelineController.postLogin);
+app.post('/login', loginController.postLogin);
 
-app.get('/home', successController.getSuccess);
+app.get('/logout', logoutController.getLogOut);
 
-app.post('/home', timelineController.newPost);
+app.get('/home', timelineController.getTimeline);
+
+app.post('/addPost', postController.insertPost);
+app.post('/deletePost', postController.deletePost);
+app.post('/editPost', postController.editPost);
+app.post('/upvotePost', postController.upvotePost);
+app.post('/downvotePost', postController.downvotePost);
+
+app.post('/addComment', commentController.insertComment);
+app.post('/deleteComment', commentController.deleteComment);
+app.post('/editComment', commentController.editComment);
+app.post('/upvoteComment', commentController.upvoteComment);
+app.post('/downvoteComment', commentController.downvoteComment);
+
+app.post('/editProfile', profileController.editProfile);
 
 app.get('/:username', profileController.getProfile);
-
-app.get('/:username/:postID', postController.getPostPage);
-
-app.get('/error', profileController.getError);
-
-// app.get('/login', timelineController.getLogin);
-
-
-/*
-    execute function getSignUp()
-    defined in object `indexController` in `../controllers/indexController.js`
-    when a client sends an HTTP GET request for `/signup`
-*/
-// app.get('/signup', timelineController.getSignUp);
-
-/*
-    execute function postSignUp()
-    defined in object `indexController` in `../controllers/indexController.js`
-    when a client sends an HTTP POST request for `/signup`
-*/
-
-
-/*
-    execute function getSuccess()
-    defined in object `successController` in `../controllers/successController.js`
-    when a client sends an HTTP GET request for `/success`
-*/
-
-
-/*
-    execute function getUsername()
-    defined in object `timelineController` in `../controllers/timelineController.js`
-    when a client sends an HTTP GET request for `/getCheckUsername`
-*/
-// app.get('/getUsername', timelineController.getCheckUsername);
+app.get('/:username/:postID', postController.getPost);
 
 
 
 
-
+// ROUTES END
 
 module.exports = app;
