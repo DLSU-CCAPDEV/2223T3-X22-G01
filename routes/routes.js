@@ -29,6 +29,8 @@ app.post('/signup', signupController.postSignUp);
 
 app.get('/login', loginController.getLogin);
 
+app.post('/login', loginController.postLogin);
+
 app.get('/home', timelineController.getTimeline);
 
 app.post('/addPost', postController.insertPost);
