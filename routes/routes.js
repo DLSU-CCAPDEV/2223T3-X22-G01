@@ -47,6 +47,8 @@ app.post('/editComment', commentController.editComment);
 app.post('/upvoteComment', commentController.upvoteComment);
 app.post('/downvoteComment', commentController.downvoteComment);
 
+app.post('/editProfile', profileController.editProfile);
+
 app.get('/:username', profileController.getProfile);
 app.get('/:username/:postID', postController.getPost);
 

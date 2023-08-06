@@ -86,7 +86,8 @@ const profileController = {
 
             
         });
-
+        
+        
         
         
 
@@ -190,6 +191,27 @@ const profileController = {
         //     res.render('error', error);
         // }
 
+    },
+    editProfile: async function(req, res) {
+        if(req.session.username){
+            var profile = 'username displayName bio icon banner';
+            var query = {username: req.body.username};
+            var user = await db.findOne(User, query, profile);
+
+            if (user.username == req.session.username) {
+                user.bio = req.body.bio;
+                user.displayName = req.body.displayName;
+
+                var result = await db.updateOne(User, query, user);
+
+                console.log("user, "+ req.body.username+" has been edited.");
+            } else {
+                console.log('you are not logged in as this user');
+            }
+            
+        } else {
+            console.log('user is not logged in');
+        } 
     }
 
 }
