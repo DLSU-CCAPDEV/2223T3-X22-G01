@@ -6,19 +6,18 @@ const Post = require('../models/PostModel.js');
 const timelineController = {
     getTimeline: async function (req, res) {
         //default user: oO0Eve0Oo
+        var loggedIn = req.session.username != null;
 
-        var loggedDetails = {};
-
-        if(req.session.username) {
-            //display sidebar : 
-        } 
-
-        var loggedProj = 'username banner displayName';
+        var loggedProj = 'username icon banner displayName';
         var postProjection = 'votes username _id title date comments deleted';
         var iconProjection = 'username icon'
 
-        var userLoggedIn = await db.findOne(User, {username: "oO0Eve0Oo"}, loggedProj);
-        var loggedPostCt = await Post.countDocuments({username: userLoggedIn.username}).exec();
+        if (loggedIn) {
+            var userLoggedIn = await db.findOne(User, {username: req.session.username}, loggedProj);
+            var loggedPostCt = await Post.countDocuments({username: userLoggedIn.username}).exec();
+            if (!userLoggedIn) loggedIn = false;
+        }
+        
 
         var posts = await db.findMany(Post, {}, postProjection);
         var userIcon = await db.findMany(User, {}, iconProjection);
@@ -31,11 +30,12 @@ const timelineController = {
             var userDownvote = false;
 
             eachPost.votes.forEach((element) => {
-                
                 if (!element.deleted) voteCount += element.voteDir ? 1 : -1;
-                if (element.username == "oO0Eve0Oo") {
-                    userUpvote = element.voteDir && !element.deleted;
-                    userDownvote = !element.voteDir && !element.deleted;
+                if(loggedIn){
+                    if (element.username == userLoggedIn.username) {
+                        userUpvote = element.voteDir && !element.deleted;
+                        userDownvote = !element.voteDir && !element.deleted;
+                    }
                 }
             });
 
@@ -50,31 +50,30 @@ const timelineController = {
                 title: eachPost.title,
                 date: new Date(eachPost.date).toDateString(),
                 icon: postIcon.icon,
-                notDeleted: !eachPost.deleted
+                notDeleted: !eachPost.deleted,
+                loggedIn: loggedIn
             }
         });
         
-        
+        var details = {
+            loggedIn: false,
+            posts: postObject
+        };
 
-        if(posts != null || userLoggedIn != null) {
+        if(loggedIn) {
 
-            var details = {
+            details = {
+                loggedIn: true,
                 loggedUsername: userLoggedIn.username,
                 displayName: userLoggedIn.displayName,
+                profileIcon: userLoggedIn.icon,
                 numPosts: loggedPostCt,
                 banner: userLoggedIn.banner,
-
                 posts: postObject
             }
+        }  
 
-            res.render('timeline', details);
-        } else {
-            var error = {
-                collectionType: "page",
-                route: "/"
-            }
-            res.render('error', error);
-        }
+        res.render('timeline', details);
 
     }
 }

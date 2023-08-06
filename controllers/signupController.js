@@ -63,8 +63,8 @@ const signupController = {
                 username: username,
                 bio: "Hi, ka-Adult!",
                 password: hashPW,
-                icon: "pfp_" + username + ".jpg",
-                banner: "banner_" + username + ".jpg"
+                icon: "pfp_default.jpg",
+                banner: "banner_default.jpg"
             }
 
             /*
@@ -88,7 +88,7 @@ const signupController = {
                 req.session.username = user.username;
                 req.session.displayName = user.displayName;
 
-                res.redirect('/home');
+                res.redirect('/');
             }
             else {
                 res.render('error');

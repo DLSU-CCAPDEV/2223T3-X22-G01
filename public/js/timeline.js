@@ -3,7 +3,7 @@ const title = document.querySelector('#post-title');
 const description = document.querySelector('#post-box');
 const postDiv =  document.querySelector('#page-content');
 
-postButton.onclick = function(){
+function insertPost(){
     var titleText = title.value.trim();
     var descText = bufferText;
 
@@ -15,7 +15,8 @@ postButton.onclick = function(){
             title: titleText,
             description: descText,
             date: Date.now(),
-            username: "oO0Eve0Oo"
+            username: sessionData.username,
+            icon: sessionData.icon
         };
 
         $.post("/addPost",p);
@@ -31,11 +32,12 @@ postButton.onclick = function(){
                         <div class="post-text">
                             
                             <h1>${p.title}</h1>
-                            <h2>${p.username}| Just now | 0 replies</h2>
+                            <h2>${p.username} | Just now | 0 replies</h2>
                             
                         </div>
 
                 </div>
+                <a href="/${p.username}"><div style="background-image: url(../images/${p.icon})" class="post-pfp glasshover"></div></a>
             </div>
         `
 
@@ -126,4 +128,8 @@ function downvotePost(id){
     voteText.innerText = voteCount;
 
     $.post("/downvotePost",{postID: id_num});
+}
+
+function loginPrompt() {
+    location.href = '/login';
 }

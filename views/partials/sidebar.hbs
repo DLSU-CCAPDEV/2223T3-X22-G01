@@ -1,4 +1,5 @@
-<div class="profile-side glasshover"  onclick="location.href='/{{loggedUsername}}'"> <!-- side bar -->
+{{#if loggedIn}}
+<div class="profile-side glasshover"  onclick="location.href='/{{loggedUsername}}'" style="background-image: url(../images/{{banner}});"> <!-- side bar -->
 
 	<div class="side-header"> <!-- logo -->
 		<a href="/"><img src="../images/salamin_logoSMALL.png" alt="Salamin" id="salamin-logo"></a>
@@ -21,3 +22,4 @@
 		
 	</div>
 </div>
+{{/if}}

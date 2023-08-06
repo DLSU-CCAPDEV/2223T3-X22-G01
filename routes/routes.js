@@ -23,7 +23,7 @@ const app = express();
 
 app.get('/favicon.ico', indexController.getFavicon);
 
-app.get('/', indexController.getIndex);
+app.get('/', timelineController.getTimeline);
 
 app.get('/signup', signupController.getSignUp);
 

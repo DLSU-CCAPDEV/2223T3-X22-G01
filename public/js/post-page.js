@@ -9,15 +9,15 @@ postDesc.innerHTML = parsedDesc;
 
 
 //addComment
-commentButton.onclick = function(){
+function insertComment(){
     var commentText = commentBox.innerText.trim();
 
     if (commentText == '') return;
     
     var c = {
-        commenterUsername: "oO0Eve0Oo",
+        commenterUsername: sessionData.username,
         commentDate: Date.now(),
-        commenterIcon: "pfp_eve.jpg",
+        commenterIcon: sessionData.icon,
         commentDesc: commentText,
         postID: pID
     }
@@ -66,10 +66,13 @@ function deleteComment(id){
 
 const deleteButton = document.querySelector('#p-del');
 
-deleteButton.onclick = function deletePost(){
-    $.post("/deletePost",{postID: pID});
-    location.href = '/home';
+if (deleteButton) {
+    deleteButton.onclick = function deletePost(){
+        $.post("/deletePost",{postID: pID});
+        location.href = '/home';
+    }
 }
+
 
 function upvotePost(){
 
@@ -197,4 +200,8 @@ function downvoteComment(id){
     voteText.innerText = voteCount;
 
     $.post("/downvoteComment",{postID: pID, commentID: id_num});
+}
+
+function loginPrompt() {
+    location.href = '/login';
 }

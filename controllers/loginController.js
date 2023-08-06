@@ -30,7 +30,7 @@ const loginController = {
                 req.session.username = user.username;
                 req.session.displayName = user.displayName;
 
-                res.redirect('/' + user.username);
+                res.redirect('/');
             } else {
                 res.render('login');
             }

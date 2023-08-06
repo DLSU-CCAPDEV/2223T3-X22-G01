@@ -4,13 +4,24 @@
             <a href="/{{commenterUsername}}"><div style="background-image: url(../images/{{commenterIcon}})" class="post-pfp pfp-small glasshover"></div></a>
            
             <div class="vote-container">
-                <ion-icon name="caret-up-outline" id="up-{{commentID}}" onclick="upvoteComment(this.id)" 
+                <ion-icon name="caret-up-outline" id="up-{{commentID}}" 
+                    {{#if loggedIn}}
+                    onclick="upvoteComment(this.id)" 
+                    {{else}}
+                    onclick="loginPrompt()" 
+                    {{/if}}
                     {{#if commentUpvoted}}
                     style="color: var(--HLsecondary);"
                     {{/if}}
                 ></ion-icon>
                 <div id="votes-{{commentID}}">{{commentVotes}}</div>
-                <ion-icon name="caret-down-outline" id="down-{{commentID}}" onclick="downvoteComment(this.id)"
+                <ion-icon name="caret-down-outline" id="down-{{commentID}}" 
+                    
+                    {{#if loggedIn}}
+                    onclick="downvoteComment(this.id)"
+                    {{else}}
+                    onclick="loginPrompt()" 
+                    {{/if}}
                     {{#if commentDownvoted}}
                     style="color: var(--HLsecondary);"
                     {{/if}}
@@ -20,6 +31,8 @@
         <div class="comment-inner full">
             <div class="comment-header">
                 <span class="commenter-username">{{commenterUsername}}</span>
+                
+                {{#if commentAuthor}}
                 <nav class="dropdown-container">
                         <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
 
@@ -30,6 +43,7 @@
                             <button id="deleteComment-{{commentID}}" onclick="deleteComment(this.id)">Delete</button>
                         </div>
                 </nav>
+                {{/if}}
             </div>
             <p class="comment-content full" contenteditable="false">
                 {{commentDesc}}

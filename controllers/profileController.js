@@ -7,6 +7,13 @@ const profileController = {
     
     getProfile: async function (req ,res) {
         var query = {username: req.params.username};
+        var loggedIn = req.session.username != null;
+        var loggedProj = 'username icon banner displayName';
+
+        if (loggedIn) {
+            var userLoggedIn = await db.findOne(User, {username: req.session.username}, loggedProj);
+            if (!userLoggedIn) loggedIn = false;
+        }
 
         var profile = 'username displayName bio icon banner';
         var posts = '_id title votes date comments username deleted';
@@ -29,8 +36,12 @@ const profileController = {
 
                     eachPost.votes.forEach((element) => {
                         if (!element.deleted) voteCount += element.voteDir ? 1 : -1;
-                        userUpvote = element.voteDir && !element.deleted;
-                        userDownvote = !element.voteDir && !element.deleted;
+                        if(loggedIn){
+                            if (element.username == userLoggedIn.username) {
+                                userUpvote = element.voteDir && !element.deleted;
+                                userDownvote = !element.voteDir && !element.deleted;
+                            }
+                        }
                     });
 
                     return {
@@ -44,9 +55,9 @@ const profileController = {
                         title: eachPost.title,
                         date: new Date(eachPost.date).toDateString(),
                         icon: user.icon,
-                        notDeleted: !eachPost.deleted
+                        notDeleted: !eachPost.deleted,
+                        loggedIn: loggedIn
                     }
-
                 });
 
                 var details = {
@@ -55,26 +66,29 @@ const profileController = {
                     bio: user.bio,
                     icon: user.icon,
                     banner: user.banner,
-                    route: "/home",
-
-                    posts: postObject
-
+                    loggedIn: loggedIn,
+                    isAuthor: req.session.username == user.username,
+                    posts: postObject,
+                    route: '/',
+                    loggedUsername:req.session.username
                 }
+
+                if (loggedIn){
+                    details.profileIcon = userLoggedIn.icon;
+                }
+
                 //console.log(`user: `+user);
                 //console.log(`post: `+post);
                 res.render('profile-page', details);
-            } else {
-                var error = {
-                    collectionType: "user",
-                    route: "/home"
-                }
-                res.render('error', error);
             }
 
             //console.log(`username from User: `+user.username)
 
             
         });
+
+        
+        
 
         //               THIS WORKS ON ITS OWN
         // var userDetails = await db.findOne(User, query, profile).then((user) => {

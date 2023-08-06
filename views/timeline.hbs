@@ -16,7 +16,7 @@
 
         {{!-- TIMELINE --}}
         <div class="page">
-
+            {{#if loggedIn}}
             {{!-- SEARCH BAR --}}
             <div class="page-header">
                 
@@ -42,14 +42,61 @@
                 {{!-- FILTER POSTS END --}}
             </div>
             {{!-- SEARCH BAR END --}}
+            {{else}}
+            {{!-- HEADER --}}
+                <header class="header">
 
+                    <div class="header-logo"></div>
+
+                    {{!-- SEARCH BAR --}}
+                    <div class="search-bar">
+                        <ion-icon name="search-outline"></ion-icon>
+                        <form class="searchForm">
+                            <input type="text" placeholder="Search..." id="search" name="search">
+                        </form>
+                    </div>
+                    {{!-- SEARCH BAR END --}}
+
+                    {{!-- FILTER OPTIONS --}}
+                    <nav class="dropdown-container">
+                        <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
+        
+                        <div class = "dropdown-items">
+                            <button>Recent</button>
+                            <button>Old</button>
+                            <button>Popular</button>
+                            <button>Unpopuar</button>
+                        </div>
+                    </nav>
+                    {{!-- FILTER OPTIONS END --}}
+
+                    {{!-- LOGIN BUTTON --}}
+                    <a href="/login"><button class="nav_btn" id="form-open">Login</button></a>
+                    {{!-- LOGIN BUTTON END --}}
+
+                </header>
+                {{!-- HEADER END --}}
+
+                {{!-- SPACER --}}
+                <div class="box" style="background-color: var(--BGprimary);">
+
+                </div>
+                {{!-- SPACER END --}}
+            {{/if}}
             {{!-- POST PROMPT --}}
             <div class="box">
                 
                 <input type="text" placeholder="Title" class="post-title" id="post-title">
                 <span class="textarea" role="textbox" id="post-box" contenteditable></span>
                 
-                <button type="submit" id="post-button">Post</button>
+                <button type="submit" id="post-button"
+                
+                {{#if loggedIn}}
+                    onclick="insertPost();"
+                {{else}}
+                    onclick="loginPrompt();"
+                {{/if}}
+                >Post</button>
                 
             </div>
             {{!-- POST PROMPT END --}}
@@ -70,7 +117,14 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     {{!-- ICON IMPORT END --}}
 
-
+    {{#if loggedIn}}
+    <script>
+        var sessionData = {
+            username: "{{loggedUsername}}",
+            icon: "{{profileIcon}}" 
+        }
+    </script>    
+    {{/if}}
     <script src="../js/timeline.js"></script>
 
     </body>

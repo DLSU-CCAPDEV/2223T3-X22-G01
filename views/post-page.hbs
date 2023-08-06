@@ -7,12 +7,12 @@
         <script src="../js/marked.min.js"></script>
         <script src="../js/purify.min.js"></script>
 
+        
+
         <title>Salamin | Post by @{{username}}</title>
     </head>
     <body>
-        {{#if loggedIn}}
-            {{> sidebar}}
-        {{/if}}
+        {{> sidebar}}
 
         {{!-- PAGE --}}
         <div class="page">
@@ -24,13 +24,27 @@
                 <div class="post-header">
 
                     <div class="vote-container">
-                        <ion-icon name="caret-up-outline" onclick="upvotePost()" id="up"
+                        <ion-icon name="caret-up-outline" 
+                            {{#if loggedIn}}
+                            onclick="upvotePost()" 
+                            {{else}}
+                            onclick="loginPrompt()"
+                            {{/if}}
+
+                            id="up"
                             {{#if userUpvote}}
                             style="color: var(--HLsecondary);"
                             {{/if}}
                         ></ion-icon>
                         <div id="votes">{{votes}}</div>
-                        <ion-icon name="caret-down-outline" onclick="downvotePost()" id="down"
+                        <ion-icon name="caret-down-outline" id="down"
+                            
+                            {{#if loggedIn}}
+                            onclick="downvotePost()"
+                            {{else}}
+                            onclick="loginPrompt()"
+                            {{/if}}
+                            
                             {{#if userDownvote}}
                             style="color: var(--HLsecondary);"
                             {{/if}}
@@ -41,6 +55,7 @@
                         {{title}}
                     </h1>
                     {{#if loggedIn}}
+                        {{#if postAuthor}}
                         <nav class="dropdown-container">
                             <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
 
@@ -49,6 +64,7 @@
                                 <button id="p-del" >Delete</button>
                             </div>
                         </nav>
+                        {{/if}}
                     {{/if}}
                 </div>
 
@@ -65,14 +81,20 @@
             {{!-- POST END --}}
             
             {{!-- COMMENT PROMPT, show only if logged in (priority: sessions) --}}
-            {{#if loggedIn}}
+            
               <div class="box">
                 
                 <span class="textarea" role="textbox" id="comment-box" contenteditable></span>
-                <button type="submit" id="comment-button">Comment</button>
+                <button type="submit" id="comment-button"
+                {{#if loggedIn}}
+                onclick="insertComment()"
+                {{else}}
+                onclick="loginPrompt()"
+                {{/if}}
+                >Comment</button>
                 
               </div>
-            {{/if}}
+            
             
             {{!-- COMMENT PROMPT END --}}
 
@@ -91,7 +113,18 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     {{!-- ICON IMPORT END --}}
+    {{#if loggedIn}}
+    <script>
+        var sessionData = {
+            username: "{{loggedUsername}}",
+            icon: "{{profileIcon}}" 
+        }
+    </script>    
+    {{/if}}
+
     
     <script src="../js/post-page.js"></script>
+    
+    
   </body>
 </html>

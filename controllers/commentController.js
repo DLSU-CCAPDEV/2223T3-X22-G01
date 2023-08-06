@@ -6,6 +6,7 @@ const Post = require('../models/PostModel.js');
 const commentController = {
 
     insertComment: async function (req, res) {
+        if(req.session.username){
         var postProjection = 'postID title username votes date description comments';
         var query = {_id: req.body.postID};
         var post = await db.findOne(Post, query, postProjection);
@@ -18,7 +19,7 @@ const commentController = {
 
         if (!isEmpty){
             var comment = {
-                username: req.body.commenterUsername,
+                username: req.session.username,
                 date: req.body.commentDate,
                 votes: [],
                 clickvote: false,
@@ -33,20 +34,25 @@ const commentController = {
         } else {
             console.log('your comment is empty');
         }
+        } else console.log("you are not logged in.");
 
     },
 
     deleteComment: async function (req, res) {
-        var postProjection = 'postID title username votes date description comments';
-        var query = {_id: req.body.postID};
-        var post = await db.findOne(Post, query, postProjection);
-
-        var comment = post.comments.find(e => e._id == req.body.commentID);
-        console.log("comment by "+ comment.username + " was soft deleted.");
-        
-        comment.deleted = true;
-
-        var result = await db.updateOne(Post, query, post);
+        if(req.session.username){
+            var postProjection = 'postID title username votes date description comments';
+            var query = {_id: req.body.postID};
+            var post = await db.findOne(Post, query, postProjection);
+            
+            var comment = post.comments.find(e => e._id == req.body.commentID);
+            
+            if (comment.username == req.session.username){
+                console.log("comment by "+ comment.username + " was soft deleted.");
+                comment.deleted = true;
+                var result = await db.updateOne(Post, query, post);
+            }   else console.log("you are not the post author.");
+            
+        } else console.log("you are not logged in.");
     },
 
     //edit comment
@@ -57,50 +63,53 @@ const commentController = {
     },
 
     upvoteComment: async function(req, res) {
-        var postProjection = 'postID title username votes date description comments';
-        var query = {_id: req.body.postID};
-        var post = await db.findOne(Post, query, postProjection);
+        if(req.session.username){
+            var postProjection = 'postID title username votes date description comments';
+            var query = {_id: req.body.postID};
+            var post = await db.findOne(Post, query, postProjection);
 
-        var comment = post.comments.find(e => e._id == req.body.commentID).votes;
-        
-        var user = "oO0Eve0Oo";
-
-        var voterIndex = comment.findIndex(e => e.username == user);
-        if (voterIndex > -1){
-            userVote = comment[voterIndex];
-
-            if (userVote.voteDir && !userVote.deleted){
-                userVote.deleted = true;
-                console.log("upvote by " + user + "was removed");
-            } else {
-                userVote.voteDir = true;
-                userVote.deleted = false;
-                console.log("vote by " + user + "was changed to upvote");
-            }
+            var comment = post.comments.find(e => e._id == req.body.commentID).votes;
             
-        }else{
-            newVote = {
-                username: user,
-                voteDir: true,
-                deleted: false
+            var user = req.session.username;
+
+            var voterIndex = comment.findIndex(e => e.username == user);
+            if (voterIndex > -1){
+                userVote = comment[voterIndex];
+
+                if (userVote.voteDir && !userVote.deleted){
+                    userVote.deleted = true;
+                    console.log("upvote by " + user + "was removed");
+                } else {
+                    userVote.voteDir = true;
+                    userVote.deleted = false;
+                    console.log("vote by " + user + "was changed to upvote");
+                }
+                
+            }else{
+                newVote = {
+                    username: user,
+                    voteDir: true,
+                    deleted: false
+                }
+
+                comment.push(newVote);
+
+                console.log("upvote by " + user + "has been added");
             }
 
-            comment.push(newVote);
-
-            console.log("upvote by " + user + "has been added");
-        }
-
-        var result = await db.updateOne(Post, query, post);
+            var result = await db.updateOne(Post, query, post);
+        } else console.log("you are not logged in.");
     },
 
     downvoteComment: async function(req, res) {
+        if(req.session.username){
         var postProjection = 'postID title username votes date description comments';
         var query = {_id: req.body.postID};
         var post = await db.findOne(Post, query, postProjection);
 
         var comment = post.comments.find(e => e._id == req.body.commentID).votes;
         
-        var user = "oO0Eve0Oo";
+        var user = req.session.username;
 
         var voterIndex = comment.findIndex(e => e.username == user);
         if (voterIndex > -1){
@@ -128,6 +137,7 @@ const commentController = {
         }
 
         var result = await db.updateOne(Post, query, post);
+        } else console.log("you are not logged in.");
     }
 }
 
