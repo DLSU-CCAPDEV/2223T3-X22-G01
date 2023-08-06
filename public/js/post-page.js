@@ -4,7 +4,8 @@ const pID = window.location.href.split('/')[4];
 
 const postDesc = document.querySelector('#post-description');
 
-let parsedDesc = DOMPurify.sanitize(marked.parse(postDesc.innerHTML));
+var rawDesc = postDesc.innerText;
+var parsedDesc = DOMPurify.sanitize(marked.parse(postDesc.innerHTML));
 postDesc.innerHTML = parsedDesc;
 
 
@@ -205,3 +206,87 @@ function downvoteComment(id){
 function loginPrompt() {
     location.href = '/login';
 }
+
+const editButton = document.querySelector('#p-edit');
+
+if(editButton){
+    editButton.onclick = function(){
+    
+        //stops adding more edit buttons
+        if(document.getElementById("post-save")==null){
+            var postTitle = document.getElementById("post-title");
+            var postBody = document.getElementById("post-description");
+            postBody.innerHTML = rawDesc;
+            var postBodyContainer = document.getElementById("post-description-container");
+            
+            postTitle.contentEditable = "true";
+            postBody.contentEditable = "true";
+
+            
+    
+            var saveButton = `
+                <div class="edit-footer">
+                    <button class="edit-button" id="post-save" onclick="savePost(this)" contenteditable="false">Save</button>    
+                </div>
+            `
+            postBodyContainer.insertAdjacentHTML('beforeend', saveButton);
+        }
+    }
+    
+    function savePost(){;
+        var button = document.getElementById("post-save");
+        button.remove();
+    
+        var postTitle = document.getElementById("post-title");
+        var postBody = document.getElementById("post-description");
+
+        $.post("/editPost",{postID: pID, description: postDesc.innerText});
+        
+        rawDesc = postBody.innerText;
+        var parsedDesc = DOMPurify.sanitize(marked.parse(postDesc.innerHTML));
+        postBody.innerHTML = parsedDesc;
+    
+        postTitle.contentEditable = "false";
+        postBody.contentEditable = "false";
+    
+        //p.title = postTitle.innerHTML;
+        //p.description = postBody.innerHTML;
+    
+        //localStorage.setItem('post',JSON.stringify(post)); //save function
+    }
+}
+
+function editComment(id){
+    var id_num = id.replace(/^\D+/g, '');
+    
+    //stops adding more edit buttons
+    if(document.getElementById("save-"+id_num)==null){
+        var commentBody = document.getElementById("comment-description-"+id_num);
+        var commentFooter = document.getElementById("comment-footer-"+id_num);
+
+        commentBody.contentEditable = "true";
+        
+        var saveButton = `
+            
+           <button id="save-${id_num}" onclick="saveComment(this)" contenteditable="false">Save</button>    
+            
+        `
+        commentFooter.insertAdjacentHTML('beforeend', saveButton);
+    }
+}
+
+function saveComment(button){
+    var id_num = button.id.replace(/^\D+/g, '');
+    
+    button.remove();
+
+    var commentBody = document.getElementById("comment-description-"+id_num);
+    commentBody.contentEditable = "false";
+
+    $.post("/editComment",{postID: pID, commentID: id_num, description: commentBody.innerText});
+
+    //var c = p.comments.find(t => t.id == id_num);
+    //c.description = commentBody.innerHTML;
+    //localStorage.setItem('post',JSON.stringify(post)); //save function
+}
+

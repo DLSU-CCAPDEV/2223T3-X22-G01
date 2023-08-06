@@ -60,6 +60,21 @@ const commentController = {
     //bonus: markdown
 
     editComment: async function (req,res) {
+        if(req.session.username){
+            var postProjection = 'postID title username votes date description comments';
+            var query = {_id: req.body.postID};
+            var post = await db.findOne(Post, query, postProjection);
+            
+            var comment = post.comments.find(e => e._id == req.body.commentID);
+            
+            if (comment.username == req.session.username){
+                console.log("comment by "+ comment.username + " was edited.");
+                console.log(req.body.description);
+                comment.description = req.body.description;
+                var result = await db.updateOne(Post, query, post);
+            }   else console.log("you are not the post author.");
+            
+        } else console.log("you are not logged in.");
     },
 
     upvoteComment: async function(req, res) {

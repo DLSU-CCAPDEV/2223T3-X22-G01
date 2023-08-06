@@ -181,7 +181,23 @@ const postController = {
     },
 
     editPost: async function(req, res) {
-        
+        if(req.session.username){
+            var postProjection = 'postID title username votes date description comments';
+            var query = {_id: req.body.postID};
+            var post = await db.findOne(Post, query, postProjection);
+
+            if (post.username == req.session.username) {
+                post.description = req.body.description;
+                var result = await db.updateOne(Post, query, post);
+                console.log("post, "+ req.body.postID+" has been edited.");
+                console.log(req.body.description);
+            } else {
+                console.log('you are not the maker of this post');
+            }
+            
+        } else {
+            console.log('user is not logged in');
+        } 
     },
 
     upvotePost: async function(req, res) {

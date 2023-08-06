@@ -45,11 +45,11 @@
                 </nav>
                 {{/if}}
             </div>
-            <p class="comment-content full" contenteditable="false">
-                {{commentDesc}}
+            <p class="comment-content full" contenteditable="false" id="comment-description-{{commentID}}">
+                {{{commentDesc}}}
             </p>
 
-            <div class="comment-footer-{{commentID}}">
+            <div class="comment-footer" id="comment-footer-{{commentID}}">
                 Posted on {{commentDate}}
             </div>
         </div>
