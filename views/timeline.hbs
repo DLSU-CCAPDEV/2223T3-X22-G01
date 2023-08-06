@@ -23,7 +23,7 @@
                 <div class="search-bar">
                     <ion-icon name="search-outline"></ion-icon>
                     <form class="searchForm">
-                        <input type="text" placeholder="Search..." id="search" name="search">
+                        <input type="text" placeholder="Search..." id="search" name="search" value="{{search}}">
                     </form>
                     
                 </div>
@@ -33,10 +33,10 @@
                     <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
 
                     <div class = "dropdown-items">
-                        <button>Recent</button>
-                        <button>Old</button>
-                        <button>Popular</button>
-                        <button>Unpopuar</button>
+                        <a href="/?sortBy=recent&search={{search}}"><button>Recent</button></a>
+                        <a href="/?sortBy=old&search={{search}}"><button>Old</button></a>
+                        <a href="/?sortBy=popular&search={{search}}"><button>Popular</button></a>
+                        <a href="/?sortBy=unpopular&search={{search}}"><button>Unpopuar</button></a>
                     </div>
                 </nav>
                 {{!-- FILTER POSTS END --}}
@@ -62,10 +62,10 @@
                         <ion-icon class="dropdown-button" name="filter-outline"></ion-icon>
         
                         <div class = "dropdown-items">
-                            <button>Recent</button>
-                            <button>Old</button>
-                            <button>Popular</button>
-                            <button>Unpopuar</button>
+                            <a href="/?sortBy=recent&search={{search}}"><button>Recent</button></a>
+                            <a href="/?sortBy=old&search={{search}}"><button>Old</button></a>
+                            <a href="/?sortBy=popular&search={{search}}"><button>Popular</button></a>
+                            <a href="/?sortBy=unpopular&search={{search}}"><button>Unpopuar</button></a>
                         </div>
                     </nav>
                     {{!-- FILTER OPTIONS END --}}

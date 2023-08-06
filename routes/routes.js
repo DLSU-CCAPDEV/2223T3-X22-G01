@@ -1,8 +1,6 @@
 
 const express = require('express');
 
-const indexController = require('../controllers/indexController.js');
-
 const loginController = require('../controllers/loginController.js');
 
 const signupController = require('../controllers/signupController.js');
@@ -21,7 +19,7 @@ const app = express();
 
 // ROUTES
 
-app.get('/favicon.ico', indexController.getFavicon);
+app.get('/favicon.ico', timelineController.getFavicon);
 
 app.get('/', timelineController.getTimeline);
 
