@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="/css/index.css">
+
+        {{!-- imports --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
+
+        <!-- Unicons -->
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
+        <title>Salamin | Edit Profile</title>
+    </head>
+    <body>
+        
+        {{!-- PAGE --}}
+        <div class="page">
+
+            {{!-- FORM --}}
+            <div class="form_content">
+                <a href="/"><i class="uil uil-times form_close"></i></a>
+
+                <form method="POST" action="/upload" enctype="multipart/form-data">
+                    <input type="file", name="image">
+                    <input type="submit">
+                </form>
+
+            
+
+                {{!-- SUBMIT EDITED PROFILE --}}
+                {{!-- <button type="submit" id="submit" class="button" style="color: white; text-decoration: none;">
+                Submit
+                </button> --}}
+                {{!-- END SUBMIT PROFILE --}}
+
+                </div>
+                {{!-- FORM END --}}
+
+        </div>
+        {{!-- PAGE END --}}
+
+    {{!-- ICONS IMPORT --}}
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {{!-- ICONS IMPORT END --}}
+
+    </body>
+</html>
