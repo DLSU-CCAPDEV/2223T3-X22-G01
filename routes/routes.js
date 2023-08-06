@@ -15,6 +15,8 @@ const profileController = require('../controllers/profileController.js');
 
 const commentController = require('../controllers/commentController.js');
 
+const logoutController = require('../controllers/logoutController.js');
+
 const app = express();
 
 // ROUTES
@@ -30,6 +32,8 @@ app.post('/signup', signupController.postSignUp);
 app.get('/login', loginController.getLogin);
 
 app.post('/login', loginController.postLogin);
+
+app.get('/logout', logoutController.getLogOut);
 
 app.get('/home', timelineController.getTimeline);
 
@@ -47,6 +51,8 @@ app.post('/downvoteComment', commentController.downvoteComment);
 
 app.get('/:username', profileController.getProfile);
 app.get('/:username/:postID', postController.getPost);
+
+
 
 
 // ROUTES END
