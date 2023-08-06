@@ -2,7 +2,7 @@ const dotenv = require(`dotenv`);
 const fs = require(`fs`);
 const express = require(`express`);
 const session = require(`express-session`);
-// const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 const bodyParser = require(`body-parser`);
 const hbs = require(`hbs`);
 const routes = require('./routes/routes.js');
@@ -25,12 +25,13 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(`public`));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use(session({
-//     'secret': 'ccapdev-session',
-//     'resave': false,
-//     'saveUninitialized': false,
-//     store: new MongoStore({mongooseConnection: mongoose.connection})
-// }));
+app.use(session({
+    'secret': 'ccapdev-session',
+    'resave': false,
+    'saveUninitialized': false,
+    // store: new MongoStore({mongooseConnection: process.env.MONGODB_URI})
+    store: MongoStore.create({mongoUrl : process.env.MONGODB_URI})
+}));
 
 app.use(`/`, routes);
 
