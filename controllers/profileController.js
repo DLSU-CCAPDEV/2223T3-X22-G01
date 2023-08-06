@@ -23,11 +23,24 @@ const profileController = {
             if(user != null && post != null) {
                 
                 var postObject = post.map((eachPost) => {
+                    var voteCount = 0;
+                    var userUpvote = false;
+                    var userDownvote = false;
+
+                    eachPost.votes.forEach((element) => {
+                        if (!element.deleted) voteCount += element.voteDir ? 1 : -1;
+                        userUpvote = element.voteDir && !element.deleted;
+                        userDownvote = !element.voteDir && !element.deleted;
+                    });
+
                     return {
-                        commentLength: eachPost.comments.length,
-                        votes: eachPost.votes,
+                        numComments: eachPost.comments.length,
+                        votes: voteCount,
                         postID: eachPost._id,
                         username: eachPost.username,
+                        userUpvote: userUpvote,
+                        userDownvote: userDownvote,
+                        
                         title: eachPost.title,
                         date: new Date(eachPost.date).toDateString(),
                         icon: user.icon,

@@ -20,7 +20,7 @@ const commentController = {
             var comment = {
                 username: req.body.commenterUsername,
                 date: req.body.commentDate,
-                votes: 0,
+                votes: [],
                 clickvote: false,
                 dirvotes: false,
                 deleted: false,

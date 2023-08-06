@@ -115,7 +115,7 @@ const postController = {
             var post = {
                 title: title,
                 username: req.body.username,
-                votes: 0,
+                votes: [],
                 date: req.body.date,
                 deleted: false,
                 description: description

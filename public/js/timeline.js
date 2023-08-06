@@ -1,6 +1,7 @@
 const postButton = document.querySelector("#post-button");
 const title = document.querySelector('#post-title');
 const description = document.querySelector('#post-box');
+const postDiv =  document.querySelector('#page-content');
 
 postButton.onclick = function(){
     var titleText = title.value.trim();
@@ -18,6 +19,27 @@ postButton.onclick = function(){
         };
 
         $.post("/addPost",p);
+
+        var newPost = `
+            <div class="post">
+                <div class="post-content glasshover">
+                    
+                    <div class="vote-container vote-width">
+                        <div id="votes">0</div>
+                    </div>
+
+                        <div class="post-text">
+                            
+                            <h1>${p.title}</h1>
+                            <h2>${p.username}| Just now | 0 replies</h2>
+                            
+                        </div>
+
+                </div>
+            </div>
+        `
+
+        postDiv.insertAdjacentHTML('beforeend', newPost);
 
         title.value = '';
         description.innerText = '';

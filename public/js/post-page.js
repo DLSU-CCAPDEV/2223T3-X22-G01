@@ -17,7 +17,6 @@ commentButton.onclick = function(){
     var c = {
         commenterUsername: "oO0Eve0Oo",
         commentDate: Date.now(),
-        commentVotes: 0,
         commenterIcon: "pfp_eve.jpg",
         commentDesc: commentText,
         postID: pID
@@ -29,24 +28,20 @@ commentButton.onclick = function(){
                 <a href="/${c.commenterUsername}"><div style="background-image: url(../images/${c.commenterIcon})" class="post-pfp pfp-small glasshover"></div></a>
                 <div class="vote-container">
                             
-                    <div>${c.commentVotes}</div>
+                    <div>0</div>
 
                 </div>
             </div>
             <div class="comment-inner full">
                 <div class="comment-header">
                     <span class="commenter-username">${c.commenterUsername}</span>
-                    <nav class="dropdown-container">
-                            <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
-
-                    </nav>
                 </div>
                 <p class="comment-content full" id="comment-description" contenteditable="false">
                     ${c.commentDesc}
                 </p>
 
                 <div class="comment-footer">
-                    Posted on ${c.commentDate}
+                    Posted just now
                 </div>
             </div>
         </div>
