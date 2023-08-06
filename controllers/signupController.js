@@ -5,8 +5,13 @@ const Post = require('../models/PostModel.js');
 
 const { validationResult } = require('express-validator');
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const signupController = {
     getSignUp: async function (req, res) {
+        
+
         res.render('signup');
     },
 
@@ -51,11 +56,13 @@ const signupController = {
             var username = req.body.username;
             var password2 = req.body.password2;
 
+            var hashPW = await bcrypt.hash(password2, saltRounds);
+
             var user = {
                 displayName: name,
                 username: username,
                 bio: "Hi, ka-Adult!",
-                password: password2,
+                password: hashPW,
                 icon: "pfp_" + username + ".jpg",
                 banner: "banner_" + username + ".jpg"
             }
@@ -77,6 +84,10 @@ const signupController = {
             */
 
             if(response != null){
+                // new session
+                req.session.username = user.username;
+                req.session.displayName = user.displayName;
+
                 res.redirect('/home');
             }
             else {
