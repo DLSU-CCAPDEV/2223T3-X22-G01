@@ -41,3 +41,4 @@ description.onblur = function(){
     description.innerHTML = descText;
 
 }
+

@@ -52,6 +52,14 @@ const commentController = {
     //bonus: markdown
 
     editComment: async function (req,res) {
+    },
+
+    upvoteComment: async function(req, res) {
+        
+    },
+
+    downvoteComment: async function(req, res) {
+        
     }
 }
 

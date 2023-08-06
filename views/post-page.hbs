@@ -4,9 +4,8 @@
         <link rel="stylesheet" type="text/css" href="../css/index.css">
         {{!-- imports --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-        <script type="text/javascript" src="../js/purify.min.js"></script>
+        <script src="../js/marked.min.js"></script>
+        <script src="../js/purify.min.js"></script>
 
         <title>Salamin | Post by @{{username}}</title>
     </head>
@@ -23,10 +22,19 @@
             {{!-- POST --}}
             <div class="box green" id="post-section">
                 <div class="post-header">
+
                     <div class="vote-container">
-                        <ion-icon name="caret-up-outline" ></ion-icon>
-                        <div>{{votes}}</div> 
-                        <ion-icon name="caret-down-outline"></ion-icon>
+                        <ion-icon name="caret-up-outline" onclick="upvotePost()" id="up"
+                            {{#if userUpvote}}
+                            style="color: var(--HLsecondary);"
+                            {{/if}}
+                        ></ion-icon>
+                        <div id="votes">{{votes}}</div>
+                        <ion-icon name="caret-down-outline" onclick="downvotePost()" id="down"
+                            {{#if userDownvote}}
+                            style="color: var(--HLsecondary);"
+                            {{/if}}
+                        ></ion-icon>
                     </div>
 
                     <h1 contenteditable="false" id="post-title">
@@ -85,6 +93,6 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     {{!-- ICON IMPORT END --}}
     
-    <script src="../js/postPage.js"></script>
+    <script src="../js/post-page.js"></script>
   </body>
 </html>

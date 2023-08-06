@@ -34,10 +34,14 @@ app.get('/home', timelineController.getTimeline);
 app.post('/addPost', postController.insertPost);
 app.post('/deletePost', postController.deletePost);
 app.post('/editPost', postController.editPost);
+app.post('/upvotePost', postController.upvotePost);
+app.post('/downvotePost', postController.downvotePost);
 
 app.post('/addComment', commentController.insertComment);
 app.post('/deleteComment', commentController.deleteComment);
 app.post('/editComment', commentController.editComment);
+app.post('/upvoteComment', commentController.upvoteComment);
+app.post('/downvoteComment', commentController.downvoteComment);
 
 app.get('/:username', profileController.getProfile);
 app.get('/:username/:postID', postController.getPost);

@@ -3,9 +3,17 @@
     <div class="post-content glasshover">
         
         <div class="vote-container vote-width">
-            <ion-icon name="caret-up-outline"></ion-icon>
-            <div>{{votes}}</div>
-            <ion-icon name="caret-down-outline"></ion-icon>
+            <ion-icon name="caret-up-outline" id="up-{{postID}}" onclick="upvotePost(this.id)" 
+                {{#if userUpvote}}
+                style="color: var(--HLsecondary);"
+                {{/if}}
+            ></ion-icon>
+            <div id="votes-{{postID}}">{{votes}}</div>
+            <ion-icon name="caret-down-outline" id="down-{{postID}}" onclick="downvotePost(this.id)"
+                {{#if userDownvote}}
+                style="color: var(--HLsecondary);"
+                {{/if}}
+            ></ion-icon>
         </div>
 
         <a href="/{{username}}/{{postID}}">

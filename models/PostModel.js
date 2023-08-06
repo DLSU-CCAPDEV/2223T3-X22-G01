@@ -1,16 +1,31 @@
 // import module `mongoose`
 var mongoose = require('mongoose');
 
+var voterSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
+
+    voteDir: {
+        type: Boolean,
+        required: true
+    },
+
+    deleted: {
+        type: Boolean,
+        required: true
+    }
+});
+
+
 var CommentSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true
     },
 
-    votes: {
-        type: Number,
-        required: true
-    },
+    votes: [ voterSchema ],
 
     date: {
         type: Date,
@@ -41,10 +56,7 @@ var PostSchema = new mongoose.Schema({
         required: true
     },
 
-    votes: {
-        type: Number,
-        required: true
-    },
+    votes: [ voterSchema ],
 
     date: {
         type: Date,

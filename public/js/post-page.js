@@ -28,17 +28,9 @@ commentButton.onclick = function(){
             <div class="comment-inner">
                 <a href="/${c.commenterUsername}"><div style="background-image: url(../images/${c.commenterIcon})" class="post-pfp pfp-small glasshover"></div></a>
                 <div class="vote-container">
-
-                    <ion-button>
-                        <ion-icon name="caret-up-outline"></ion-icon>
-                    </ion-button>
                             
                     <div>${c.commentVotes}</div>
 
-                    <ion-button>
-                        <ion-icon name="caret-down-outline"></ion-icon>
-                    </ion-button>
-                    
                 </div>
             </div>
             <div class="comment-inner full">
@@ -47,10 +39,6 @@ commentButton.onclick = function(){
                     <nav class="dropdown-container">
                             <ion-icon class="dropdown-button" name="ellipsis-horizontal"></ion-icon>
 
-                            <div class="dropdown-items">
-                                <button id="edit" onclick="edit(this.id)">Edit</button>
-                                <button id="del" onclick="del(this.id)">Delete</button>
-                            </div>
                     </nav>
                 </div>
                 <p class="comment-content full" id="comment-description" contenteditable="false">
@@ -86,4 +74,66 @@ const deleteButton = document.querySelector('#p-del');
 deleteButton.onclick = function deletePost(){
     $.post("/deletePost",{postID: pID});
     location.href = '/home';
+}
+
+function upvotePost(){
+
+    var upvoteButton = document.querySelector('#up');
+    var downvoteButton = document.querySelector('#down');
+    var voteText = document.querySelector('#votes');
+
+    var isUpvoted = upvoteButton.style.color == "var(--HLsecondary)";
+    var isDownvoted = downvoteButton.style.color == "var(--HLsecondary)";
+
+    var state = 2*isUpvoted + isDownvoted;
+    var voteCount = Number(voteText.innerText);
+    //alert(state);
+
+    switch(state){
+        case 2: //was upvoted
+            upvoteButton.style.color = "var(--secondary)";
+            voteCount--; 
+            break;
+        case 1: //was downvoted
+            downvoteButton.style.color = "var(--secondary)";
+            voteCount++; 
+        case 0: //no action
+            upvoteButton.style.color = "var(--HLsecondary)";
+            voteCount++; 
+    }
+
+    voteText.innerText = voteCount;
+
+    $.post("/upvotePost",{postID: pID});
+}
+
+function downvotePost(){
+
+    var upvoteButton = document.querySelector('#up');
+    var downvoteButton = document.querySelector('#down');
+    var voteText = document.querySelector('#votes');
+
+    var isUpvoted = upvoteButton.style.color == "var(--HLsecondary)";
+    var isDownvoted = downvoteButton.style.color == "var(--HLsecondary)";
+
+    var state = 2*isUpvoted + isDownvoted;
+    var voteCount = Number(voteText.innerText);
+    //alert(state);
+
+    switch(state){
+        case 1: //was downvoted
+            downvoteButton.style.color = "var(--secondary)";
+            voteCount++; 
+            break;
+        case 2: //was upvoted
+            upvoteButton.style.color = "var(--secondary)";
+            voteCount--; 
+        case 0: //no action
+            downvoteButton.style.color = "var(--HLsecondary)";
+            voteCount--; 
+    }
+
+    voteText.innerText = voteCount;
+
+    $.post("/downvotePost",{postID: pID});
 }

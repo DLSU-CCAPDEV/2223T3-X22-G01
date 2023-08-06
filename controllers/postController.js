@@ -26,10 +26,26 @@ const postController = {
             var commentObject = result.comments.map((c) => {
                 commentCount++;
                 var commenterIcon = userIcon.find((user) => user.username == c.username);
+
+                var voteCount = 0;
+                var userUpvote = false;
+                var userDownvote = false;
+
+                c.votes.forEach((element) => {
+                    
+                    if (!element.deleted) voteCount += element.voteDir ? 1 : -1;
+                    if (element.username == "oO0Eve0Oo") {
+                        userUpvote = element.voteDir && !element.deleted;
+                        userDownvote = !element.voteDir && !element.deleted;
+                    }
+                });
+
                 return {
                     commentID: commentCount,
                     commenterUsername: c.username,
-                    commentVotes: c.votes,
+                    commentVotes: voteCount,
+                    commentUpvoted: userUpvote,
+                    commentDownvoted: userDownvote,
                     commentDate: new Date(c.date).toDateString(),
                     commentDesc: c.description,
                     commenterIcon: commenterIcon.icon,
@@ -38,9 +54,25 @@ const postController = {
 
             });
 
+            var voteCount = 0;
+            var userUpvote = false;
+            var userDownvote = false;
+
+            result.votes.forEach((element) => {
+                
+                if (!element.deleted) voteCount += element.voteDir ? 1 : -1;
+                if (element.username == "oO0Eve0Oo") {
+                    userUpvote = element.voteDir && !element.deleted;
+                    userDownvote = !element.voteDir && !element.deleted;
+                }
+            });
+
             var details = {
                 username: result.username,
-                votes: result.votes,
+                votes: voteCount,
+                userUpvote: userUpvote,
+                userDownvote: userDownvote,
+
                 title: result.title,
                 description: result.description,
                 date: dateProj,
@@ -49,10 +81,6 @@ const postController = {
                 route: "/", // change for conditions
                 loggedIn: loggedIn
             };
-            // console.log('comments projection: ' + details.comments);
-            // console.log('commenterUsername projection: ' + details.commenterUsername);
-            // console.log('commentVotes projection: ' + details.commentVotes);
-            // console.log('commentDesc projection: ' + details.commentDesc);
             
             if(loggedIn){
                 details.loggedUsername= "oO0Eve0Oo";
@@ -116,9 +144,77 @@ const postController = {
 
     editPost: async function(req, res) {
         
-    }
+    },
 
+    upvotePost: async function(req, res) {
+        var postProjection = 'postID title username votes date description comments';
+        var query = {_id: req.body.postID};
+        var post = await db.findOne(Post, query, postProjection);
 
+        var user = "oO0Eve0Oo";
+
+        var voterIndex = post.votes.findIndex(e => e.username == user);
+        if (voterIndex > -1){
+            userVote = post.votes[voterIndex];
+
+            if (userVote.voteDir && !userVote.deleted){
+                userVote.deleted = true;
+                console.log("upvote by " + user + "was removed");
+            } else {
+                userVote.voteDir = true;
+                userVote.deleted = false;
+                console.log("vote by " + user + "was changed to upvote");
+            }
+            
+        }else{
+            newVote = {
+                username: user,
+                voteDir: true,
+                deleted: false
+            }
+
+            post.votes.push(newVote);
+
+            console.log("upvote by " + user + "has been added");
+        }
+        
+        var result = await db.updateOne(Post, query, post);
+    },
+
+    downvotePost: async function(req, res) {
+        var postProjection = 'postID title username votes date description comments';
+        var query = {_id: req.body.postID};
+        var post = await db.findOne(Post, query, postProjection);
+
+        var user = "oO0Eve0Oo";
+
+        var voterIndex = post.votes.findIndex(e => e.username == user);
+        if (voterIndex > -1){
+            userVote = post.votes[voterIndex];
+
+            if (!userVote.voteDir && !userVote.deleted){
+                userVote.deleted = true;
+                console.log("downvote by " + user + "was removed");
+            } else {
+                userVote.voteDir = false;
+                userVote.deleted = false;
+                console.log("downvote by " + user + "was changed to upvote");
+            }
+            
+        }else{
+            newVote = {
+                username: user,
+                voteDir: false,
+                deleted: false
+            }
+
+            post.votes.push(newVote);
+
+            console.log("upvote by " + user + "has been added");
+        }
+        
+        var result = await db.updateOne(Post, query, post);
+    } 
 }
 
 module.exports = postController;

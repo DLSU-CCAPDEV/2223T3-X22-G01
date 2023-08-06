@@ -2,19 +2,19 @@
     <div class="comment" id="comment-{{commentID}}">
         <div class="comment-inner">
             <a href="/{{commenterUsername}}"><div style="background-image: url(../images/{{commenterIcon}})" class="post-pfp pfp-small glasshover"></div></a>
+           
             <div class="vote-container">
-
-                <ion-button id="up-{{commentID}}" onclick="upvoteComment(this.id)">
-                    <ion-icon name="caret-up-outline"></ion-icon>
-                </ion-button>
-                        
+                <ion-icon name="caret-up-outline" id="up-{{commentID}}" onclick="upvoteComment(this.id)" 
+                    {{#if commentUpvote}}
+                    style="color: var(--HLsecondary);"
+                    {{/if}}
+                ></ion-icon>
                 <div id="votes-{{commentID}}">{{commentVotes}}</div>
-
-                <ion-button id="down-{{commentID}}" onclick="downvoteComment(this.id)">
-                    <ion-icon name="caret-down-outline"></ion-icon>
-                </ion-button>
-                
-
+                <ion-icon name="caret-down-outline" id="down-{{commentID}}" onclick="downvoteComment(this.id)"
+                    {{#if commentDownvote}}
+                    style="color: var(--HLsecondary);"
+                    {{/if}}
+                ></ion-icon>
             </div>
         </div>
         <div class="comment-inner full">
